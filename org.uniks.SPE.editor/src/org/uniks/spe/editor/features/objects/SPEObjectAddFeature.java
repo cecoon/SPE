@@ -3,12 +3,14 @@ package org.uniks.spe.editor.features.objects;
 import model.SPEObject;
 
 import org.eclipse.graphiti.features.IAddFeature;
+import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddFeature;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
@@ -25,6 +27,8 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
     protected IColorConstant objectTextColor = CommonFeatureColors.TEXT_FOREGROUND;
     protected IColorConstant objectForeground = CommonFeatureColors.NORMAL_FOREGROUND;
     protected IColorConstant objectBackground = CommonFeatureColors.NORMAL_BACKGROUND;
+    protected LineStyle lineStyle = LineStyle.SOLID;
+    
     
     private static final int width = 100; 
     private static final int height = 150;
@@ -70,6 +74,8 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         roundedRectangle.setForeground(manageColor(objectForeground));
         roundedRectangle.setBackground(manageColor(objectBackground));
         roundedRectangle.setLineWidth(2);
+        roundedRectangle.setLineStyle(lineStyle);
+        
         gaService.setLocationAndSize(roundedRectangle, context.getX(), context.getY(), width, height);        
       
         return containerShape;
@@ -85,6 +91,9 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         Polyline polyline = gaService.createPolyline(shape, new int[] { 0, 20, width, 20 });
         polyline.setForeground(manageColor(objectForeground));
         polyline.setLineWidth(2);
+        polyline.setLineStyle(lineStyle);        
+        
+     
     }
 
     protected Shape createHeaderShape(ContainerShape containerShape, String headerText) {      
@@ -97,11 +106,17 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         // create and set text graphics algorithm
         Text text = gaService.createText(shape, headerText);
         text.setForeground(manageColor(objectTextColor));
-        text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-        // vertical alignment has as default value "center"
+        text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER); 
         text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
         gaService.setLocationAndSize(text, 0, 0, width, 20);
         
+        IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();
+        directEditingInfo.setMainPictogramElement(containerShape);
+        directEditingInfo.setPictogramElement(shape);
+        directEditingInfo.setGraphicsAlgorithm(text);
+        directEditingInfo.setActive(true); 
+        
         return shape;
     }
+     
 }

@@ -46,7 +46,7 @@ public class SPEAttributeAddFeature extends AbstractAddFeature implements IAddFe
         ContainerShape containerShape = createBaseContainerShape(context, target);         
         link(containerShape, attribute);
         
-        String contentText = "* = *"; 
+        String contentText = attribute.getName() + " "  + attribute.getOperation(); 
         Shape shape = createContentShape(containerShape, contentText);
         link(shape, attribute);        
 
@@ -85,8 +85,7 @@ public class SPEAttributeAddFeature extends AbstractAddFeature implements IAddFe
         text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
         // vertical alignment has as default value "center"
         text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-        gaService.setLocationAndSize(text, 0, 0, containerShape.getGraphicsAlgorithm().getWidth(), height);     
-        
+        gaService.setLocationAndSize(text, 0, 0, containerShape.getGraphicsAlgorithm().getWidth(), height);  
         
         IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();
         directEditingInfo.setMainPictogramElement(containerShape);

@@ -14,27 +14,33 @@ import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.ILayoutFeature; 
+import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
+import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape; 
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.uniks.spe.editor.features.LayoutDomainObjectFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeDirectEditFeature;
-import org.uniks.spe.editor.features.custom.RetriggerDirectEditFeature;
+import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeUpdateFeature;
+import org.uniks.spe.editor.features.behaviors.RetriggerDirectEditFeature;
 import org.uniks.spe.editor.features.links.SPELinkAddFeature;
 import org.uniks.spe.editor.features.links.SPELinkCreateFeature;
+import org.uniks.spe.editor.features.links.SPELinkUpdateFeature;
 import org.uniks.spe.editor.features.links.SPENotLink.SPENotLinkAddFeature;
 import org.uniks.spe.editor.features.links.SPENotLink.SPENotLinkCreateFeature;
 import org.uniks.spe.editor.features.links.SPEOptionalLink.SPEOptionalLinkAddFeature;
 import org.uniks.spe.editor.features.links.SPEOptionalLink.SPEOptionalLinkCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectAddFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
+import org.uniks.spe.editor.features.objects.SPEObjectDirectEditFeature;
+import org.uniks.spe.editor.features.objects.SPEObjectUpdateFeature;
 import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectAddFeature;
 import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEOptionalObject.SPEOptionalObjectAddFeature;
@@ -70,15 +76,37 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
     public ICustomFeature[] getCustomFeatures(ICustomContext context) {
         return new ICustomFeature[] { new RetriggerDirectEditFeature(this) };
     } 
-	
-	
+
+    @Override
+    public IUpdateFeature getUpdateFeature(IUpdateContext context) {
+        PictogramElement pictogramElement = context.getPictogramElement();
+        if ( ! (pictogramElement instanceof ContainerShape)) {
+            return super.getUpdateFeature(context);
+        }
+        
+        Object bo = getBusinessObjectForPictogramElement(pictogramElement);        
+        if (bo instanceof SPEAttribute) 
+            return new SPEAttributeUpdateFeature(this);   
+        if (bo instanceof SPELink) 
+            return new SPELinkUpdateFeature(this); 
+        if (bo instanceof SPEObject) 
+            return new SPEObjectUpdateFeature(this);
+        
+
+        return super.getUpdateFeature(context);
+    }
+
     @Override
     public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
         Object businessObject = getBusinessObjectForPictogramElement(context.getPictogramElement());
 
-        if (businessObject instanceof SPEAttribute) {
+        if (businessObject instanceof SPEAttribute) 
             return new SPEAttributeDirectEditFeature(this);
-        }
+        if (businessObject instanceof SPELink) 
+            return new SPEAttributeDirectEditFeature(this);
+        if (businessObject instanceof SPEObject) 
+            return new SPEObjectDirectEditFeature(this);
+        
 
         return super.getDirectEditingFeature(context);
 	 } 

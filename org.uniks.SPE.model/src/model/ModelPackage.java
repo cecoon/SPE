@@ -149,13 +149,13 @@ public interface ModelPackage extends EPackage {
     int SPE_ATTRIBUTE__NAME = 0;
 
     /**
-     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * The feature id for the '<em><b>Operation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_ATTRIBUTE__VALUE = 1;
+    int SPE_ATTRIBUTE__OPERATION = 1;
 
     /**
      * The number of structural features of the '<em>SPE Attribute</em>' class.
@@ -574,15 +574,15 @@ public interface ModelPackage extends EPackage {
     EAttribute getSPEAttribute_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link model.SPEAttribute#getValue <em>Value</em>}'.
+     * Returns the meta object for the attribute '{@link model.SPEAttribute#getOperation <em>Operation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Value</em>'.
-     * @see model.SPEAttribute#getValue()
+     * @return the meta object for the attribute '<em>Operation</em>'.
+     * @see model.SPEAttribute#getOperation()
      * @see #getSPEAttribute()
      * @generated
      */
-    EAttribute getSPEAttribute_Value();
+    EAttribute getSPEAttribute_Operation();
 
     /**
      * Returns the meta object for class '{@link model.SPELink <em>SPE Link</em>}'.
@@ -759,12 +759,12 @@ public interface ModelPackage extends EPackage {
         EAttribute SPE_ATTRIBUTE__NAME = eINSTANCE.getSPEAttribute_Name();
 
         /**
-         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Operation</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SPE_ATTRIBUTE__VALUE = eINSTANCE.getSPEAttribute_Value();
+        EAttribute SPE_ATTRIBUTE__OPERATION = eINSTANCE.getSPEAttribute_Operation();
 
         /**
          * The meta object literal for the '{@link model.impl.SPELinkImpl <em>SPE Link</em>}' class.

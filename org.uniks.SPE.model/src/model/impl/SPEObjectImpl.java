@@ -50,7 +50,7 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
      * @generated
      * @ordered
      */
-    protected static final String NAME_EDEFAULT = "any";
+    protected static final String NAME_EDEFAULT = "*";
 
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -70,7 +70,7 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
      * @generated
      * @ordered
      */
-    protected static final String CLASS_EDEFAULT = "any";
+    protected static final String CLASS_EDEFAULT = "*";
 
     /**
      * The cached value of the '{@link #getClass_() <em>Class</em>}' attribute.

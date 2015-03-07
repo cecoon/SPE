@@ -52,8 +52,7 @@ public class SPELinkCreateFeature extends AbstractCreateConnectionFeature implem
 
         AddConnectionContext addContext = new AddConnectionContext(context.getSourceAnchor(), context.getTargetAnchor());
         addContext.setNewObject(speLink);
-        Connection newConnection = (Connection) getFeatureProvider().addIfPossible(addContext);
-
+        Connection newConnection = (Connection) getFeatureProvider().addIfPossible(addContext); 
         return newConnection;
     }
 

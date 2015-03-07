@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link model.impl.SPEAttributeImpl#getName <em>Name</em>}</li>
- *   <li>{@link model.impl.SPEAttributeImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link model.impl.SPEAttributeImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,24 +48,24 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * The default value of the '{@link #getOperation() <em>Operation</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValue()
+     * @see #getOperation()
      * @generated
      * @ordered
      */
-    protected static final String VALUE_EDEFAULT = "value";
+    protected static final String OPERATION_EDEFAULT = "== value";
 
     /**
-     * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * The cached value of the '{@link #getOperation() <em>Operation</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValue()
+     * @see #getOperation()
      * @generated
      * @ordered
      */
-    protected String value = VALUE_EDEFAULT;
+    protected String operation = OPERATION_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -112,8 +112,8 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getValue() {
-        return value;
+    public String getOperation() {
+        return operation;
     }
 
     /**
@@ -121,11 +121,11 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(String newValue) {
-        String oldValue = value;
-        value = newValue;
+    public void setOperation(String newOperation) {
+        String oldOperation = operation;
+        operation = newOperation;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_ATTRIBUTE__VALUE, oldValue, value));
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_ATTRIBUTE__OPERATION, oldOperation, operation));
     }
 
     /**
@@ -138,8 +138,8 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
         switch (featureID) {
             case ModelPackage.SPE_ATTRIBUTE__NAME:
                 return getName();
-            case ModelPackage.SPE_ATTRIBUTE__VALUE:
-                return getValue();
+            case ModelPackage.SPE_ATTRIBUTE__OPERATION:
+                return getOperation();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -155,8 +155,8 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
             case ModelPackage.SPE_ATTRIBUTE__NAME:
                 setName((String)newValue);
                 return;
-            case ModelPackage.SPE_ATTRIBUTE__VALUE:
-                setValue((String)newValue);
+            case ModelPackage.SPE_ATTRIBUTE__OPERATION:
+                setOperation((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -173,8 +173,8 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
             case ModelPackage.SPE_ATTRIBUTE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case ModelPackage.SPE_ATTRIBUTE__VALUE:
-                setValue(VALUE_EDEFAULT);
+            case ModelPackage.SPE_ATTRIBUTE__OPERATION:
+                setOperation(OPERATION_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -190,8 +190,8 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
         switch (featureID) {
             case ModelPackage.SPE_ATTRIBUTE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case ModelPackage.SPE_ATTRIBUTE__VALUE:
-                return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+            case ModelPackage.SPE_ATTRIBUTE__OPERATION:
+                return OPERATION_EDEFAULT == null ? operation != null : !OPERATION_EDEFAULT.equals(operation);
         }
         return super.eIsSet(featureID);
     }
@@ -208,8 +208,8 @@ public class SPEAttributeImpl extends MinimalEObjectImpl.Container implements SP
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: ");
         result.append(name);
-        result.append(", value: ");
-        result.append(value);
+        result.append(", operation: ");
+        result.append(operation);
         result.append(')');
         return result.toString();
     }

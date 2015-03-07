@@ -213,7 +213,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSPEAttribute_Value() {
+    public EAttribute getSPEAttribute_Operation() {
         return (EAttribute)speAttributeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -326,7 +326,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         speAttributeEClass = createEClass(SPE_ATTRIBUTE);
         createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__NAME);
-        createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__VALUE);
+        createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__OPERATION);
 
         speLinkEClass = createEClass(SPE_LINK);
         createEAttribute(speLinkEClass, SPE_LINK__NAME);
@@ -377,18 +377,18 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         // Initialize classes, features, and operations; add parameters
         initEClass(speObjectEClass, SPEObject.class, "SPEObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSPEObject_Name(), ecorePackage.getEString(), "name", "any", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSPEObject_Class(), ecorePackage.getEString(), "class", "any", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEObject_Name(), ecorePackage.getEString(), "name", "*", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEObject_Class(), ecorePackage.getEString(), "class", "*", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEObject_Attributes(), this.getSPEAttribute(), null, "attributes", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEObject_OutboundLinks(), this.getSPELink(), this.getSPELink_Source(), "outboundLinks", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEObject_InboundLinks(), this.getSPELink(), this.getSPELink_Target(), "inboundLinks", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(speAttributeEClass, SPEAttribute.class, "SPEAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSPEAttribute_Name(), ecorePackage.getEString(), "name", "name", 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSPEAttribute_Value(), ecorePackage.getEString(), "value", "value", 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEAttribute_Operation(), ecorePackage.getEString(), "operation", "== value", 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(speLinkEClass, SPELink.class, "SPELink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSPELink_Name(), ecorePackage.getEString(), "name", "any", 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPELink_Name(), ecorePackage.getEString(), "name", "*", 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPELink_Source(), this.getSPEObject(), this.getSPEObject_OutboundLinks(), "source", null, 1, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPELink_Target(), this.getSPEObject(), this.getSPEObject_InboundLinks(), "target", null, 1, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

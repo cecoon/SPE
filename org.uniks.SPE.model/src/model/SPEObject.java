@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface SPEObject extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * The default value is <code>"any"</code>.
+     * The default value is <code>"*"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -39,7 +39,7 @@ public interface SPEObject extends EObject {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see model.ModelPackage#getSPEObject_Name()
-     * @model default="any" id="true"
+     * @model default="*" id="true"
      * @generated
      */
     String getName();
@@ -56,7 +56,7 @@ public interface SPEObject extends EObject {
 
     /**
      * Returns the value of the '<em><b>Class</b></em>' attribute.
-     * The default value is <code>"any"</code>.
+     * The default value is <code>"*"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Class</em>' attribute isn't clear,
@@ -66,7 +66,7 @@ public interface SPEObject extends EObject {
      * @return the value of the '<em>Class</em>' attribute.
      * @see #setClass(String)
      * @see model.ModelPackage#getSPEObject_Class()
-     * @model default="any"
+     * @model default="*"
      * @generated
      */
     String getClass_();

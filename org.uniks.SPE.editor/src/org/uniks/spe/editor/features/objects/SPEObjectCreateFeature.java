@@ -29,6 +29,7 @@ public class SPEObjectCreateFeature extends AbstractCreateFeature implements
 		SPEObject object = createBusinessObject();			
 		getDiagram().eResource().getContents().add(object);		
 		addGraphicalRepresentation(context, object);
+        getFeatureProvider().getDirectEditingInfo().setActive(true);
 		return new Object[] { object };
 	}
 

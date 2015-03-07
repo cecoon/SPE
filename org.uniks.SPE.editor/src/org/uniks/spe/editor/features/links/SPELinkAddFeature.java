@@ -3,12 +3,14 @@ package org.uniks.spe.editor.features.links;
 import model.SPELink; 
 
 import org.eclipse.graphiti.features.IAddFeature;
+import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddFeature; 
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -21,7 +23,8 @@ import org.uniks.spe.editor.features.CommonFeatureColors;
 public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature {
 
     protected IColorConstant forgroundColor = CommonFeatureColors.NORMAL_FOREGROUND;
-
+    protected LineStyle lineStyle = LineStyle.SOLID;
+    
     public SPELinkAddFeature(IFeatureProvider fp) {
         super(fp);
     }
@@ -50,6 +53,7 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         return connection;
     }
 
+  
     protected Connection createConnectionLine(IAddConnectionContext addConContext) {
         IGaService gaService = Graphiti.getGaService();
         IPeCreateService peCreateService = Graphiti.getPeCreateService();   
@@ -59,10 +63,12 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         connection.setEnd(addConContext.getTargetAnchor());
  
         Polyline polyline = gaService.createPolyline(connection);
-        polyline.setLineWidth(2);
+        polyline.setLineStyle(lineStyle);
         polyline.setForeground(manageColor(forgroundColor));
+        polyline.setLineWidth(2);
         return connection;
     }
+
 
     protected void addLabel(Connection connection, String labelText) {
         IGaService gaService = Graphiti.getGaService();
@@ -73,7 +79,7 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         Text text = gaService.createDefaultText(getDiagram(), textDecorator);
         text.setForeground(manageColor(IColorConstant.BLACK));
         gaService.setLocation(text, 10, 0);
-        text.setValue(labelText);
+        text.setValue(labelText);  
     }
 
     protected void addDirectionArrow(Connection connection) { 
@@ -82,7 +88,7 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         
         ConnectionDecorator cd = peCreateService.createConnectionDecorator(connection, false, 1.0, true);          
         Polyline polyline = gaService.createPolyline(cd, new int[] { -15, 10, 0, 0, -15, -10 });
-        polyline.setForeground(manageColor(forgroundColor));
+        polyline.setLineStyle(lineStyle);
         polyline.setLineWidth(2);
     }
 
