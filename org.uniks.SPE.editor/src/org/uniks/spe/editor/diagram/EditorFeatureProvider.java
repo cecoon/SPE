@@ -1,5 +1,9 @@
 package org.uniks.spe.editor.diagram;
 
+import model.SPENotObject;
+import model.SPEObject;
+import model.SPEOptionalObject;
+
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
@@ -12,12 +16,14 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.uniks.spe.editor.features.LayoutDomainObjectFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
-import org.uniks.spe.editor.features.SPELink.SPELinkAddFeature;
-import org.uniks.spe.editor.features.SPELink.SPELinkCreateFeature;
-import org.uniks.spe.editor.features.SPENotObject.SPENotObjectCreateFeature;
-import org.uniks.spe.editor.features.SPEObject.SPEObjectAddFeature;
-import org.uniks.spe.editor.features.SPEObject.SPEObjectCreateFeature;
-import org.uniks.spe.editor.features.SPEOptionalObject.SPEOptionalObjectCreateFeature;
+import org.uniks.spe.editor.features.links.SPELinkAddFeature;
+import org.uniks.spe.editor.features.links.SPELinkCreateFeature;
+import org.uniks.spe.editor.features.objects.SPEObjectAddFeature;
+import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
+import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectAddFeature;
+import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectCreateFeature;
+import org.uniks.spe.editor.features.objects.SPEOptionalObject.SPEOptionalObjectAddFeature;
+import org.uniks.spe.editor.features.objects.SPEOptionalObject.SPEOptionalObjectCreateFeature;
 
 
 public class EditorFeatureProvider extends DefaultFeatureProvider {
@@ -38,21 +44,42 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	
 	@Override
 	public ICreateConnectionFeature[] getCreateConnectionFeatures() {
-		return new ICreateConnectionFeature[] {new SPELinkCreateFeature(this)};
+		return new ICreateConnectionFeature[] {
+		        new SPELinkCreateFeature(this)		       
+		};
 	} 
-	
+
+    private IAddFeature getAddContextFeature(IAddContext context) {
+        Object newObject = context.getNewObject();
+        
+        if(newObject instanceof SPEOptionalObject){
+            return new SPEOptionalObjectAddFeature(this);             
+        } 
+        
+        if((newObject instanceof SPENotObject)){
+            return new SPENotObjectAddFeature(this);             
+        }
+        
+        //default value
+        return new SPEObjectAddFeature(this); 
+             
+    }
+    
 	@Override
 	public IAddFeature getAddFeature(IAddContext context) { 
-		if (context instanceof IAddConnectionContext /* && context.getNewObject() instanceof <DomainObject> */) {
-			return new SPELinkAddFeature(this);
-		} else if (context instanceof IAddContext /* && context.getNewObject() instanceof <DomainObject> */) {
-			return new SPEObjectAddFeature(this);
-		}
-
+		if (context instanceof IAddConnectionContext) {		    
+			return new SPELinkAddFeature(this);			
+		} 
+		
+		if (context instanceof IAddContext) {
+		    return getAddContextFeature(context);
+		}		
+		
 		return super.getAddFeature(context);
 	}
 	
-	@Override
+
+    @Override
 	public ILayoutFeature getLayoutFeature(ILayoutContext context) {
 		// TODO: check for right domain object instances below
 		if (context.getPictogramElement() instanceof ContainerShape /* && getBusinessObjectForPictogramElement(context.getPictogramElement()) instanceof <DomainObject> */) {

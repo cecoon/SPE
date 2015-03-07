@@ -80,6 +80,14 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
                 return createSPELinkAdapter();
             }
             @Override
+            public Adapter caseSPEOptionalObject(SPEOptionalObject object) {
+                return createSPEOptionalObjectAdapter();
+            }
+            @Override
+            public Adapter caseSPENotObject(SPENotObject object) {
+                return createSPENotObjectAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -142,6 +150,34 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
     }
 
 	/**
+     * Creates a new adapter for an object of class '{@link model.SPEOptionalObject <em>SPE Optional Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see model.SPEOptionalObject
+     * @generated
+     */
+    public Adapter createSPEOptionalObjectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link model.SPENotObject <em>SPE Not Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see model.SPENotObject
+     * @generated
+     */
+    public Adapter createSPENotObjectAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for the default case.
      * <!-- begin-user-doc -->
 	 * This default implementation returns null.

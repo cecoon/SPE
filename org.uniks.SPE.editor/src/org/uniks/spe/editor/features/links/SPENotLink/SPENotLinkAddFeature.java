@@ -1,4 +1,4 @@
-package org.uniks.spe.editor.features.SPELink;
+package org.uniks.spe.editor.features.links.SPENotLink;
 
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -14,9 +14,9 @@ import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
 
 
-public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature {
+public class SPENotLinkAddFeature extends AbstractAddFeature implements IAddFeature {
 
-	public SPELinkAddFeature(IFeatureProvider fp) {
+	public SPENotLinkAddFeature(IFeatureProvider fp) {
 		super(fp);
 	}
 

@@ -6,8 +6,10 @@ import model.ModelFactory;
 import model.ModelPackage;
 import model.SPEAttribute;
 import model.SPELink;
+import model.SPENotObject;
 import model.SPEObject;
 
+import model.SPEOptionalObject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -44,6 +46,20 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	private EClass speLinkEClass = null;
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass speOptionalObjectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass speNotObjectEClass = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -187,6 +203,24 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSPEOptionalObject() {
+        return speOptionalObjectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSPENotObject() {
+        return speNotObjectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -224,6 +258,10 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         speLinkEClass = createEClass(SPE_LINK);
         createEAttribute(speLinkEClass, SPE_LINK__NAME);
+
+        speOptionalObjectEClass = createEClass(SPE_OPTIONAL_OBJECT);
+
+        speNotObjectEClass = createEClass(SPE_NOT_OBJECT);
     }
 
 	/**
@@ -254,6 +292,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        speOptionalObjectEClass.getESuperTypes().add(this.getSPEObject());
+        speNotObjectEClass.getESuperTypes().add(this.getSPEObject());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(speObjectEClass, SPEObject.class, "SPEObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -267,6 +307,10 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         initEClass(speLinkEClass, SPELink.class, "SPELink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSPELink_Name(), ecorePackage.getEString(), "name", null, 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(speOptionalObjectEClass, SPEOptionalObject.class, "SPEOptionalObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(speNotObjectEClass, SPENotObject.class, "SPENotObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

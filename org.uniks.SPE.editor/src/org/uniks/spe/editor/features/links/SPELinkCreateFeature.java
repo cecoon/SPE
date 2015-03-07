@@ -1,4 +1,4 @@
-package org.uniks.spe.editor.features.SPELink;
+package org.uniks.spe.editor.features.links;
 
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;

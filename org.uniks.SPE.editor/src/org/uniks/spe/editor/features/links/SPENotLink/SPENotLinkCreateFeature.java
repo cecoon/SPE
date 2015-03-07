@@ -1,4 +1,4 @@
-package org.uniks.spe.editor.features.SPENotLink;
+package org.uniks.spe.editor.features.links.SPENotLink;
 
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;

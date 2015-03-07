@@ -59,6 +59,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
             case ModelPackage.SPE_OBJECT: return createSPEObject();
             case ModelPackage.SPE_ATTRIBUTE: return createSPEAttribute();
             case ModelPackage.SPE_LINK: return createSPELink();
+            case ModelPackage.SPE_OPTIONAL_OBJECT: return createSPEOptionalObject();
+            case ModelPackage.SPE_NOT_OBJECT: return createSPENotObject();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -95,6 +97,26 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SPEOptionalObject createSPEOptionalObject() {
+        SPEOptionalObjectImpl speOptionalObject = new SPEOptionalObjectImpl();
+        return speOptionalObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SPENotObject createSPENotObject() {
+        SPENotObjectImpl speNotObject = new SPENotObjectImpl();
+        return speNotObject;
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated

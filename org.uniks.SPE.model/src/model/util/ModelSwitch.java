@@ -84,6 +84,20 @@ public class ModelSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ModelPackage.SPE_OPTIONAL_OBJECT: {
+                SPEOptionalObject speOptionalObject = (SPEOptionalObject)theEObject;
+                T result = caseSPEOptionalObject(speOptionalObject);
+                if (result == null) result = caseSPEObject(speOptionalObject);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ModelPackage.SPE_NOT_OBJECT: {
+                SPENotObject speNotObject = (SPENotObject)theEObject;
+                T result = caseSPENotObject(speNotObject);
+                if (result == null) result = caseSPEObject(speNotObject);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -134,6 +148,36 @@ public class ModelSwitch<T> extends Switch<T> {
     }
 
 	/**
+     * Returns the result of interpreting the object as an instance of '<em>SPE Optional Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>SPE Optional Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSPEOptionalObject(SPEOptionalObject object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>SPE Not Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>SPE Not Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSPENotObject(SPENotObject object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
 	 * This implementation returns null;

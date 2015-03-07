@@ -1,4 +1,4 @@
-package org.uniks.spe.editor.features.SPEObject;
+package org.uniks.spe.editor.features.objects;
 
 import model.ModelFactory;
 import model.SPEObject;
@@ -10,22 +10,29 @@ import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 
 public class SPEObjectCreateFeature extends AbstractCreateFeature implements
-		ICreateFeature {
+		ICreateFeature { 
 
 	public SPEObjectCreateFeature(IFeatureProvider fp) {
-		super(fp, "Object", "Creates a new Object");
+		this(fp, "Object", "Creates a new Object");
 	}
+	public SPEObjectCreateFeature(IFeatureProvider fp, String name, String description) {
+	    super(fp, name, description);
+    }
 
-	@Override
+    @Override
 	public boolean canCreate(ICreateContext context) {
 		return context.getTargetContainer() instanceof Diagram;
 	}
 
 	@Override
 	public Object[] create(ICreateContext context) { 
-		SPEObject object = ModelFactory.eINSTANCE.createSPEObject();			
+		SPEObject object = createBusinessObject();			
 		getDiagram().eResource().getContents().add(object);		
 		addGraphicalRepresentation(context, object);
 		return new Object[] { object };
 	}
+
+    protected SPEObject createBusinessObject() {
+        return ModelFactory.eINSTANCE.createSPEObject();
+    }
 }

@@ -194,6 +194,116 @@ public interface ModelPackage extends EPackage {
      */
     int SPE_LINK_OPERATION_COUNT = 0;
 
+    /**
+     * The meta object id for the '{@link model.impl.SPEOptionalObjectImpl <em>SPE Optional Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.impl.SPEOptionalObjectImpl
+     * @see model.impl.ModelPackageImpl#getSPEOptionalObject()
+     * @generated
+     */
+    int SPE_OPTIONAL_OBJECT = 3;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT__NAME = SPE_OBJECT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Class</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT__CLASS = SPE_OBJECT__CLASS;
+
+    /**
+     * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT__ATTRIBUTES = SPE_OBJECT__ATTRIBUTES;
+
+    /**
+     * The number of structural features of the '<em>SPE Optional Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT_FEATURE_COUNT = SPE_OBJECT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>SPE Optional Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT_OPERATION_COUNT = SPE_OBJECT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link model.impl.SPENotObjectImpl <em>SPE Not Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.impl.SPENotObjectImpl
+     * @see model.impl.ModelPackageImpl#getSPENotObject()
+     * @generated
+     */
+    int SPE_NOT_OBJECT = 4;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT__NAME = SPE_OBJECT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Class</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT__CLASS = SPE_OBJECT__CLASS;
+
+    /**
+     * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT__ATTRIBUTES = SPE_OBJECT__ATTRIBUTES;
+
+    /**
+     * The number of structural features of the '<em>SPE Not Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT_FEATURE_COUNT = SPE_OBJECT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>SPE Not Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT_OPERATION_COUNT = SPE_OBJECT_OPERATION_COUNT + 0;
+
 
     /**
      * Returns the meta object for class '{@link model.SPEObject <em>SPE Object</em>}'.
@@ -290,6 +400,26 @@ public interface ModelPackage extends EPackage {
      * @generated
      */
     EAttribute getSPELink_Name();
+
+    /**
+     * Returns the meta object for class '{@link model.SPEOptionalObject <em>SPE Optional Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SPE Optional Object</em>'.
+     * @see model.SPEOptionalObject
+     * @generated
+     */
+    EClass getSPEOptionalObject();
+
+    /**
+     * Returns the meta object for class '{@link model.SPENotObject <em>SPE Not Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SPE Not Object</em>'.
+     * @see model.SPENotObject
+     * @generated
+     */
+    EClass getSPENotObject();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -391,6 +521,26 @@ public interface ModelPackage extends EPackage {
          * @generated
          */
         EAttribute SPE_LINK__NAME = eINSTANCE.getSPELink_Name();
+
+        /**
+         * The meta object literal for the '{@link model.impl.SPEOptionalObjectImpl <em>SPE Optional Object</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.impl.SPEOptionalObjectImpl
+         * @see model.impl.ModelPackageImpl#getSPEOptionalObject()
+         * @generated
+         */
+        EClass SPE_OPTIONAL_OBJECT = eINSTANCE.getSPEOptionalObject();
+
+        /**
+         * The meta object literal for the '{@link model.impl.SPENotObjectImpl <em>SPE Not Object</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.impl.SPENotObjectImpl
+         * @see model.impl.ModelPackageImpl#getSPENotObject()
+         * @generated
+         */
+        EClass SPE_NOT_OBJECT = eINSTANCE.getSPENotObject();
 
     }
 
