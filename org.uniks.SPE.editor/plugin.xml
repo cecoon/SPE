@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            name="Story Pattern Editor Type"
+            type="spe"
+            id="org.uniks.SPE.editor.editorDiagramType">
+      </diagramType>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            name="Editor Diagram Type Provider"
+            class="org.uniks.spe.editor.diagram.EditorDiagramTypeProvider"
+            id="org.uniks.SPE.editor.editorDiagramTypeProvider">
+         <diagramType
+               id="org.uniks.SPE.editor.editorDiagramType">
+         </diagramType>
+      </diagramTypeProvider>
+   </extension>
+
+</plugin>
