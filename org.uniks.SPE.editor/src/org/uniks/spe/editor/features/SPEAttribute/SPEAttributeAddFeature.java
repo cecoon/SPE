@@ -4,6 +4,7 @@ import model.SPEAttribute;
 import model.SPEObject;
 
 import org.eclipse.graphiti.features.IAddFeature;
+import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddFeature;
@@ -20,7 +21,7 @@ import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
-public class SPEAttributeAddFeature extends AbstractAddFeature implements	IAddFeature {
+public class SPEAttributeAddFeature extends AbstractAddFeature implements IAddFeature {
     
     protected IColorConstant E_CLASS_TEXT_FOREGROUND = IColorConstant.BLACK;
     protected IColorConstant E_CLASS_FOREGROUND = new ColorConstant(0, 0, 0);
@@ -45,7 +46,7 @@ public class SPEAttributeAddFeature extends AbstractAddFeature implements	IAddFe
         ContainerShape containerShape = createBaseContainerShape(context, target);         
         link(containerShape, attribute);
         
-        String contentText = attribute.getName() + " = " + attribute.getValue();        
+        String contentText = "* = *"; 
         Shape shape = createContentShape(containerShape, contentText);
         link(shape, attribute);        
 
@@ -84,7 +85,14 @@ public class SPEAttributeAddFeature extends AbstractAddFeature implements	IAddFe
         text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
         // vertical alignment has as default value "center"
         text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-        gaService.setLocationAndSize(text, 0, 0, containerShape.getGraphicsAlgorithm().getWidth(), height);
+        gaService.setLocationAndSize(text, 0, 0, containerShape.getGraphicsAlgorithm().getWidth(), height);     
+        
+        
+        IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();
+        directEditingInfo.setMainPictogramElement(containerShape);
+        directEditingInfo.setPictogramElement(shape);
+        directEditingInfo.setGraphicsAlgorithm(text);
+        directEditingInfo.setActive(true); 
         
         return shape;
     }

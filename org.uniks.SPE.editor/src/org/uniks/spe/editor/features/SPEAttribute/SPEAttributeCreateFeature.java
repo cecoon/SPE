@@ -28,7 +28,8 @@ public class SPEAttributeCreateFeature extends AbstractCreateFeature implements
 		SPEObject tgtObject = (SPEObject) getBusinessObjectForPictogramElement(context.getTargetContainer());
 		tgtObject.getAttributes().add(attribute);
 		
-		addGraphicalRepresentation(context, attribute);				
+		addGraphicalRepresentation(context, attribute);		
+	    getFeatureProvider().getDirectEditingInfo().setActive(true);		
 		return new Object[] { attribute };
 	}
 }
