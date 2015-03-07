@@ -23,253 +23,253 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private EClass speObjectEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private EClass speAttributeEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private EClass speLinkEClass = null;
 
 	/**
-	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-	 * package URI value.
-	 * <p>Note: the correct way to create the package is via the static
-	 * factory method {@link #init init()}, which also performs
-	 * initialization of the package, or returns the registered package,
-	 * if one already exists.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the model <b>Package</b>, registered with
+     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+     * package URI value.
+     * <p>Note: the correct way to create the package is via the static
+     * factory method {@link #init init()}, which also performs
+     * initialization of the package, or returns the registered package,
+     * if one already exists.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see model.ModelPackage#eNS_URI
-	 * @see #init()
-	 * @generated
-	 */
+     * @see org.eclipse.emf.ecore.EPackage.Registry
+     * @see model.ModelPackage#eNS_URI
+     * @see #init()
+     * @generated
+     */
 	private ModelPackageImpl() {
-		super(eNS_URI, ModelFactory.eINSTANCE);
-	}
+        super(eNS_URI, ModelFactory.eINSTANCE);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
-	 * <p>This method is used to initialize {@link ModelPackage#eINSTANCE} when that field is accessed.
-	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-	 * <!-- begin-user-doc -->
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     * 
+     * <p>This method is used to initialize {@link ModelPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #eNS_URI
-	 * @see #createPackageContents()
-	 * @see #initializePackageContents()
-	 * @generated
-	 */
+     * @see #eNS_URI
+     * @see #createPackageContents()
+     * @see #initializePackageContents()
+     * @generated
+     */
 	public static ModelPackage init() {
-		if (isInited) return (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
+        if (isInited) return (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 
-		// Obtain or create and register package
-		ModelPackageImpl theModelPackage = (ModelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ModelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ModelPackageImpl());
+        // Obtain or create and register package
+        ModelPackageImpl theModelPackage = (ModelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ModelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ModelPackageImpl());
 
-		isInited = true;
+        isInited = true;
 
-		// Create package meta-data objects
-		theModelPackage.createPackageContents();
+        // Create package meta-data objects
+        theModelPackage.createPackageContents();
 
-		// Initialize created meta-data
-		theModelPackage.initializePackageContents();
+        // Initialize created meta-data
+        theModelPackage.initializePackageContents();
 
-		// Mark meta-data to indicate it can't be changed
-		theModelPackage.freeze();
+        // Mark meta-data to indicate it can't be changed
+        theModelPackage.freeze();
 
   
-		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, theModelPackage);
-		return theModelPackage;
-	}
+        // Update the registry and return the package
+        EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, theModelPackage);
+        return theModelPackage;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EClass getSPEObject() {
-		return speObjectEClass;
-	}
+        return speObjectEClass;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getSPEObject_Name() {
-		return (EAttribute)speObjectEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)speObjectEClass.getEStructuralFeatures().get(0);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getSPEObject_Class() {
-		return (EAttribute)speObjectEClass.getEStructuralFeatures().get(1);
-	}
+        return (EAttribute)speObjectEClass.getEStructuralFeatures().get(1);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EReference getSPEObject_Attributes() {
-		return (EReference)speObjectEClass.getEStructuralFeatures().get(2);
-	}
+        return (EReference)speObjectEClass.getEStructuralFeatures().get(2);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EClass getSPEAttribute() {
-		return speAttributeEClass;
-	}
+        return speAttributeEClass;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getSPEAttribute_Name() {
-		return (EAttribute)speAttributeEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)speAttributeEClass.getEStructuralFeatures().get(0);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getSPEAttribute_Value() {
-		return (EAttribute)speAttributeEClass.getEStructuralFeatures().get(1);
-	}
+        return (EAttribute)speAttributeEClass.getEStructuralFeatures().get(1);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EClass getSPELink() {
-		return speLinkEClass;
-	}
+        return speLinkEClass;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getSPELink_Name() {
-		return (EAttribute)speLinkEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)speLinkEClass.getEStructuralFeatures().get(0);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ModelFactory getModelFactory() {
-		return (ModelFactory)getEFactoryInstance();
-	}
+        return (ModelFactory)getEFactoryInstance();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package.  This method is
-	 * guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
+     * Creates the meta-model objects for the package.  This method is
+     * guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void createPackageContents() {
-		if (isCreated) return;
-		isCreated = true;
+        if (isCreated) return;
+        isCreated = true;
 
-		// Create classes and their features
-		speObjectEClass = createEClass(SPE_OBJECT);
-		createEAttribute(speObjectEClass, SPE_OBJECT__NAME);
-		createEAttribute(speObjectEClass, SPE_OBJECT__CLASS);
-		createEReference(speObjectEClass, SPE_OBJECT__ATTRIBUTES);
+        // Create classes and their features
+        speObjectEClass = createEClass(SPE_OBJECT);
+        createEAttribute(speObjectEClass, SPE_OBJECT__NAME);
+        createEAttribute(speObjectEClass, SPE_OBJECT__CLASS);
+        createEReference(speObjectEClass, SPE_OBJECT__ATTRIBUTES);
 
-		speAttributeEClass = createEClass(SPE_ATTRIBUTE);
-		createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__NAME);
-		createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__VALUE);
+        speAttributeEClass = createEClass(SPE_ATTRIBUTE);
+        createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__NAME);
+        createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__VALUE);
 
-		speLinkEClass = createEClass(SPE_LINK);
-		createEAttribute(speLinkEClass, SPE_LINK__NAME);
-	}
+        speLinkEClass = createEClass(SPE_LINK);
+        createEAttribute(speLinkEClass, SPE_LINK__NAME);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model.  This
-	 * method is guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
+     * Complete the initialization of the package and its meta-model.  This
+     * method is guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void initializePackageContents() {
-		if (isInitialized) return;
-		isInitialized = true;
+        if (isInitialized) return;
+        isInitialized = true;
 
-		// Initialize package
-		setName(eNAME);
-		setNsPrefix(eNS_PREFIX);
-		setNsURI(eNS_URI);
+        // Initialize package
+        setName(eNAME);
+        setNsPrefix(eNS_PREFIX);
+        setNsURI(eNS_URI);
 
-		// Create type parameters
+        // Create type parameters
 
-		// Set bounds for type parameters
+        // Set bounds for type parameters
 
-		// Add supertypes to classes
+        // Add supertypes to classes
 
-		// Initialize classes, features, and operations; add parameters
-		initEClass(speObjectEClass, SPEObject.class, "SPEObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSPEObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSPEObject_Class(), ecorePackage.getEString(), "class", null, 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSPEObject_Attributes(), this.getSPEAttribute(), null, "attributes", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        // Initialize classes, features, and operations; add parameters
+        initEClass(speObjectEClass, SPEObject.class, "SPEObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSPEObject_Name(), ecorePackage.getEString(), "name", "object", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEObject_Class(), ecorePackage.getEString(), "class", "class", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSPEObject_Attributes(), this.getSPEAttribute(), null, "attributes", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(speAttributeEClass, SPEAttribute.class, "SPEAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSPEAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSPEAttribute_Value(), ecorePackage.getEJavaObject(), "value", null, 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(speAttributeEClass, SPEAttribute.class, "SPEAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSPEAttribute_Name(), ecorePackage.getEString(), "name", "name", 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEAttribute_Value(), ecorePackage.getEString(), "value", "value", 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(speLinkEClass, SPELink.class, "SPELink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSPELink_Name(), ecorePackage.getEString(), "name", null, 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(speLinkEClass, SPELink.class, "SPELink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSPELink_Name(), ecorePackage.getEString(), "name", null, 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		// Create resource
-		createResource(eNS_URI);
-	}
+        // Create resource
+        createResource(eNS_URI);
+    }
 
 } //ModelPackageImpl

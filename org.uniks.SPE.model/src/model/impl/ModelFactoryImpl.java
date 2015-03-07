@@ -20,98 +20,98 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static ModelFactory init() {
-		try {
-			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory(ModelPackage.eNS_URI);
-			if (theModelFactory != null) {
-				return theModelFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new ModelFactoryImpl();
-	}
+        try {
+            ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory(ModelPackage.eNS_URI);
+            if (theModelFactory != null) {
+                return theModelFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new ModelFactoryImpl();
+    }
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ModelFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case ModelPackage.SPE_OBJECT: return createSPEObject();
-			case ModelPackage.SPE_ATTRIBUTE: return createSPEAttribute();
-			case ModelPackage.SPE_LINK: return createSPELink();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case ModelPackage.SPE_OBJECT: return createSPEObject();
+            case ModelPackage.SPE_ATTRIBUTE: return createSPEAttribute();
+            case ModelPackage.SPE_LINK: return createSPELink();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SPEObject createSPEObject() {
-		SPEObjectImpl speObject = new SPEObjectImpl();
-		return speObject;
-	}
+        SPEObjectImpl speObject = new SPEObjectImpl();
+        return speObject;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SPEAttribute createSPEAttribute() {
-		SPEAttributeImpl speAttribute = new SPEAttributeImpl();
-		return speAttribute;
-	}
+        SPEAttributeImpl speAttribute = new SPEAttributeImpl();
+        return speAttribute;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SPELink createSPELink() {
-		SPELinkImpl speLink = new SPELinkImpl();
-		return speLink;
-	}
+        SPELinkImpl speLink = new SPELinkImpl();
+        return speLink;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ModelPackage getModelPackage() {
-		return (ModelPackage)getEPackage();
-	}
+        return (ModelPackage)getEPackage();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
 	@Deprecated
 	public static ModelPackage getPackage() {
-		return ModelPackage.eINSTANCE;
-	}
+        return ModelPackage.eINSTANCE;
+    }
 
 } //ModelFactoryImpl
