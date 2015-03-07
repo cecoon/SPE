@@ -19,12 +19,13 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.uniks.spe.editor.features.CommonFeatureColors;
 
 public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeature {
 
-    protected IColorConstant E_CLASS_TEXT_FOREGROUND = IColorConstant.BLACK;
-    protected IColorConstant E_CLASS_FOREGROUND = new ColorConstant(98, 131, 167);
-    protected IColorConstant E_CLASS_BACKGROUND = new ColorConstant(187, 218, 247);
+    protected IColorConstant objectTextColor = CommonFeatureColors.TEXT_FOREGROUND;
+    protected IColorConstant objectForeground = CommonFeatureColors.NORMAL_FOREGROUND;
+    protected IColorConstant objectBackground = CommonFeatureColors.NORMAL_BACKGROUND;
     
     private static final int width = 100; 
     private static final int height = 150;
@@ -67,8 +68,8 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         IGaService gaService = Graphiti.getGaService();
         RoundedRectangle roundedRectangle; // need to access it later
         roundedRectangle = gaService.createRoundedRectangle(containerShape, 5, 5);
-        roundedRectangle.setForeground(manageColor(E_CLASS_FOREGROUND));
-        roundedRectangle.setBackground(manageColor(E_CLASS_BACKGROUND));
+        roundedRectangle.setForeground(manageColor(objectForeground));
+        roundedRectangle.setBackground(manageColor(objectBackground));
         roundedRectangle.setLineWidth(2);
         gaService.setLocationAndSize(roundedRectangle, context.getX(), context.getY(), width, height);
         return containerShape;
@@ -82,7 +83,7 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         
         // create and set graphics algorithm
         Polyline polyline = gaService.createPolyline(shape, new int[] { 0, 20, width, 20 });
-        polyline.setForeground(manageColor(E_CLASS_FOREGROUND));
+        polyline.setForeground(manageColor(objectForeground));
         polyline.setLineWidth(2);
     }
 
@@ -95,7 +96,7 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
 
         // create and set text graphics algorithm
         Text text = gaService.createText(shape, headerText);
-        text.setForeground(manageColor(E_CLASS_TEXT_FOREGROUND));
+        text.setForeground(manageColor(objectTextColor));
         text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
         // vertical alignment has as default value "center"
         text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));

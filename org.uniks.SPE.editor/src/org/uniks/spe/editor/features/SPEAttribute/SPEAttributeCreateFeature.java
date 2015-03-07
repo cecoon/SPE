@@ -2,6 +2,8 @@ package org.uniks.spe.editor.features.SPEAttribute;
 
 import model.ModelFactory;
 import model.SPEAttribute; 
+import model.SPEObject;
+
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
@@ -17,14 +19,17 @@ public class SPEAttributeCreateFeature extends AbstractCreateFeature implements
 
 	@Override
 	public boolean canCreate(ICreateContext context) {
-		return context.getTargetContainer() instanceof Diagram;
+        return getBusinessObjectForPictogramElement(context.getTargetContainer()) instanceof SPEObject;
 	}
 
 	@Override
-	public Object[] create(ICreateContext context) { 
-		SPEAttribute attribute = ModelFactory.eINSTANCE.createSPEAttribute();			
-		getDiagram().eResource().getContents().add(attribute);		
-		addGraphicalRepresentation(context, attribute);
+	public Object[] create(ICreateContext context) { 	    
+		SPEAttribute attribute = ModelFactory.eINSTANCE.createSPEAttribute();
+		
+		SPEObject tgtObject = (SPEObject) getBusinessObjectForPictogramElement(context.getTargetContainer());
+		tgtObject.getAttributes().add(attribute);
+		
+		addGraphicalRepresentation(context, attribute);				
 		return new Object[] { attribute };
 	}
 }

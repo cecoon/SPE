@@ -1,5 +1,6 @@
 package org.uniks.spe.editor.diagram;
 
+import model.SPEAttribute;
 import model.SPENotObject;
 import model.SPEObject;
 import model.SPEOptionalObject;
@@ -15,6 +16,7 @@ import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.uniks.spe.editor.features.LayoutDomainObjectFeature;
+import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.links.SPELinkAddFeature;
 import org.uniks.spe.editor.features.links.SPELinkCreateFeature;
@@ -49,7 +51,25 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 		};
 	} 
 
-    private IAddFeature getAddContextFeature(IAddContext context) {
+    
+	@Override
+	public IAddFeature getAddFeature(IAddContext context) { 
+		if (context instanceof IAddConnectionContext) {		    
+			return new SPELinkAddFeature(this);			
+		} 
+		
+		if (context instanceof IAddContext  && context.getNewObject() instanceof SPEAttribute) {           
+            return new SPEAttributeAddFeature(this);         
+        } 
+		
+		if (context instanceof IAddContext && context.getNewObject() instanceof SPEObject) {
+		    return getFeatureForSPEObject(context);
+		}		
+		
+		return super.getAddFeature(context);
+	}	
+
+    private IAddFeature getFeatureForSPEObject(IAddContext context) {
         Object newObject = context.getNewObject();
         
         if(newObject instanceof SPEOptionalObject){
@@ -65,20 +85,6 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
              
     }
     
-	@Override
-	public IAddFeature getAddFeature(IAddContext context) { 
-		if (context instanceof IAddConnectionContext) {		    
-			return new SPELinkAddFeature(this);			
-		} 
-		
-		if (context instanceof IAddContext) {
-		    return getAddContextFeature(context);
-		}		
-		
-		return super.getAddFeature(context);
-	}
-	
-
     @Override
 	public ILayoutFeature getLayoutFeature(ILayoutContext context) {
 		// TODO: check for right domain object instances below
