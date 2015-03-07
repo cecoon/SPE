@@ -16,8 +16,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.ColorConstant;
+import org.eclipse.graphiti.services.IPeCreateService; 
 import org.eclipse.graphiti.util.IColorConstant;
 import org.uniks.spe.editor.features.CommonFeatureColors;
 
@@ -56,22 +55,23 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         link(shape, object);
         
         createHeaderSeperationLine(containerShape);
-
+        
+        Graphiti.getPeCreateService().createChopboxAnchor(containerShape);        
         return containerShape;
     }
 
     protected ContainerShape createBaseContainerShape(IAddContext context, Diagram targetDiagram) {
         IPeCreateService peCreateService = Graphiti.getPeCreateService();
         ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
-        
-      
+              
         IGaService gaService = Graphiti.getGaService();
         RoundedRectangle roundedRectangle; // need to access it later
         roundedRectangle = gaService.createRoundedRectangle(containerShape, 5, 5);
         roundedRectangle.setForeground(manageColor(objectForeground));
         roundedRectangle.setBackground(manageColor(objectBackground));
         roundedRectangle.setLineWidth(2);
-        gaService.setLocationAndSize(roundedRectangle, context.getX(), context.getY(), width, height);
+        gaService.setLocationAndSize(roundedRectangle, context.getX(), context.getY(), width, height);        
+      
         return containerShape;
     }
 

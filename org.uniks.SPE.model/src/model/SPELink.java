@@ -13,6 +13,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link model.SPELink#getName <em>Name</em>}</li>
+ *   <li>{@link model.SPELink#getSource <em>Source</em>}</li>
+ *   <li>{@link model.SPELink#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface SPELink extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * The default value is <code>"any"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -32,7 +35,7 @@ public interface SPELink extends EObject {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see model.ModelPackage#getSPELink_Name()
-     * @model
+     * @model default="any"
      * @generated
      */
     String getName();
@@ -46,5 +49,61 @@ public interface SPELink extends EObject {
      * @generated
      */
     void setName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Source</b></em>' reference.
+     * It is bidirectional and its opposite is '{@link model.SPEObject#getOutboundLinks <em>Outbound Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Source</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Source</em>' reference.
+     * @see #setSource(SPEObject)
+     * @see model.ModelPackage#getSPELink_Source()
+     * @see model.SPEObject#getOutboundLinks
+     * @model opposite="outboundLinks" required="true"
+     * @generated
+     */
+    SPEObject getSource();
+
+    /**
+     * Sets the value of the '{@link model.SPELink#getSource <em>Source</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Source</em>' reference.
+     * @see #getSource()
+     * @generated
+     */
+    void setSource(SPEObject value);
+
+    /**
+     * Returns the value of the '<em><b>Target</b></em>' reference.
+     * It is bidirectional and its opposite is '{@link model.SPEObject#getInboundLinks <em>Inbound Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Target</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Target</em>' reference.
+     * @see #setTarget(SPEObject)
+     * @see model.ModelPackage#getSPELink_Target()
+     * @see model.SPEObject#getInboundLinks
+     * @model opposite="inboundLinks" required="true"
+     * @generated
+     */
+    SPEObject getTarget();
+
+    /**
+     * Sets the value of the '{@link model.SPELink#getTarget <em>Target</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Target</em>' reference.
+     * @see #getTarget()
+     * @generated
+     */
+    void setTarget(SPEObject value);
 
 } // SPELink

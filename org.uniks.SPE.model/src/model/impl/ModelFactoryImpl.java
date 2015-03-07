@@ -19,13 +19,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * @generated
  */
 public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
-	/**
+    /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static ModelFactory init() {
+    public static ModelFactory init() {
         try {
             ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory(ModelPackage.eNS_URI);
             if (theModelFactory != null) {
@@ -38,65 +38,67 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
         return new ModelFactoryImpl();
     }
 
-	/**
+    /**
      * Creates an instance of the factory.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ModelFactoryImpl() {
+    public ModelFactoryImpl() {
         super();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public EObject create(EClass eClass) {
+    @Override
+    public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case ModelPackage.SPE_OBJECT: return createSPEObject();
             case ModelPackage.SPE_ATTRIBUTE: return createSPEAttribute();
             case ModelPackage.SPE_LINK: return createSPELink();
             case ModelPackage.SPE_OPTIONAL_OBJECT: return createSPEOptionalObject();
             case ModelPackage.SPE_NOT_OBJECT: return createSPENotObject();
+            case ModelPackage.SPE_NOT_LINK: return createSPENotLink();
+            case ModelPackage.SPE_OPTIONAL_LINK: return createSPEOptionalLink();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public SPEObject createSPEObject() {
+    public SPEObject createSPEObject() {
         SPEObjectImpl speObject = new SPEObjectImpl();
         return speObject;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public SPEAttribute createSPEAttribute() {
+    public SPEAttribute createSPEAttribute() {
         SPEAttributeImpl speAttribute = new SPEAttributeImpl();
         return speAttribute;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public SPELink createSPELink() {
+    public SPELink createSPELink() {
         SPELinkImpl speLink = new SPELinkImpl();
         return speLink;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -118,21 +120,41 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ModelPackage getModelPackage() {
+    public SPENotLink createSPENotLink() {
+        SPENotLinkImpl speNotLink = new SPENotLinkImpl();
+        return speNotLink;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SPEOptionalLink createSPEOptionalLink() {
+        SPEOptionalLinkImpl speOptionalLink = new SPEOptionalLinkImpl();
+        return speOptionalLink;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ModelPackage getModelPackage() {
         return (ModelPackage)getEPackage();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @deprecated
      * @generated
      */
-	@Deprecated
-	public static ModelPackage getPackage() {
+    @Deprecated
+    public static ModelPackage getPackage() {
         return ModelPackage.eINSTANCE;
     }
 

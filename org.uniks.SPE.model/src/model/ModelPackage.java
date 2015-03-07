@@ -94,13 +94,31 @@ public interface ModelPackage extends EPackage {
     int SPE_OBJECT__ATTRIBUTES = 2;
 
     /**
+     * The feature id for the '<em><b>Outbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__OUTBOUND_LINKS = 3;
+
+    /**
+     * The feature id for the '<em><b>Inbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__INBOUND_LINKS = 4;
+
+    /**
      * The number of structural features of the '<em>SPE Object</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_OBJECT_FEATURE_COUNT = 3;
+    int SPE_OBJECT_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>SPE Object</em>' class.
@@ -177,13 +195,31 @@ public interface ModelPackage extends EPackage {
     int SPE_LINK__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_LINK__SOURCE = 1;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_LINK__TARGET = 2;
+
+    /**
      * The number of structural features of the '<em>SPE Link</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_LINK_FEATURE_COUNT = 1;
+    int SPE_LINK_FEATURE_COUNT = 3;
 
     /**
      * The number of operations of the '<em>SPE Link</em>' class.
@@ -230,6 +266,24 @@ public interface ModelPackage extends EPackage {
      * @ordered
      */
     int SPE_OPTIONAL_OBJECT__ATTRIBUTES = SPE_OBJECT__ATTRIBUTES;
+
+    /**
+     * The feature id for the '<em><b>Outbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT__OUTBOUND_LINKS = SPE_OBJECT__OUTBOUND_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Inbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_OBJECT__INBOUND_LINKS = SPE_OBJECT__INBOUND_LINKS;
 
     /**
      * The number of structural features of the '<em>SPE Optional Object</em>' class.
@@ -287,6 +341,24 @@ public interface ModelPackage extends EPackage {
     int SPE_NOT_OBJECT__ATTRIBUTES = SPE_OBJECT__ATTRIBUTES;
 
     /**
+     * The feature id for the '<em><b>Outbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT__OUTBOUND_LINKS = SPE_OBJECT__OUTBOUND_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Inbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_OBJECT__INBOUND_LINKS = SPE_OBJECT__INBOUND_LINKS;
+
+    /**
      * The number of structural features of the '<em>SPE Not Object</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -303,6 +375,116 @@ public interface ModelPackage extends EPackage {
      * @ordered
      */
     int SPE_NOT_OBJECT_OPERATION_COUNT = SPE_OBJECT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link model.impl.SPENotLinkImpl <em>SPE Not Link</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.impl.SPENotLinkImpl
+     * @see model.impl.ModelPackageImpl#getSPENotLink()
+     * @generated
+     */
+    int SPE_NOT_LINK = 5;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_LINK__NAME = SPE_LINK__NAME;
+
+    /**
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_LINK__SOURCE = SPE_LINK__SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_LINK__TARGET = SPE_LINK__TARGET;
+
+    /**
+     * The number of structural features of the '<em>SPE Not Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_LINK_FEATURE_COUNT = SPE_LINK_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>SPE Not Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_NOT_LINK_OPERATION_COUNT = SPE_LINK_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link model.impl.SPEOptionalLinkImpl <em>SPE Optional Link</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.impl.SPEOptionalLinkImpl
+     * @see model.impl.ModelPackageImpl#getSPEOptionalLink()
+     * @generated
+     */
+    int SPE_OPTIONAL_LINK = 6;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_LINK__NAME = SPE_LINK__NAME;
+
+    /**
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_LINK__SOURCE = SPE_LINK__SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_LINK__TARGET = SPE_LINK__TARGET;
+
+    /**
+     * The number of structural features of the '<em>SPE Optional Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_LINK_FEATURE_COUNT = SPE_LINK_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>SPE Optional Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OPTIONAL_LINK_OPERATION_COUNT = SPE_LINK_OPERATION_COUNT + 0;
 
 
     /**
@@ -347,6 +529,28 @@ public interface ModelPackage extends EPackage {
      * @generated
      */
     EReference getSPEObject_Attributes();
+
+    /**
+     * Returns the meta object for the reference list '{@link model.SPEObject#getOutboundLinks <em>Outbound Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Outbound Links</em>'.
+     * @see model.SPEObject#getOutboundLinks()
+     * @see #getSPEObject()
+     * @generated
+     */
+    EReference getSPEObject_OutboundLinks();
+
+    /**
+     * Returns the meta object for the reference list '{@link model.SPEObject#getInboundLinks <em>Inbound Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Inbound Links</em>'.
+     * @see model.SPEObject#getInboundLinks()
+     * @see #getSPEObject()
+     * @generated
+     */
+    EReference getSPEObject_InboundLinks();
 
     /**
      * Returns the meta object for class '{@link model.SPEAttribute <em>SPE Attribute</em>}'.
@@ -402,6 +606,28 @@ public interface ModelPackage extends EPackage {
     EAttribute getSPELink_Name();
 
     /**
+     * Returns the meta object for the reference '{@link model.SPELink#getSource <em>Source</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Source</em>'.
+     * @see model.SPELink#getSource()
+     * @see #getSPELink()
+     * @generated
+     */
+    EReference getSPELink_Source();
+
+    /**
+     * Returns the meta object for the reference '{@link model.SPELink#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see model.SPELink#getTarget()
+     * @see #getSPELink()
+     * @generated
+     */
+    EReference getSPELink_Target();
+
+    /**
      * Returns the meta object for class '{@link model.SPEOptionalObject <em>SPE Optional Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -420,6 +646,26 @@ public interface ModelPackage extends EPackage {
      * @generated
      */
     EClass getSPENotObject();
+
+    /**
+     * Returns the meta object for class '{@link model.SPENotLink <em>SPE Not Link</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SPE Not Link</em>'.
+     * @see model.SPENotLink
+     * @generated
+     */
+    EClass getSPENotLink();
+
+    /**
+     * Returns the meta object for class '{@link model.SPEOptionalLink <em>SPE Optional Link</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SPE Optional Link</em>'.
+     * @see model.SPEOptionalLink
+     * @generated
+     */
+    EClass getSPEOptionalLink();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -479,6 +725,22 @@ public interface ModelPackage extends EPackage {
         EReference SPE_OBJECT__ATTRIBUTES = eINSTANCE.getSPEObject_Attributes();
 
         /**
+         * The meta object literal for the '<em><b>Outbound Links</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SPE_OBJECT__OUTBOUND_LINKS = eINSTANCE.getSPEObject_OutboundLinks();
+
+        /**
+         * The meta object literal for the '<em><b>Inbound Links</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SPE_OBJECT__INBOUND_LINKS = eINSTANCE.getSPEObject_InboundLinks();
+
+        /**
          * The meta object literal for the '{@link model.impl.SPEAttributeImpl <em>SPE Attribute</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -523,6 +785,22 @@ public interface ModelPackage extends EPackage {
         EAttribute SPE_LINK__NAME = eINSTANCE.getSPELink_Name();
 
         /**
+         * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SPE_LINK__SOURCE = eINSTANCE.getSPELink_Source();
+
+        /**
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SPE_LINK__TARGET = eINSTANCE.getSPELink_Target();
+
+        /**
          * The meta object literal for the '{@link model.impl.SPEOptionalObjectImpl <em>SPE Optional Object</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -541,6 +819,26 @@ public interface ModelPackage extends EPackage {
          * @generated
          */
         EClass SPE_NOT_OBJECT = eINSTANCE.getSPENotObject();
+
+        /**
+         * The meta object literal for the '{@link model.impl.SPENotLinkImpl <em>SPE Not Link</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.impl.SPENotLinkImpl
+         * @see model.impl.ModelPackageImpl#getSPENotLink()
+         * @generated
+         */
+        EClass SPE_NOT_LINK = eINSTANCE.getSPENotLink();
+
+        /**
+         * The meta object literal for the '{@link model.impl.SPEOptionalLinkImpl <em>SPE Optional Link</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.impl.SPEOptionalLinkImpl
+         * @see model.impl.ModelPackageImpl#getSPEOptionalLink()
+         * @generated
+         */
+        EClass SPE_OPTIONAL_LINK = eINSTANCE.getSPEOptionalLink();
 
     }
 

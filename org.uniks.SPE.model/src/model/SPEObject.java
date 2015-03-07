@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link model.SPEObject#getName <em>Name</em>}</li>
  *   <li>{@link model.SPEObject#getClass_ <em>Class</em>}</li>
  *   <li>{@link model.SPEObject#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link model.SPEObject#getOutboundLinks <em>Outbound Links</em>}</li>
+ *   <li>{@link model.SPEObject#getInboundLinks <em>Inbound Links</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface SPEObject extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * The default value is <code>"object"</code>.
+     * The default value is <code>"any"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -37,7 +39,7 @@ public interface SPEObject extends EObject {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see model.ModelPackage#getSPEObject_Name()
-     * @model default="object" id="true"
+     * @model default="any" id="true"
      * @generated
      */
     String getName();
@@ -54,7 +56,7 @@ public interface SPEObject extends EObject {
 
     /**
      * Returns the value of the '<em><b>Class</b></em>' attribute.
-     * The default value is <code>"class"</code>.
+     * The default value is <code>"any"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Class</em>' attribute isn't clear,
@@ -64,7 +66,7 @@ public interface SPEObject extends EObject {
      * @return the value of the '<em>Class</em>' attribute.
      * @see #setClass(String)
      * @see model.ModelPackage#getSPEObject_Class()
-     * @model default="class"
+     * @model default="any"
      * @generated
      */
     String getClass_();
@@ -94,5 +96,41 @@ public interface SPEObject extends EObject {
      * @generated
      */
     EList<SPEAttribute> getAttributes();
+
+    /**
+     * Returns the value of the '<em><b>Outbound Links</b></em>' reference list.
+     * The list contents are of type {@link model.SPELink}.
+     * It is bidirectional and its opposite is '{@link model.SPELink#getSource <em>Source</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Outbound Links</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Outbound Links</em>' reference list.
+     * @see model.ModelPackage#getSPEObject_OutboundLinks()
+     * @see model.SPELink#getSource
+     * @model opposite="source"
+     * @generated
+     */
+    EList<SPELink> getOutboundLinks();
+
+    /**
+     * Returns the value of the '<em><b>Inbound Links</b></em>' reference list.
+     * The list contents are of type {@link model.SPELink}.
+     * It is bidirectional and its opposite is '{@link model.SPELink#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Inbound Links</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Inbound Links</em>' reference list.
+     * @see model.ModelPackage#getSPEObject_InboundLinks()
+     * @see model.SPELink#getTarget
+     * @model opposite="target"
+     * @generated
+     */
+    EList<SPELink> getInboundLinks();
 
 } // SPEObject

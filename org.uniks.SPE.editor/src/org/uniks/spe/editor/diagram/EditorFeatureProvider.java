@@ -1,16 +1,18 @@
 package org.uniks.spe.editor.diagram;
 
 import model.SPEAttribute;
+import model.SPELink;
+import model.SPENotLink;
 import model.SPENotObject;
 import model.SPEObject;
+import model.SPEOptionalLink;
 import model.SPEOptionalObject;
 
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
-import org.eclipse.graphiti.features.ILayoutFeature;
-import org.eclipse.graphiti.features.context.IAddConnectionContext;
+import org.eclipse.graphiti.features.ILayoutFeature; 
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
@@ -20,6 +22,10 @@ import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.links.SPELinkAddFeature;
 import org.uniks.spe.editor.features.links.SPELinkCreateFeature;
+import org.uniks.spe.editor.features.links.SPENotLink.SPENotLinkAddFeature;
+import org.uniks.spe.editor.features.links.SPENotLink.SPENotLinkCreateFeature;
+import org.uniks.spe.editor.features.links.SPEOptionalLink.SPEOptionalLinkAddFeature;
+import org.uniks.spe.editor.features.links.SPEOptionalLink.SPEOptionalLinkCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectAddFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
 import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectAddFeature;
@@ -47,27 +53,44 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	@Override
 	public ICreateConnectionFeature[] getCreateConnectionFeatures() {
 		return new ICreateConnectionFeature[] {
-		        new SPELinkCreateFeature(this)		       
+		        new SPELinkCreateFeature(this),
+		        new SPENotLinkCreateFeature(this),
+		        new SPEOptionalLinkCreateFeature(this)
 		};
 	} 
 
     
 	@Override
 	public IAddFeature getAddFeature(IAddContext context) { 
-		if (context instanceof IAddConnectionContext) {		    
-			return new SPELinkAddFeature(this);			
+		if (context.getNewObject() instanceof SPELink) {		    
+			return getFeatureForSPELink(context);			
 		} 
 		
-		if (context instanceof IAddContext  && context.getNewObject() instanceof SPEAttribute) {           
+		if (context.getNewObject() instanceof SPEAttribute) {           
             return new SPEAttributeAddFeature(this);         
         } 
 		
-		if (context instanceof IAddContext && context.getNewObject() instanceof SPEObject) {
+		if (context.getNewObject() instanceof SPEObject) {
 		    return getFeatureForSPEObject(context);
 		}		
 		
 		return super.getAddFeature(context);
 	}	
+	
+	private IAddFeature getFeatureForSPELink(IAddContext context) {
+        Object newObject = context.getNewObject();
+        
+        if(newObject instanceof SPEOptionalLink){
+            return new SPEOptionalLinkAddFeature(this);             
+        } 
+        
+        if((newObject instanceof SPENotLink)){
+            return new SPENotLinkAddFeature(this);             
+        }
+        
+        //default value
+        return new SPELinkAddFeature(this);              
+    }
 
     private IAddFeature getFeatureForSPEObject(IAddContext context) {
         Object newObject = context.getNewObject();
@@ -81,9 +104,9 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
         }
         
         //default value
-        return new SPEObjectAddFeature(this); 
-             
+        return new SPEObjectAddFeature(this);              
     }
+    
     
     @Override
 	public ILayoutFeature getLayoutFeature(ILayoutContext context) {

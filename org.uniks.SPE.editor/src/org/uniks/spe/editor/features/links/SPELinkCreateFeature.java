@@ -1,52 +1,60 @@
 package org.uniks.spe.editor.features.links;
 
+import model.ModelFactory;
+import model.SPELink;
+import model.SPEObject;
+ 
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
-import org.eclipse.graphiti.features.impl.AbstractCreateConnectionFeature;
-import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.features.impl.AbstractCreateConnectionFeature; 
+import org.eclipse.graphiti.mm.pictograms.Connection; 
 
-public class SPELinkCreateFeature extends AbstractCreateConnectionFeature
-		implements ICreateConnectionFeature {
+public class SPELinkCreateFeature extends AbstractCreateConnectionFeature implements ICreateConnectionFeature {
 
-	public SPELinkCreateFeature(IFeatureProvider fp) {
-		super(fp, "Link", "Creates a new Link between two Objects");
-	}
+    public SPELinkCreateFeature(IFeatureProvider fp) {
+        this(fp, "Link", "Creates a new Link between two Objects");
+    }
 
-	@Override
-	public boolean canStartConnection(ICreateConnectionContext context) {
-		// TODO: check for right domain object instance below
-		// return getBusinessObjectForPictogramElement(context.getSourcePictogramElement()) instanceof <DomainObject>;
+    public SPELinkCreateFeature(IFeatureProvider fp, String name, String description) {
+        super(fp, name, description);
+    }
 
-		return true;
-	}
+    @Override
+    public boolean canStartConnection(ICreateConnectionContext context) {
+        return getBusinessObjectForPictogramElement(context.getSourcePictogramElement()) instanceof SPEObject;
+    }
 
-	@Override
-	public boolean canCreate(ICreateConnectionContext context) {
-		PictogramElement sourcePictogramElement = context.getSourcePictogramElement();
-		PictogramElement targetPictogramElement = context.getTargetPictogramElement();
+    @Override
+    public boolean canCreate(ICreateConnectionContext context) {
+        Object src = getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
+        Object tgt = getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
 
-		// TODO: check for right domain object instance below
-		// if (getBusinessObjectForPictogramElement(sourcePictogramElement) instanceof <DomainObject> && getBusinessObjectForPictogramElement(targetPictogramElement) instanceof <DomainObject>) {
-		//  	return true;
-		// }
-		
-		return sourcePictogramElement != null && targetPictogramElement != null;
-	}
+        return src instanceof SPEObject && tgt instanceof SPEObject;
+    }
 
-	@Override
-	public Connection create(ICreateConnectionContext context) {
-		Connection newConnection = null;
+    protected SPELink createBusinessObject() {
+        return ModelFactory.eINSTANCE.createSPELink();
+    }
 
-		// TODO: create the domain object connection here
-		Object newDomainObjectConnetion = null;
+    @Override
+    public Connection create(ICreateConnectionContext context) {
+        SPEObject src = (SPEObject) getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
+        SPEObject tgt = (SPEObject) getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
 
-		AddConnectionContext addContext = new AddConnectionContext(context.getSourceAnchor(), context.getTargetAnchor());
-		addContext.setNewObject(newDomainObjectConnetion);
-		newConnection = (Connection) getFeatureProvider().addIfPossible(addContext);
+        SPELink speLink = createBusinessObject();
+        src.getOutboundLinks().add(speLink);
+        tgt.getInboundLinks().add(speLink);
+        speLink.setSource(src);
+        speLink.setTarget(tgt);
+        getDiagram().eResource().getContents().add(speLink);
 
-		return newConnection;
-	}
+        AddConnectionContext addContext = new AddConnectionContext(context.getSourceAnchor(), context.getTargetAnchor());
+        addContext.setNewObject(speLink);
+        Connection newConnection = (Connection) getFeatureProvider().addIfPossible(addContext);
+
+        return newConnection;
+    }
+
 }
