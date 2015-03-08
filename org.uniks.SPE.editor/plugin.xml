@@ -21,5 +21,19 @@
          </diagramType>
       </diagramTypeProvider>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.uniks.SPE.editor"
+            name="Story Pattern Editor">
+      </category>
+      <wizard
+            category="org.uniks.SPE.editor"
+            class="org.uniks.spe.editor.wizards.SPEWizard"
+            icon="icons/sample.gif"
+            id="org.uniks.spe.editor.wizards.SampleNewWizard"
+            name="Story Pattern Editor File">
+      </wizard>
+   </extension>
 
 </plugin>
