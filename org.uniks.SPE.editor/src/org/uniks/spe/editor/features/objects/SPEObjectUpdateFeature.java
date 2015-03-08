@@ -2,8 +2,8 @@ package org.uniks.spe.editor.features.objects;
  
 import java.util.Optional;
 
+import model.MatchTag;
 import model.SPEObject;
-import model.Tag;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -15,10 +15,9 @@ import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
+import org.eclipse.graphiti.mm.algorithms.styles.TextStyleRegion;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.Shape;
-import org.eclipse.graphiti.util.IColorConstant;
 import org.uniks.spe.editor.features.CommonFeatureStyles;
 
 public class SPEObjectUpdateFeature extends AbstractUpdateFeature {
@@ -71,15 +70,19 @@ public class SPEObjectUpdateFeature extends AbstractUpdateFeature {
         //update text
         String newText = SPEObjectAddFeature.createHeaderTextOfObject(object);
         ContainerShape containerShape = (ContainerShape) pictogramElement;
-        
+        TextStyleRegion underlinedStyleRegion = SPEObjectAddFeature.createUnderlinedStyleregion(newText);        
         containerShape.getChildren().stream()
                 .filter(it -> it.getGraphicsAlgorithm() instanceof Text)
                 .map(it -> (Text) it.getGraphicsAlgorithm())
-                .forEach(it -> it.setValue(newText));
+                .forEach(it -> {
+                    it.setValue(newText);
+                    it.getStyleRegions().clear();
+                    it.getStyleRegions().add(underlinedStyleRegion);
+                });
        
 
         //update colors
-        Tag tag = object.getTag();
+        MatchTag tag = object.getTag();
         Color foregroundItShouldHave = manageColor(CommonFeatureStyles.getForegroundByTag(tag));
         Color backgroundItShouldHave = manageColor(CommonFeatureStyles.getBackgroundByTag(tag));
         LineStyle lineStyleItShouldhave = CommonFeatureStyles.getLineStyleByTag(tag);

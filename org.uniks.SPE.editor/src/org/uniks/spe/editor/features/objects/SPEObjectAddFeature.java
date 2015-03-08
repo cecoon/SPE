@@ -1,8 +1,8 @@
 package org.uniks.spe.editor.features.objects;
 
+import model.MatchTag;
 import model.SPEGroup;
 import model.SPEObject;
-import model.Tag;
 
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
@@ -12,16 +12,17 @@ import org.eclipse.graphiti.features.impl.AbstractAddFeature;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
+import org.eclipse.graphiti.mm.algorithms.styles.StylesFactory;
+import org.eclipse.graphiti.mm.algorithms.styles.TextStyle;
+import org.eclipse.graphiti.mm.algorithms.styles.TextStyleRegion;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.graphiti.services.IPeCreateService; 
+import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.uniks.spe.editor.features.CommonFeatureStyles;
 
@@ -56,7 +57,7 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         SPEObject object = getObject(context);  
         ContainerShape container = (ContainerShape) context.getTargetContainer(); 
         
-        Tag tag = object.getTag();
+        MatchTag tag = object.getTag();
         IColorConstant fColor = CommonFeatureStyles.getForegroundByTag(tag);
         IColorConstant bColor = CommonFeatureStyles.getBackgroundByTag(tag);
         LineStyle linestyle = CommonFeatureStyles.getLineStyleByTag(tag); 
@@ -113,6 +114,8 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
 
         // create and set text graphics algorithm
         Text text = gaService.createText(shape, headerText);
+        text.getStyleRegions().add(createUnderlinedStyleregion(headerText));
+        
         text.setForeground(manageColor(CommonFeatureStyles.TEXT_FOREGROUND));
         text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER); 
         text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
@@ -125,6 +128,18 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         directEditingInfo.setActive(true); 
         
         return shape;
+    }
+
+    public static TextStyleRegion createUnderlinedStyleregion(String headerText) {
+        //... rly? to underline a freakin' text? 
+        TextStyle textStyle = StylesFactory.eINSTANCE.createTextStyle();         
+        textStyle.setUnderline(true);   
+        
+        TextStyleRegion textStyleRegion = StylesFactory.eINSTANCE.createTextStyleRegion(); 
+        textStyleRegion.setStart(0);
+        textStyleRegion.setEnd(headerText.length());
+        textStyleRegion.setStyle(textStyle);
+        return textStyleRegion;
     }
      
 }

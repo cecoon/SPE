@@ -2,13 +2,17 @@
  */
 package model.util;
 
-import model.*;
+import model.IHasMatchTag;
+import model.IHasOperation;
+import model.ModelPackage;
+import model.SPEAttribute;
+import model.SPEGroup;
+import model.SPELink;
+import model.SPEObject;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -84,6 +88,14 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
                 return createSPEGroupAdapter();
             }
             @Override
+            public Adapter caseIHasMatchTag(IHasMatchTag object) {
+                return createIHasMatchTagAdapter();
+            }
+            @Override
+            public Adapter caseIHasOperation(IHasOperation object) {
+                return createIHasOperationAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -156,6 +168,34 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSPEGroupAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link model.IHasMatchTag <em>IHas Match Tag</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see model.IHasMatchTag
+     * @generated
+     */
+    public Adapter createIHasMatchTagAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link model.IHasOperation <em>IHas Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see model.IHasOperation
+     * @generated
+     */
+    public Adapter createIHasOperationAdapter() {
         return null;
     }
 

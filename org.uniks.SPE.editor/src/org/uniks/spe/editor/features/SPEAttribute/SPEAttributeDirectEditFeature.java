@@ -3,7 +3,7 @@ package org.uniks.spe.editor.features.SPEAttribute;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.SPEAttribute; 
+import model.SPEAttribute;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
@@ -15,9 +15,9 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
  
 public class SPEAttributeDirectEditFeature extends AbstractDirectEditingFeature {
     
-    private final static String SINGEL_OPERATOR_REGEX = "^(\\w+)([!=<>]={0,1}[^!=<>]+)$";
+    private final static String SINGEL_OPERATOR_REGEX = "^(\\w+)([!=<>:]={0,1}[^!=<>]+)$";
     private final static String INTERVAL_OPERATOR_REGEX = "^(\\w+)([=<>]={0,1}[^!=<>]+){2}$";    
-    private final static Pattern EXTRACT_ATTRIBUTE_PATTERN = Pattern.compile("^(\\w+)([!=<>].*)$");
+    private final static Pattern EXTRACT_ATTRIBUTE_PATTERN = Pattern.compile("^(\\w+)([!=<>:].*)$");
     
     public SPEAttributeDirectEditFeature(IFeatureProvider fp) {
         super(fp);

@@ -3,13 +3,13 @@ package org.uniks.spe.editor.features.links;
 import model.ModelFactory;
 import model.SPELink;
 import model.SPEObject;
- 
+
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
-import org.eclipse.graphiti.features.impl.AbstractCreateConnectionFeature; 
-import org.eclipse.graphiti.mm.pictograms.Connection; 
+import org.eclipse.graphiti.features.impl.AbstractCreateConnectionFeature;
+import org.eclipse.graphiti.mm.pictograms.Connection;
 
 public class SPELinkCreateFeature extends AbstractCreateConnectionFeature implements ICreateConnectionFeature {
 

@@ -3,7 +3,7 @@ package org.uniks.spe.editor.features;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.Tag;
+import model.MatchTag;
 
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.util.ColorConstant;
@@ -22,33 +22,33 @@ public class CommonFeatureStyles {
     public final static IColorConstant OPTIONAL_FOREGROUND =  new ColorConstant(164, 164, 164);
     public final static IColorConstant OPTIONAL_BACKGROUND =    new ColorConstant(210, 210, 210);
     
-    public static Map<Tag, LineStyle> LINESTYLE_PER_TAG = new HashMap<Tag, LineStyle>();  
-    public static Map<Tag, IColorConstant> FOREGROUND_PER_TAG = new HashMap<Tag, IColorConstant>();  
-    public static Map<Tag, IColorConstant> BACKGROUND_PER_TAG = new HashMap<Tag, IColorConstant>();  
+    public static Map<MatchTag, LineStyle> LINESTYLE_PER_Tag = new HashMap<MatchTag, LineStyle>();  
+    public static Map<MatchTag, IColorConstant> FOREGROUND_PER_Tag = new HashMap<MatchTag, IColorConstant>();  
+    public static Map<MatchTag, IColorConstant> BACKGROUND_PER_Tag = new HashMap<MatchTag, IColorConstant>();  
     static {
-        LINESTYLE_PER_TAG.put(Tag.DEFAULT, LineStyle.SOLID);
-        LINESTYLE_PER_TAG.put(Tag.NOT, LineStyle.SOLID);
-        LINESTYLE_PER_TAG.put(Tag.OPTIONAL, LineStyle.DASH);
+        LINESTYLE_PER_Tag.put(MatchTag.DEFAULT, LineStyle.SOLID);
+        LINESTYLE_PER_Tag.put(MatchTag.NOT, LineStyle.SOLID);
+        LINESTYLE_PER_Tag.put(MatchTag.OPTIONAL, LineStyle.DASH);
 
-        FOREGROUND_PER_TAG.put(Tag.DEFAULT, NORMAL_FOREGROUND);
-        FOREGROUND_PER_TAG.put(Tag.NOT, NOT_FOREGROUND);
-        FOREGROUND_PER_TAG.put(Tag.OPTIONAL, OPTIONAL_FOREGROUND);
+        FOREGROUND_PER_Tag.put(MatchTag.DEFAULT, NORMAL_FOREGROUND);
+        FOREGROUND_PER_Tag.put(MatchTag.NOT, NOT_FOREGROUND);
+        FOREGROUND_PER_Tag.put(MatchTag.OPTIONAL, OPTIONAL_FOREGROUND);
 
-        BACKGROUND_PER_TAG.put(Tag.DEFAULT, NORMAL_BACKGROUND);
-        BACKGROUND_PER_TAG.put(Tag.NOT, NOT_BACKGROUND);
-        BACKGROUND_PER_TAG.put(Tag.OPTIONAL, OPTIONAL_BACKGROUND);
+        BACKGROUND_PER_Tag.put(MatchTag.DEFAULT, NORMAL_BACKGROUND);
+        BACKGROUND_PER_Tag.put(MatchTag.NOT, NOT_BACKGROUND);
+        BACKGROUND_PER_Tag.put(MatchTag.OPTIONAL, OPTIONAL_BACKGROUND);
     }
     
-    public static LineStyle getLineStyleByTag(Tag tag) {
-        return LINESTYLE_PER_TAG.getOrDefault(tag, LineStyle.SOLID);
+    public static LineStyle getLineStyleByTag(MatchTag MatchTag) {
+        return LINESTYLE_PER_Tag.getOrDefault(MatchTag, LineStyle.SOLID);
     }
     
-    public static IColorConstant getForegroundByTag(Tag tag) {
-        return FOREGROUND_PER_TAG.getOrDefault(tag, CommonFeatureStyles.NORMAL_FOREGROUND);
+    public static IColorConstant getForegroundByTag(MatchTag MatchTag) {
+        return FOREGROUND_PER_Tag.getOrDefault(MatchTag, CommonFeatureStyles.NORMAL_FOREGROUND);
     }
     
-    public static IColorConstant getBackgroundByTag(Tag tag) {
-        return BACKGROUND_PER_TAG.getOrDefault(tag, CommonFeatureStyles.NORMAL_BACKGROUND);
+    public static IColorConstant getBackgroundByTag(MatchTag MatchTag) {
+        return BACKGROUND_PER_Tag.getOrDefault(MatchTag, CommonFeatureStyles.NORMAL_BACKGROUND);
     }
   
     //more static = more better

@@ -10,14 +10,14 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Tag</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Match Tag</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see model.ModelPackage#getTag()
+ * @see model.ModelPackage#getMatchTag()
  * @model
  * @generated
  */
-public enum Tag implements Enumerator {
+public enum MatchTag implements Enumerator {
     /**
      * The '<em><b>Default</b></em>' literal object.
      * <!-- begin-user-doc -->
@@ -94,35 +94,35 @@ public enum Tag implements Enumerator {
     public static final int OPTIONAL_VALUE = 3;
 
     /**
-     * An array of all the '<em><b>Tag</b></em>' enumerators.
+     * An array of all the '<em><b>Match Tag</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private static final Tag[] VALUES_ARRAY =
-        new Tag[] {
+    private static final MatchTag[] VALUES_ARRAY =
+        new MatchTag[] {
             DEFAULT,
             NOT,
             OPTIONAL,
         };
 
     /**
-     * A public read-only list of all the '<em><b>Tag</b></em>' enumerators.
+     * A public read-only list of all the '<em><b>Match Tag</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final List<Tag> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+    public static final List<MatchTag> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
     /**
-     * Returns the '<em><b>Tag</b></em>' literal with the specified literal value.
+     * Returns the '<em><b>Match Tag</b></em>' literal with the specified literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static Tag get(String literal) {
+    public static MatchTag get(String literal) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            Tag result = VALUES_ARRAY[i];
+            MatchTag result = VALUES_ARRAY[i];
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -131,14 +131,14 @@ public enum Tag implements Enumerator {
     }
 
     /**
-     * Returns the '<em><b>Tag</b></em>' literal with the specified name.
+     * Returns the '<em><b>Match Tag</b></em>' literal with the specified name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static Tag getByName(String name) {
+    public static MatchTag getByName(String name) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            Tag result = VALUES_ARRAY[i];
+            MatchTag result = VALUES_ARRAY[i];
             if (result.getName().equals(name)) {
                 return result;
             }
@@ -147,12 +147,12 @@ public enum Tag implements Enumerator {
     }
 
     /**
-     * Returns the '<em><b>Tag</b></em>' literal with the specified integer value.
+     * Returns the '<em><b>Match Tag</b></em>' literal with the specified integer value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static Tag get(int value) {
+    public static MatchTag get(int value) {
         switch (value) {
             case DEFAULT_VALUE: return DEFAULT;
             case NOT_VALUE: return NOT;
@@ -188,7 +188,7 @@ public enum Tag implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    private Tag(int value, String name, String literal) {
+    private MatchTag(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;
@@ -232,4 +232,4 @@ public enum Tag implements Enumerator {
         return literal;
     }
     
-} //Tag
+} //MatchTag

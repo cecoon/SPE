@@ -1,13 +1,12 @@
 package org.uniks.spe.editor.features.behaviors;
 
 import model.SPEAttribute;
-import model.SPELink;
 import model.SPEObject;
 
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
-import org.eclipse.graphiti.features.custom.AbstractCustomFeature; 
+import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
@@ -38,8 +37,7 @@ public class RetriggerDirectEditFeature extends AbstractCustomFeature {
     
     @Override
     public void execute(ICustomContext context) {        
-        PictogramElement mainPictogram = context.getPictogramElements()[0]; 
-        Object businessObject = getBusinessObjectForPictogramElement(mainPictogram);
+        PictogramElement mainPictogram = context.getPictogramElements()[0];  
         
         PictogramElement textPE;
         Text textGA;                

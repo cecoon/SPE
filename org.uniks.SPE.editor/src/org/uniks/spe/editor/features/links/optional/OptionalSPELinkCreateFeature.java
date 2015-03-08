@@ -1,10 +1,10 @@
 package org.uniks.spe.editor.features.links.optional;
 
+import model.MatchTag;
 import model.ModelFactory;
-import model.SPELink; 
-import model.Tag;
+import model.SPELink;
 
-import org.eclipse.graphiti.features.IFeatureProvider; 
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.uniks.spe.editor.features.links.SPELinkCreateFeature;
 
 public class OptionalSPELinkCreateFeature extends SPELinkCreateFeature {
@@ -15,7 +15,7 @@ public class OptionalSPELinkCreateFeature extends SPELinkCreateFeature {
 
     protected SPELink createBusinessObject() {
         SPELink link = ModelFactory.eINSTANCE.createSPELink();
-        link.setTag(Tag.OPTIONAL);
+        link.setTag(MatchTag.OPTIONAL);
         return link;
     }
 }

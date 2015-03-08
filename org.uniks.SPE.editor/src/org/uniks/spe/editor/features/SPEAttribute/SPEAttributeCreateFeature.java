@@ -1,13 +1,13 @@
 package org.uniks.spe.editor.features.SPEAttribute;
 
 import model.ModelFactory;
-import model.SPEAttribute; 
+import model.SPEAttribute;
 import model.SPEObject;
 
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.features.impl.AbstractCreateFeature; 
+import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 
 public class SPEAttributeCreateFeature extends AbstractCreateFeature implements
 		ICreateFeature {

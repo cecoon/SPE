@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://www.example.org/model" nsPrefix="model">
-  <eClassifiers xsi:type="ecore:EClass" name="SPEObject">
+  <eClassifiers xsi:type="ecore:EClass" name="SPEObject" eSuperTypes="#//IHasOperation #//IHasMatchTag">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="this" iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -12,7 +12,6 @@
         eType="#//SPELink" eOpposite="#//SPELink/source"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inboundLinks" upperBound="-1"
         eType="#//SPELink" eOpposite="#//SPELink/target"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SPEAttribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -20,25 +19,36 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="== value"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SPELink">
+  <eClassifiers xsi:type="ecore:EClass" name="SPELink" eSuperTypes="#//IHasOperation #//IHasMatchTag">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="*"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
         eType="#//SPEObject" eOpposite="#//SPEObject/outboundLinks"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//SPEObject" eOpposite="#//SPEObject/inboundLinks"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SPEGroup">
+  <eClassifiers xsi:type="ecore:EClass" name="SPEGroup" eSuperTypes="#//IHasOperation #//IHasMatchTag">
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
         eType="#//SPEObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subGroups" upperBound="-1"
         eType="#//SPEGroup" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="Tag">
+  <eClassifiers xsi:type="ecore:EEnum" name="MatchTag">
     <eLiterals name="Default"/>
     <eLiterals name="Not" value="1"/>
     <eLiterals name="Optional" value="3" literal="Optional"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Operations">
+    <eLiterals name="Nop"/>
+    <eLiterals name="Create" value="1"/>
+    <eLiterals name="Delete" value="3" literal="Delete"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IHasMatchTag" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//MatchTag"
+        defaultValueLiteral="Default"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IHasOperation" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" eType="#//Operations"
+        defaultValueLiteral="Nop"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -2,17 +2,17 @@
  */
 package model.impl;
 
+import model.IHasMatchTag;
+import model.MatchTag;
 import model.ModelPackage;
+import model.Operations;
 import model.SPELink;
 import model.SPEObject;
-import model.Tag;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
@@ -23,16 +23,57 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link model.impl.SPELinkImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link model.impl.SPELinkImpl#getTag <em>Tag</em>}</li>
  *   <li>{@link model.impl.SPELinkImpl#getName <em>Name</em>}</li>
  *   <li>{@link model.impl.SPELinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link model.impl.SPELinkImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link model.impl.SPELinkImpl#getTag <em>Tag</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink {
+    /**
+     * The default value of the '{@link #getOperation() <em>Operation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperation()
+     * @generated
+     * @ordered
+     */
+    protected static final Operations OPERATION_EDEFAULT = Operations.NOP;
+
+    /**
+     * The cached value of the '{@link #getOperation() <em>Operation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperation()
+     * @generated
+     * @ordered
+     */
+    protected Operations operation = OPERATION_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected static final MatchTag TAG_EDEFAULT = MatchTag.DEFAULT;
+
+    /**
+     * The cached value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected MatchTag tag = TAG_EDEFAULT;
+
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -74,26 +115,6 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
     protected SPEObject target;
 
     /**
-     * The default value of the '{@link #getTag() <em>Tag</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTag()
-     * @generated
-     * @ordered
-     */
-    protected static final Tag TAG_EDEFAULT = Tag.DEFAULT;
-
-    /**
-     * The cached value of the '{@link #getTag() <em>Tag</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTag()
-     * @generated
-     * @ordered
-     */
-    protected Tag tag = TAG_EDEFAULT;
-
-    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -110,6 +131,48 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
     @Override
     protected EClass eStaticClass() {
         return ModelPackage.Literals.SPE_LINK;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Operations getOperation() {
+        return operation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setOperation(Operations newOperation) {
+        Operations oldOperation = operation;
+        operation = newOperation == null ? OPERATION_EDEFAULT : newOperation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_LINK__OPERATION, oldOperation, operation));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public MatchTag getTag() {
+        return tag;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTag(MatchTag newTag) {
+        MatchTag oldTag = tag;
+        tag = newTag == null ? TAG_EDEFAULT : newTag;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_LINK__TAG, oldTag, tag));
     }
 
     /**
@@ -258,27 +321,6 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
      * <!-- end-user-doc -->
      * @generated
      */
-    public Tag getTag() {
-        return tag;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTag(Tag newTag) {
-        Tag oldTag = tag;
-        tag = newTag == null ? TAG_EDEFAULT : newTag;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_LINK__TAG, oldTag, tag));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -318,6 +360,10 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case ModelPackage.SPE_LINK__OPERATION:
+                return getOperation();
+            case ModelPackage.SPE_LINK__TAG:
+                return getTag();
             case ModelPackage.SPE_LINK__NAME:
                 return getName();
             case ModelPackage.SPE_LINK__SOURCE:
@@ -326,8 +372,6 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
             case ModelPackage.SPE_LINK__TARGET:
                 if (resolve) return getTarget();
                 return basicGetTarget();
-            case ModelPackage.SPE_LINK__TAG:
-                return getTag();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -340,6 +384,12 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case ModelPackage.SPE_LINK__OPERATION:
+                setOperation((Operations)newValue);
+                return;
+            case ModelPackage.SPE_LINK__TAG:
+                setTag((MatchTag)newValue);
+                return;
             case ModelPackage.SPE_LINK__NAME:
                 setName((String)newValue);
                 return;
@@ -348,9 +398,6 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
                 return;
             case ModelPackage.SPE_LINK__TARGET:
                 setTarget((SPEObject)newValue);
-                return;
-            case ModelPackage.SPE_LINK__TAG:
-                setTag((Tag)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -364,6 +411,12 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case ModelPackage.SPE_LINK__OPERATION:
+                setOperation(OPERATION_EDEFAULT);
+                return;
+            case ModelPackage.SPE_LINK__TAG:
+                setTag(TAG_EDEFAULT);
+                return;
             case ModelPackage.SPE_LINK__NAME:
                 setName(NAME_EDEFAULT);
                 return;
@@ -372,9 +425,6 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
                 return;
             case ModelPackage.SPE_LINK__TARGET:
                 setTarget((SPEObject)null);
-                return;
-            case ModelPackage.SPE_LINK__TAG:
-                setTag(TAG_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -388,16 +438,50 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case ModelPackage.SPE_LINK__OPERATION:
+                return operation != OPERATION_EDEFAULT;
+            case ModelPackage.SPE_LINK__TAG:
+                return tag != TAG_EDEFAULT;
             case ModelPackage.SPE_LINK__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case ModelPackage.SPE_LINK__SOURCE:
                 return source != null;
             case ModelPackage.SPE_LINK__TARGET:
                 return target != null;
-            case ModelPackage.SPE_LINK__TAG:
-                return tag != TAG_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == IHasMatchTag.class) {
+            switch (derivedFeatureID) {
+                case ModelPackage.SPE_LINK__TAG: return ModelPackage.IHAS_MATCH_TAG__TAG;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == IHasMatchTag.class) {
+            switch (baseFeatureID) {
+                case ModelPackage.IHAS_MATCH_TAG__TAG: return ModelPackage.SPE_LINK__TAG;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**
@@ -410,10 +494,12 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (name: ");
-        result.append(name);
+        result.append(" (operation: ");
+        result.append(operation);
         result.append(", tag: ");
         result.append(tag);
+        result.append(", name: ");
+        result.append(name);
         result.append(')');
         return result.toString();
     }

@@ -58,6 +58,43 @@ public interface ModelPackage extends EPackage {
     ModelPackage eINSTANCE = model.impl.ModelPackageImpl.init();
 
     /**
+     * The meta object id for the '{@link model.IHasOperation <em>IHas Operation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.IHasOperation
+     * @see model.impl.ModelPackageImpl#getIHasOperation()
+     * @generated
+     */
+    int IHAS_OPERATION = 5;
+
+    /**
+     * The feature id for the '<em><b>Operation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IHAS_OPERATION__OPERATION = 0;
+
+    /**
+     * The number of structural features of the '<em>IHas Operation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IHAS_OPERATION_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>IHas Operation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IHAS_OPERATION_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link model.impl.SPEObjectImpl <em>SPE Object</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -68,49 +105,13 @@ public interface ModelPackage extends EPackage {
     int SPE_OBJECT = 0;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * The feature id for the '<em><b>Operation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_OBJECT__NAME = 0;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SPE_OBJECT__TYPE = 1;
-
-    /**
-     * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SPE_OBJECT__ATTRIBUTES = 2;
-
-    /**
-     * The feature id for the '<em><b>Outbound Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SPE_OBJECT__OUTBOUND_LINKS = 3;
-
-    /**
-     * The feature id for the '<em><b>Inbound Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SPE_OBJECT__INBOUND_LINKS = 4;
+    int SPE_OBJECT__OPERATION = IHAS_OPERATION__OPERATION;
 
     /**
      * The feature id for the '<em><b>Tag</b></em>' attribute.
@@ -119,7 +120,52 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_OBJECT__TAG = 5;
+    int SPE_OBJECT__TAG = IHAS_OPERATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__NAME = IHAS_OPERATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__TYPE = IHAS_OPERATION_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__ATTRIBUTES = IHAS_OPERATION_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Outbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__OUTBOUND_LINKS = IHAS_OPERATION_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Inbound Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_OBJECT__INBOUND_LINKS = IHAS_OPERATION_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>SPE Object</em>' class.
@@ -128,7 +174,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_OBJECT_FEATURE_COUNT = 6;
+    int SPE_OBJECT_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 6;
 
     /**
      * The number of operations of the '<em>SPE Object</em>' class.
@@ -137,7 +183,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_OBJECT_OPERATION_COUNT = 0;
+    int SPE_OBJECT_OPERATION_COUNT = IHAS_OPERATION_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link model.impl.SPEAttributeImpl <em>SPE Attribute</em>}' class.
@@ -196,31 +242,13 @@ public interface ModelPackage extends EPackage {
     int SPE_LINK = 2;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * The feature id for the '<em><b>Operation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_LINK__NAME = 0;
-
-    /**
-     * The feature id for the '<em><b>Source</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SPE_LINK__SOURCE = 1;
-
-    /**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SPE_LINK__TARGET = 2;
+    int SPE_LINK__OPERATION = IHAS_OPERATION__OPERATION;
 
     /**
      * The feature id for the '<em><b>Tag</b></em>' attribute.
@@ -229,7 +257,34 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_LINK__TAG = 3;
+    int SPE_LINK__TAG = IHAS_OPERATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_LINK__NAME = IHAS_OPERATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_LINK__SOURCE = IHAS_OPERATION_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_LINK__TARGET = IHAS_OPERATION_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>SPE Link</em>' class.
@@ -238,7 +293,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_LINK_FEATURE_COUNT = 4;
+    int SPE_LINK_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 4;
 
     /**
      * The number of operations of the '<em>SPE Link</em>' class.
@@ -247,7 +302,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_LINK_OPERATION_COUNT = 0;
+    int SPE_LINK_OPERATION_COUNT = IHAS_OPERATION_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link model.impl.SPEGroupImpl <em>SPE Group</em>}' class.
@@ -260,13 +315,13 @@ public interface ModelPackage extends EPackage {
     int SPE_GROUP = 3;
 
     /**
-     * The feature id for the '<em><b>Objects</b></em>' containment reference list.
+     * The feature id for the '<em><b>Operation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_GROUP__OBJECTS = 0;
+    int SPE_GROUP__OPERATION = IHAS_OPERATION__OPERATION;
 
     /**
      * The feature id for the '<em><b>Tag</b></em>' attribute.
@@ -275,7 +330,16 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_GROUP__TAG = 1;
+    int SPE_GROUP__TAG = IHAS_OPERATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_GROUP__OBJECTS = IHAS_OPERATION_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Sub Groups</b></em>' containment reference list.
@@ -284,7 +348,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_GROUP__SUB_GROUPS = 2;
+    int SPE_GROUP__SUB_GROUPS = IHAS_OPERATION_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>SPE Group</em>' class.
@@ -293,7 +357,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_GROUP_FEATURE_COUNT = 3;
+    int SPE_GROUP_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 3;
 
     /**
      * The number of operations of the '<em>SPE Group</em>' class.
@@ -302,17 +366,64 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_GROUP_OPERATION_COUNT = 0;
+    int SPE_GROUP_OPERATION_COUNT = IHAS_OPERATION_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link model.Tag <em>Tag</em>}' enum.
+     * The meta object id for the '{@link model.IHasMatchTag <em>IHas Match Tag</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see model.Tag
-     * @see model.impl.ModelPackageImpl#getTag()
+     * @see model.IHasMatchTag
+     * @see model.impl.ModelPackageImpl#getIHasMatchTag()
      * @generated
      */
-    int TAG = 4;
+    int IHAS_MATCH_TAG = 4;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IHAS_MATCH_TAG__TAG = 0;
+
+    /**
+     * The number of structural features of the '<em>IHas Match Tag</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IHAS_MATCH_TAG_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>IHas Match Tag</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IHAS_MATCH_TAG_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link model.MatchTag <em>Match Tag</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.MatchTag
+     * @see model.impl.ModelPackageImpl#getMatchTag()
+     * @generated
+     */
+    int MATCH_TAG = 6;
+
+    /**
+     * The meta object id for the '{@link model.Operations <em>Operations</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see model.Operations
+     * @see model.impl.ModelPackageImpl#getOperations()
+     * @generated
+     */
+    int OPERATIONS = 7;
 
 
     /**
@@ -379,17 +490,6 @@ public interface ModelPackage extends EPackage {
      * @generated
      */
     EReference getSPEObject_InboundLinks();
-
-    /**
-     * Returns the meta object for the attribute '{@link model.SPEObject#getTag <em>Tag</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Tag</em>'.
-     * @see model.SPEObject#getTag()
-     * @see #getSPEObject()
-     * @generated
-     */
-    EAttribute getSPEObject_Tag();
 
     /**
      * Returns the meta object for class '{@link model.SPEAttribute <em>SPE Attribute</em>}'.
@@ -467,17 +567,6 @@ public interface ModelPackage extends EPackage {
     EReference getSPELink_Target();
 
     /**
-     * Returns the meta object for the attribute '{@link model.SPELink#getTag <em>Tag</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Tag</em>'.
-     * @see model.SPELink#getTag()
-     * @see #getSPELink()
-     * @generated
-     */
-    EAttribute getSPELink_Tag();
-
-    /**
      * Returns the meta object for class '{@link model.SPEGroup <em>SPE Group</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -499,17 +588,6 @@ public interface ModelPackage extends EPackage {
     EReference getSPEGroup_Objects();
 
     /**
-     * Returns the meta object for the attribute '{@link model.SPEGroup#getTag <em>Tag</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Tag</em>'.
-     * @see model.SPEGroup#getTag()
-     * @see #getSPEGroup()
-     * @generated
-     */
-    EAttribute getSPEGroup_Tag();
-
-    /**
      * Returns the meta object for the containment reference list '{@link model.SPEGroup#getSubGroups <em>Sub Groups</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -521,14 +599,66 @@ public interface ModelPackage extends EPackage {
     EReference getSPEGroup_SubGroups();
 
     /**
-     * Returns the meta object for enum '{@link model.Tag <em>Tag</em>}'.
+     * Returns the meta object for class '{@link model.IHasMatchTag <em>IHas Match Tag</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Tag</em>'.
-     * @see model.Tag
+     * @return the meta object for class '<em>IHas Match Tag</em>'.
+     * @see model.IHasMatchTag
      * @generated
      */
-    EEnum getTag();
+    EClass getIHasMatchTag();
+
+    /**
+     * Returns the meta object for the attribute '{@link model.IHasMatchTag#getTag <em>Tag</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tag</em>'.
+     * @see model.IHasMatchTag#getTag()
+     * @see #getIHasMatchTag()
+     * @generated
+     */
+    EAttribute getIHasMatchTag_Tag();
+
+    /**
+     * Returns the meta object for class '{@link model.IHasOperation <em>IHas Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>IHas Operation</em>'.
+     * @see model.IHasOperation
+     * @generated
+     */
+    EClass getIHasOperation();
+
+    /**
+     * Returns the meta object for the attribute '{@link model.IHasOperation#getOperation <em>Operation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Operation</em>'.
+     * @see model.IHasOperation#getOperation()
+     * @see #getIHasOperation()
+     * @generated
+     */
+    EAttribute getIHasOperation_Operation();
+
+    /**
+     * Returns the meta object for enum '{@link model.MatchTag <em>Match Tag</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Match Tag</em>'.
+     * @see model.MatchTag
+     * @generated
+     */
+    EEnum getMatchTag();
+
+    /**
+     * Returns the meta object for enum '{@link model.Operations <em>Operations</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Operations</em>'.
+     * @see model.Operations
+     * @generated
+     */
+    EEnum getOperations();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -604,14 +734,6 @@ public interface ModelPackage extends EPackage {
         EReference SPE_OBJECT__INBOUND_LINKS = eINSTANCE.getSPEObject_InboundLinks();
 
         /**
-         * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SPE_OBJECT__TAG = eINSTANCE.getSPEObject_Tag();
-
-        /**
          * The meta object literal for the '{@link model.impl.SPEAttributeImpl <em>SPE Attribute</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -672,14 +794,6 @@ public interface ModelPackage extends EPackage {
         EReference SPE_LINK__TARGET = eINSTANCE.getSPELink_Target();
 
         /**
-         * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SPE_LINK__TAG = eINSTANCE.getSPELink_Tag();
-
-        /**
          * The meta object literal for the '{@link model.impl.SPEGroupImpl <em>SPE Group</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -698,14 +812,6 @@ public interface ModelPackage extends EPackage {
         EReference SPE_GROUP__OBJECTS = eINSTANCE.getSPEGroup_Objects();
 
         /**
-         * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SPE_GROUP__TAG = eINSTANCE.getSPEGroup_Tag();
-
-        /**
          * The meta object literal for the '<em><b>Sub Groups</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -714,14 +820,60 @@ public interface ModelPackage extends EPackage {
         EReference SPE_GROUP__SUB_GROUPS = eINSTANCE.getSPEGroup_SubGroups();
 
         /**
-         * The meta object literal for the '{@link model.Tag <em>Tag</em>}' enum.
+         * The meta object literal for the '{@link model.IHasMatchTag <em>IHas Match Tag</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see model.Tag
-         * @see model.impl.ModelPackageImpl#getTag()
+         * @see model.IHasMatchTag
+         * @see model.impl.ModelPackageImpl#getIHasMatchTag()
          * @generated
          */
-        EEnum TAG = eINSTANCE.getTag();
+        EClass IHAS_MATCH_TAG = eINSTANCE.getIHasMatchTag();
+
+        /**
+         * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IHAS_MATCH_TAG__TAG = eINSTANCE.getIHasMatchTag_Tag();
+
+        /**
+         * The meta object literal for the '{@link model.IHasOperation <em>IHas Operation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.IHasOperation
+         * @see model.impl.ModelPackageImpl#getIHasOperation()
+         * @generated
+         */
+        EClass IHAS_OPERATION = eINSTANCE.getIHasOperation();
+
+        /**
+         * The meta object literal for the '<em><b>Operation</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IHAS_OPERATION__OPERATION = eINSTANCE.getIHasOperation_Operation();
+
+        /**
+         * The meta object literal for the '{@link model.MatchTag <em>Match Tag</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.MatchTag
+         * @see model.impl.ModelPackageImpl#getMatchTag()
+         * @generated
+         */
+        EEnum MATCH_TAG = eINSTANCE.getMatchTag();
+
+        /**
+         * The meta object literal for the '{@link model.Operations <em>Operations</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see model.Operations
+         * @see model.impl.ModelPackageImpl#getOperations()
+         * @generated
+         */
+        EEnum OPERATIONS = eINSTANCE.getOperations();
 
     }
 

@@ -2,11 +2,16 @@
  */
 package model.util;
 
-import model.*;
+import model.IHasMatchTag;
+import model.IHasOperation;
+import model.ModelPackage;
+import model.SPEAttribute;
+import model.SPEGroup;
+import model.SPELink;
+import model.SPEObject;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -69,6 +74,8 @@ public class ModelSwitch<T> extends Switch<T> {
             case ModelPackage.SPE_OBJECT: {
                 SPEObject speObject = (SPEObject)theEObject;
                 T result = caseSPEObject(speObject);
+                if (result == null) result = caseIHasOperation(speObject);
+                if (result == null) result = caseIHasMatchTag(speObject);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -81,12 +88,28 @@ public class ModelSwitch<T> extends Switch<T> {
             case ModelPackage.SPE_LINK: {
                 SPELink speLink = (SPELink)theEObject;
                 T result = caseSPELink(speLink);
+                if (result == null) result = caseIHasOperation(speLink);
+                if (result == null) result = caseIHasMatchTag(speLink);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.SPE_GROUP: {
                 SPEGroup speGroup = (SPEGroup)theEObject;
                 T result = caseSPEGroup(speGroup);
+                if (result == null) result = caseIHasOperation(speGroup);
+                if (result == null) result = caseIHasMatchTag(speGroup);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ModelPackage.IHAS_MATCH_TAG: {
+                IHasMatchTag iHasMatchTag = (IHasMatchTag)theEObject;
+                T result = caseIHasMatchTag(iHasMatchTag);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ModelPackage.IHAS_OPERATION: {
+                IHasOperation iHasOperation = (IHasOperation)theEObject;
+                T result = caseIHasOperation(iHasOperation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -151,6 +174,36 @@ public class ModelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseSPEGroup(SPEGroup object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>IHas Match Tag</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IHas Match Tag</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIHasMatchTag(IHasMatchTag object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>IHas Operation</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IHas Operation</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIHasOperation(IHasOperation object) {
         return null;
     }
 

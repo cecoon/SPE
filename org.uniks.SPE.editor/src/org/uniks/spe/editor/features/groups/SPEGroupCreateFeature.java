@@ -1,15 +1,13 @@
 package org.uniks.spe.editor.features.groups;
 
+import model.MatchTag;
 import model.ModelFactory;
 import model.SPEGroup;
-import model.SPEObject;
-import model.Tag;
 
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 
 public class SPEGroupCreateFeature extends AbstractCreateFeature implements
 		ICreateFeature { 
@@ -26,7 +24,7 @@ public class SPEGroupCreateFeature extends AbstractCreateFeature implements
         Object bo = getBusinessObjectForPictogramElement(context.getTargetContainer());
         if (bo instanceof SPEGroup) {
             SPEGroup group = (SPEGroup) bo;
-            if (group.getTag().equals(Tag.DEFAULT)) {
+            if (group.getTag().equals(MatchTag.DEFAULT)) {
                 return true;
             }
         }

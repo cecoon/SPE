@@ -7,12 +7,12 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature;
-import org.eclipse.graphiti.features.impl.Reason; 
-import org.eclipse.graphiti.mm.algorithms.Text; 
+import org.eclipse.graphiti.features.impl.Reason;
+import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
-import org.eclipse.graphiti.mm.algorithms.styles.LineStyle; 
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement; 
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.uniks.spe.editor.features.CommonFeatureStyles;
 
 public class SPELinkUpdateFeature extends AbstractUpdateFeature {

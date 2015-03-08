@@ -1,10 +1,10 @@
 package org.uniks.spe.editor.features.objects.not;
 
+import model.MatchTag;
 import model.ModelFactory;
 import model.SPEObject;
-import model.Tag;
 
-import org.eclipse.graphiti.features.IFeatureProvider;  
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
 
 public class NotSPEObjectCreateFeature extends SPEObjectCreateFeature {
@@ -16,7 +16,7 @@ public class NotSPEObjectCreateFeature extends SPEObjectCreateFeature {
 	@Override
 	protected SPEObject createBusinessObject() {
         SPEObject object = ModelFactory.eINSTANCE.createSPEObject();
-        object.setTag(Tag.NOT);
+        object.setTag(MatchTag.NOT);
         return object;
 	}
 

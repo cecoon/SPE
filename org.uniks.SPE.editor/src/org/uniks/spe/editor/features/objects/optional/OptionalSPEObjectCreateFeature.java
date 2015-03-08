@@ -1,8 +1,8 @@
 package org.uniks.spe.editor.features.objects.optional;
 
+import model.MatchTag;
 import model.ModelFactory;
 import model.SPEObject;
-import model.Tag;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
@@ -16,7 +16,7 @@ public class OptionalSPEObjectCreateFeature extends SPEObjectCreateFeature {
     @Override
     protected SPEObject createBusinessObject() {
         SPEObject createSPEObject = ModelFactory.eINSTANCE.createSPEObject();
-        createSPEObject.setTag(Tag.OPTIONAL);
+        createSPEObject.setTag(MatchTag.OPTIONAL);
         return createSPEObject;
     }
 }

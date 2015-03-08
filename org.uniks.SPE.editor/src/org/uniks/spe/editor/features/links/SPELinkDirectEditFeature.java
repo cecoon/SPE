@@ -3,18 +3,15 @@ package org.uniks.spe.editor.features.links;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.MatchTag;
 import model.SPELink;
-import model.Tag;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.Shape;
 
 public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
 
@@ -66,13 +63,13 @@ public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
         link.setName(match.group(1)); 
         
         if(value.startsWith("!")){
-            link.setTag(Tag.NOT);
+            link.setTag(MatchTag.NOT);
         } 
         if(value.startsWith("?")){
-            link.setTag(Tag.OPTIONAL);
+            link.setTag(MatchTag.OPTIONAL);
         }
         if(value.startsWith(".")){
-            link.setTag(Tag.DEFAULT);
+            link.setTag(MatchTag.DEFAULT);
         }            
         
         updatePictogramElement(pictorgram);

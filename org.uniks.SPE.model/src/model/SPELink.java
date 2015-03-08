@@ -2,7 +2,6 @@
  */
 package model;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link model.SPELink#getName <em>Name</em>}</li>
  *   <li>{@link model.SPELink#getSource <em>Source</em>}</li>
  *   <li>{@link model.SPELink#getTarget <em>Target</em>}</li>
- *   <li>{@link model.SPELink#getTag <em>Tag</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface SPELink extends EObject {
+public interface SPELink extends IHasOperation, IHasMatchTag {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * The default value is <code>"*"</code>.
@@ -106,35 +104,5 @@ public interface SPELink extends EObject {
      * @generated
      */
     void setTarget(SPEObject value);
-
-    /**
-     * Returns the value of the '<em><b>Tag</b></em>' attribute.
-     * The default value is <code>"Default"</code>.
-     * The literals are from the enumeration {@link model.Tag}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Tag</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Tag</em>' attribute.
-     * @see model.Tag
-     * @see #setTag(Tag)
-     * @see model.ModelPackage#getSPELink_Tag()
-     * @model default="Default"
-     * @generated
-     */
-    Tag getTag();
-
-    /**
-     * Sets the value of the '{@link model.SPELink#getTag <em>Tag</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Tag</em>' attribute.
-     * @see model.Tag
-     * @see #getTag()
-     * @generated
-     */
-    void setTag(Tag value);
 
 } // SPELink

@@ -2,15 +2,20 @@
  */
 package model.impl;
 
-import model.*;
+import model.MatchTag;
+import model.ModelFactory;
+import model.ModelPackage;
+import model.Operations;
+import model.SPEAttribute;
+import model.SPEGroup;
+import model.SPELink;
+import model.SPEObject;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
@@ -74,8 +79,10 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
-            case ModelPackage.TAG:
-                return createTagFromString(eDataType, initialValue);
+            case ModelPackage.MATCH_TAG:
+                return createMatchTagFromString(eDataType, initialValue);
+            case ModelPackage.OPERATIONS:
+                return createOperationsFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -89,8 +96,10 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
-            case ModelPackage.TAG:
-                return convertTagToString(eDataType, instanceValue);
+            case ModelPackage.MATCH_TAG:
+                return convertMatchTagToString(eDataType, instanceValue);
+            case ModelPackage.OPERATIONS:
+                return convertOperationsToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -141,8 +150,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Tag createTagFromString(EDataType eDataType, String initialValue) {
-        Tag result = Tag.get(initialValue);
+    public MatchTag createMatchTagFromString(EDataType eDataType, String initialValue) {
+        MatchTag result = MatchTag.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
         return result;
     }
@@ -152,7 +161,27 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertTagToString(EDataType eDataType, Object instanceValue) {
+    public String convertMatchTagToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Operations createOperationsFromString(EDataType eDataType, String initialValue) {
+        Operations result = Operations.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertOperationsToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

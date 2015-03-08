@@ -1,9 +1,23 @@
 package org.uniks.spe.editor.wizards;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+
+import model.MatchTag;
 import model.ModelFactory;
 import model.SPEGroup;
-import model.Tag;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -11,24 +25,17 @@ import org.eclipse.graphiti.examples.common.FileService;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jface.operation.*;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.CoreException;
-
-import java.io.*;
-
-import org.eclipse.ui.*;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWizard;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 
 /**
@@ -122,7 +129,7 @@ public class SPEWizard extends Wizard implements INewWizard {
         URI diagramUri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             
         SPEGroup modelRoot = ModelFactory.eINSTANCE.createSPEGroup();
-        modelRoot.setTag(Tag.DEFAULT);        
+        modelRoot.setTag(MatchTag.DEFAULT);        
         URI modelUri = URI.createPlatformResourceURI(file.getFullPath().toString() + ".model", true);
         
         FileService.createEmfFileForDiagram(diagramUri, diagram);

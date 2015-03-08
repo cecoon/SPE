@@ -2,20 +2,22 @@
  */
 package model.impl;
 
+import model.IHasMatchTag;
+import model.IHasOperation;
+import model.MatchTag;
 import model.ModelFactory;
 import model.ModelPackage;
+import model.Operations;
 import model.SPEAttribute;
 import model.SPEGroup;
 import model.SPELink;
 import model.SPEObject;
-import model.Tag;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -58,7 +60,28 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EEnum tagEEnum = null;
+    private EClass iHasMatchTagEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iHasOperationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum matchTagEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum operationsEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -180,15 +203,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSPEObject_Tag() {
-        return (EAttribute)speObjectEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getSPEAttribute() {
         return speAttributeEClass;
     }
@@ -252,15 +266,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSPELink_Tag() {
-        return (EAttribute)speLinkEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getSPEGroup() {
         return speGroupEClass;
     }
@@ -279,17 +284,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSPEGroup_Tag() {
-        return (EAttribute)speGroupEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getSPEGroup_SubGroups() {
-        return (EReference)speGroupEClass.getEStructuralFeatures().get(2);
+        return (EReference)speGroupEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -297,8 +293,53 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EEnum getTag() {
-        return tagEEnum;
+    public EClass getIHasMatchTag() {
+        return iHasMatchTagEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIHasMatchTag_Tag() {
+        return (EAttribute)iHasMatchTagEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIHasOperation() {
+        return iHasOperationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIHasOperation_Operation() {
+        return (EAttribute)iHasOperationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EEnum getMatchTag() {
+        return matchTagEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EEnum getOperations() {
+        return operationsEEnum;
     }
 
     /**
@@ -335,7 +376,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         createEReference(speObjectEClass, SPE_OBJECT__ATTRIBUTES);
         createEReference(speObjectEClass, SPE_OBJECT__OUTBOUND_LINKS);
         createEReference(speObjectEClass, SPE_OBJECT__INBOUND_LINKS);
-        createEAttribute(speObjectEClass, SPE_OBJECT__TAG);
 
         speAttributeEClass = createEClass(SPE_ATTRIBUTE);
         createEAttribute(speAttributeEClass, SPE_ATTRIBUTE__NAME);
@@ -345,15 +385,20 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         createEAttribute(speLinkEClass, SPE_LINK__NAME);
         createEReference(speLinkEClass, SPE_LINK__SOURCE);
         createEReference(speLinkEClass, SPE_LINK__TARGET);
-        createEAttribute(speLinkEClass, SPE_LINK__TAG);
 
         speGroupEClass = createEClass(SPE_GROUP);
         createEReference(speGroupEClass, SPE_GROUP__OBJECTS);
-        createEAttribute(speGroupEClass, SPE_GROUP__TAG);
         createEReference(speGroupEClass, SPE_GROUP__SUB_GROUPS);
 
+        iHasMatchTagEClass = createEClass(IHAS_MATCH_TAG);
+        createEAttribute(iHasMatchTagEClass, IHAS_MATCH_TAG__TAG);
+
+        iHasOperationEClass = createEClass(IHAS_OPERATION);
+        createEAttribute(iHasOperationEClass, IHAS_OPERATION__OPERATION);
+
         // Create enums
-        tagEEnum = createEEnum(TAG);
+        matchTagEEnum = createEEnum(MATCH_TAG);
+        operationsEEnum = createEEnum(OPERATIONS);
     }
 
     /**
@@ -384,6 +429,12 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        speObjectEClass.getESuperTypes().add(this.getIHasOperation());
+        speObjectEClass.getESuperTypes().add(this.getIHasMatchTag());
+        speLinkEClass.getESuperTypes().add(this.getIHasOperation());
+        speLinkEClass.getESuperTypes().add(this.getIHasMatchTag());
+        speGroupEClass.getESuperTypes().add(this.getIHasOperation());
+        speGroupEClass.getESuperTypes().add(this.getIHasMatchTag());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(speObjectEClass, SPEObject.class, "SPEObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -392,7 +443,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         initEReference(getSPEObject_Attributes(), this.getSPEAttribute(), null, "attributes", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEObject_OutboundLinks(), this.getSPELink(), this.getSPELink_Source(), "outboundLinks", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEObject_InboundLinks(), this.getSPELink(), this.getSPELink_Target(), "inboundLinks", null, 0, -1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSPEObject_Tag(), this.getTag(), "tag", "Default", 0, 1, SPEObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(speAttributeEClass, SPEAttribute.class, "SPEAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSPEAttribute_Name(), ecorePackage.getEString(), "name", "name", 0, 1, SPEAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -402,18 +452,27 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         initEAttribute(getSPELink_Name(), ecorePackage.getEString(), "name", "*", 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPELink_Source(), this.getSPEObject(), this.getSPEObject_OutboundLinks(), "source", null, 1, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPELink_Target(), this.getSPEObject(), this.getSPEObject_InboundLinks(), "target", null, 1, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSPELink_Tag(), this.getTag(), "tag", "Default", 0, 1, SPELink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(speGroupEClass, SPEGroup.class, "SPEGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSPEGroup_Objects(), this.getSPEObject(), null, "objects", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSPEGroup_Tag(), this.getTag(), "tag", "Default", 0, 1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEGroup_SubGroups(), this.getSPEGroup(), null, "subGroups", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(iHasMatchTagEClass, IHasMatchTag.class, "IHasMatchTag", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIHasMatchTag_Tag(), this.getMatchTag(), "tag", "Default", 0, 1, IHasMatchTag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(iHasOperationEClass, IHasOperation.class, "IHasOperation", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIHasOperation_Operation(), this.getOperations(), "operation", "Nop", 0, 1, IHasOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         // Initialize enums and add enum literals
-        initEEnum(tagEEnum, Tag.class, "Tag");
-        addEEnumLiteral(tagEEnum, Tag.DEFAULT);
-        addEEnumLiteral(tagEEnum, Tag.NOT);
-        addEEnumLiteral(tagEEnum, Tag.OPTIONAL);
+        initEEnum(matchTagEEnum, MatchTag.class, "MatchTag");
+        addEEnumLiteral(matchTagEEnum, MatchTag.DEFAULT);
+        addEEnumLiteral(matchTagEEnum, MatchTag.NOT);
+        addEEnumLiteral(matchTagEEnum, MatchTag.OPTIONAL);
+
+        initEEnum(operationsEEnum, Operations.class, "Operations");
+        addEEnumLiteral(operationsEEnum, Operations.NOP);
+        addEEnumLiteral(operationsEEnum, Operations.CREATE);
+        addEEnumLiteral(operationsEEnum, Operations.DELETE);
 
         // Create resource
         createResource(eNS_URI);

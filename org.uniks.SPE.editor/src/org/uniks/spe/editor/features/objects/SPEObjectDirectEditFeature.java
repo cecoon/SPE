@@ -1,25 +1,20 @@
 package org.uniks.spe.editor.features.objects;
  
-import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern; 
-import java.util.stream.Collector;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.MatchTag;
 import model.SPEGroup;
 import model.SPEObject;
-import model.Tag;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
  
@@ -80,13 +75,13 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         
         if(isInRootGroup(speObject)){
             if(value.startsWith("!")){
-                speObject.setTag(Tag.NOT);
+                speObject.setTag(MatchTag.NOT);
             } 
             if(value.startsWith("?")){
-                speObject.setTag(Tag.OPTIONAL);
+                speObject.setTag(MatchTag.OPTIONAL);
             }
             if(value.startsWith(".")){
-                speObject.setTag(Tag.DEFAULT);
+                speObject.setTag(MatchTag.DEFAULT);
             }             
         };
         
