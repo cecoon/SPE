@@ -3,8 +3,8 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://www.example.org/model" nsPrefix="model">
   <eClassifiers xsi:type="ecore:EClass" name="SPEObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="*" iD="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="this" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="*"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//SPEAttribute" containment="true"/>
@@ -12,6 +12,7 @@
         eType="#//SPELink" eOpposite="#//SPELink/source"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inboundLinks" upperBound="-1"
         eType="#//SPELink" eOpposite="#//SPELink/target"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SPEAttribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -26,9 +27,16 @@
         eType="#//SPEObject" eOpposite="#//SPEObject/outboundLinks"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//SPEObject" eOpposite="#//SPEObject/inboundLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SPEOptionalObject" eSuperTypes="#//SPEObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SPENotObject" eSuperTypes="#//SPEObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SPENotLink" eSuperTypes="#//SPELink"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SPEOptionalLink" eSuperTypes="#//SPELink"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SPEGroup">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="#//SPEObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Tag">
+    <eLiterals name="Default"/>
+    <eLiterals name="Not" value="1"/>
+    <eLiterals name="Optional" value="3" literal="Optional"/>
+  </eClassifiers>
 </ecore:EPackage>

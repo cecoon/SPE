@@ -8,6 +8,7 @@ import model.ModelPackage;
 import model.SPEAttribute;
 import model.SPELink;
 import model.SPEObject;
+import model.Tag;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,10 +33,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link model.impl.SPEObjectImpl#getName <em>Name</em>}</li>
- *   <li>{@link model.impl.SPEObjectImpl#getClass_ <em>Class</em>}</li>
+ *   <li>{@link model.impl.SPEObjectImpl#getType <em>Type</em>}</li>
  *   <li>{@link model.impl.SPEObjectImpl#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link model.impl.SPEObjectImpl#getOutboundLinks <em>Outbound Links</em>}</li>
  *   <li>{@link model.impl.SPEObjectImpl#getInboundLinks <em>Inbound Links</em>}</li>
+ *   <li>{@link model.impl.SPEObjectImpl#getTag <em>Tag</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,7 +52,7 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
      * @generated
      * @ordered
      */
-    protected static final String NAME_EDEFAULT = "*";
+    protected static final String NAME_EDEFAULT = "this";
 
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -63,24 +65,24 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getClass_() <em>Class</em>}' attribute.
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getClass_()
+     * @see #getType()
      * @generated
      * @ordered
      */
-    protected static final String CLASS_EDEFAULT = "*";
+    protected static final String TYPE_EDEFAULT = "*";
 
     /**
-     * The cached value of the '{@link #getClass_() <em>Class</em>}' attribute.
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getClass_()
+     * @see #getType()
      * @generated
      * @ordered
      */
-    protected String class_ = CLASS_EDEFAULT;
+    protected String type = TYPE_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
@@ -111,6 +113,26 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
      * @ordered
      */
     protected EList<SPELink> inboundLinks;
+
+    /**
+     * The default value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected static final Tag TAG_EDEFAULT = Tag.DEFAULT;
+
+    /**
+     * The cached value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected Tag tag = TAG_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -157,8 +179,8 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getClass_() {
-        return class_;
+    public String getType() {
+        return type;
     }
 
     /**
@@ -166,11 +188,11 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setClass(String newClass) {
-        String oldClass = class_;
-        class_ = newClass;
+    public void setType(String newType) {
+        String oldType = type;
+        type = newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_OBJECT__CLASS, oldClass, class_));
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_OBJECT__TYPE, oldType, type));
     }
 
     /**
@@ -207,6 +229,27 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
             inboundLinks = new EObjectWithInverseResolvingEList<SPELink>(SPELink.class, this, ModelPackage.SPE_OBJECT__INBOUND_LINKS, ModelPackage.SPE_LINK__TARGET);
         }
         return inboundLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Tag getTag() {
+        return tag;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTag(Tag newTag) {
+        Tag oldTag = tag;
+        tag = newTag == null ? TAG_EDEFAULT : newTag;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_OBJECT__TAG, oldTag, tag));
     }
 
     /**
@@ -254,14 +297,16 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
         switch (featureID) {
             case ModelPackage.SPE_OBJECT__NAME:
                 return getName();
-            case ModelPackage.SPE_OBJECT__CLASS:
-                return getClass_();
+            case ModelPackage.SPE_OBJECT__TYPE:
+                return getType();
             case ModelPackage.SPE_OBJECT__ATTRIBUTES:
                 return getAttributes();
             case ModelPackage.SPE_OBJECT__OUTBOUND_LINKS:
                 return getOutboundLinks();
             case ModelPackage.SPE_OBJECT__INBOUND_LINKS:
                 return getInboundLinks();
+            case ModelPackage.SPE_OBJECT__TAG:
+                return getTag();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -278,8 +323,8 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
             case ModelPackage.SPE_OBJECT__NAME:
                 setName((String)newValue);
                 return;
-            case ModelPackage.SPE_OBJECT__CLASS:
-                setClass((String)newValue);
+            case ModelPackage.SPE_OBJECT__TYPE:
+                setType((String)newValue);
                 return;
             case ModelPackage.SPE_OBJECT__ATTRIBUTES:
                 getAttributes().clear();
@@ -292,6 +337,9 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
             case ModelPackage.SPE_OBJECT__INBOUND_LINKS:
                 getInboundLinks().clear();
                 getInboundLinks().addAll((Collection<? extends SPELink>)newValue);
+                return;
+            case ModelPackage.SPE_OBJECT__TAG:
+                setTag((Tag)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -308,8 +356,8 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
             case ModelPackage.SPE_OBJECT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case ModelPackage.SPE_OBJECT__CLASS:
-                setClass(CLASS_EDEFAULT);
+            case ModelPackage.SPE_OBJECT__TYPE:
+                setType(TYPE_EDEFAULT);
                 return;
             case ModelPackage.SPE_OBJECT__ATTRIBUTES:
                 getAttributes().clear();
@@ -319,6 +367,9 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
                 return;
             case ModelPackage.SPE_OBJECT__INBOUND_LINKS:
                 getInboundLinks().clear();
+                return;
+            case ModelPackage.SPE_OBJECT__TAG:
+                setTag(TAG_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -334,14 +385,16 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
         switch (featureID) {
             case ModelPackage.SPE_OBJECT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case ModelPackage.SPE_OBJECT__CLASS:
-                return CLASS_EDEFAULT == null ? class_ != null : !CLASS_EDEFAULT.equals(class_);
+            case ModelPackage.SPE_OBJECT__TYPE:
+                return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
             case ModelPackage.SPE_OBJECT__ATTRIBUTES:
                 return attributes != null && !attributes.isEmpty();
             case ModelPackage.SPE_OBJECT__OUTBOUND_LINKS:
                 return outboundLinks != null && !outboundLinks.isEmpty();
             case ModelPackage.SPE_OBJECT__INBOUND_LINKS:
                 return inboundLinks != null && !inboundLinks.isEmpty();
+            case ModelPackage.SPE_OBJECT__TAG:
+                return tag != TAG_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -358,8 +411,10 @@ public class SPEObjectImpl extends MinimalEObjectImpl.Container implements SPEOb
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: ");
         result.append(name);
-        result.append(", class: ");
-        result.append(class_);
+        result.append(", type: ");
+        result.append(type);
+        result.append(", tag: ");
+        result.append(tag);
         result.append(')');
         return result.toString();
     }

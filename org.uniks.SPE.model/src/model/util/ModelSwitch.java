@@ -84,31 +84,9 @@ public class ModelSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ModelPackage.SPE_OPTIONAL_OBJECT: {
-                SPEOptionalObject speOptionalObject = (SPEOptionalObject)theEObject;
-                T result = caseSPEOptionalObject(speOptionalObject);
-                if (result == null) result = caseSPEObject(speOptionalObject);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ModelPackage.SPE_NOT_OBJECT: {
-                SPENotObject speNotObject = (SPENotObject)theEObject;
-                T result = caseSPENotObject(speNotObject);
-                if (result == null) result = caseSPEObject(speNotObject);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ModelPackage.SPE_NOT_LINK: {
-                SPENotLink speNotLink = (SPENotLink)theEObject;
-                T result = caseSPENotLink(speNotLink);
-                if (result == null) result = caseSPELink(speNotLink);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ModelPackage.SPE_OPTIONAL_LINK: {
-                SPEOptionalLink speOptionalLink = (SPEOptionalLink)theEObject;
-                T result = caseSPEOptionalLink(speOptionalLink);
-                if (result == null) result = caseSPELink(speOptionalLink);
+            case ModelPackage.SPE_GROUP: {
+                SPEGroup speGroup = (SPEGroup)theEObject;
+                T result = caseSPEGroup(speGroup);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -162,62 +140,17 @@ public class ModelSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>SPE Optional Object</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>SPE Group</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SPE Optional Object</em>'.
+     * @return the result of interpreting the object as an instance of '<em>SPE Group</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseSPEOptionalObject(SPEOptionalObject object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>SPE Not Object</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SPE Not Object</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSPENotObject(SPENotObject object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>SPE Not Link</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SPE Not Link</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSPENotLink(SPENotLink object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>SPE Optional Link</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SPE Optional Link</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSPEOptionalLink(SPEOptionalLink object) {
+    public T caseSPEGroup(SPEGroup object) {
         return null;
     }
 

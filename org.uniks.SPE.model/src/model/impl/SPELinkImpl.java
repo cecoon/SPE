@@ -5,6 +5,7 @@ package model.impl;
 import model.ModelPackage;
 import model.SPELink;
 import model.SPEObject;
+import model.Tag;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link model.impl.SPELinkImpl#getName <em>Name</em>}</li>
  *   <li>{@link model.impl.SPELinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link model.impl.SPELinkImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link model.impl.SPELinkImpl#getTag <em>Tag</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,6 +72,26 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
      * @ordered
      */
     protected SPEObject target;
+
+    /**
+     * The default value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected static final Tag TAG_EDEFAULT = Tag.DEFAULT;
+
+    /**
+     * The cached value of the '{@link #getTag() <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTag()
+     * @generated
+     * @ordered
+     */
+    protected Tag tag = TAG_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -236,6 +258,27 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
      * <!-- end-user-doc -->
      * @generated
      */
+    public Tag getTag() {
+        return tag;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTag(Tag newTag) {
+        Tag oldTag = tag;
+        tag = newTag == null ? TAG_EDEFAULT : newTag;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_LINK__TAG, oldTag, tag));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -283,6 +326,8 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
             case ModelPackage.SPE_LINK__TARGET:
                 if (resolve) return getTarget();
                 return basicGetTarget();
+            case ModelPackage.SPE_LINK__TAG:
+                return getTag();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -303,6 +348,9 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
                 return;
             case ModelPackage.SPE_LINK__TARGET:
                 setTarget((SPEObject)newValue);
+                return;
+            case ModelPackage.SPE_LINK__TAG:
+                setTag((Tag)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -325,6 +373,9 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
             case ModelPackage.SPE_LINK__TARGET:
                 setTarget((SPEObject)null);
                 return;
+            case ModelPackage.SPE_LINK__TAG:
+                setTag(TAG_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -343,6 +394,8 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
                 return source != null;
             case ModelPackage.SPE_LINK__TARGET:
                 return target != null;
+            case ModelPackage.SPE_LINK__TAG:
+                return tag != TAG_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -359,6 +412,8 @@ public class SPELinkImpl extends MinimalEObjectImpl.Container implements SPELink
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", tag: ");
+        result.append(tag);
         result.append(')');
         return result.toString();
     }

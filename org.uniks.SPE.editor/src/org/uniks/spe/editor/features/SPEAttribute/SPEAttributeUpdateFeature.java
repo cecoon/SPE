@@ -62,14 +62,11 @@ public class SPEAttributeUpdateFeature extends AbstractUpdateFeature {
  
         // Set name in pictogram model
         ContainerShape cs = (ContainerShape) pictogramElement;
-        for (Shape shape : cs.getChildren()) {
-            if (shape.getGraphicsAlgorithm() instanceof Text) {
-                Text text = (Text) shape.getGraphicsAlgorithm();
-                text.setValue(newText);
-                return true;
-            }
-        }
- 
+        cs.getChildren().stream()
+            .filter(it -> it.getGraphicsAlgorithm() instanceof Text)
+            .map(it -> (Text) it.getGraphicsAlgorithm())
+            .forEach(it -> it.setValue(newText));
+     
         return false;
     }
 

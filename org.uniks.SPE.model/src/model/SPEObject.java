@@ -15,10 +15,11 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link model.SPEObject#getName <em>Name</em>}</li>
- *   <li>{@link model.SPEObject#getClass_ <em>Class</em>}</li>
+ *   <li>{@link model.SPEObject#getType <em>Type</em>}</li>
  *   <li>{@link model.SPEObject#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link model.SPEObject#getOutboundLinks <em>Outbound Links</em>}</li>
  *   <li>{@link model.SPEObject#getInboundLinks <em>Inbound Links</em>}</li>
+ *   <li>{@link model.SPEObject#getTag <em>Tag</em>}</li>
  * </ul>
  * </p>
  *
@@ -29,7 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface SPEObject extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * The default value is <code>"*"</code>.
+     * The default value is <code>"this"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -39,7 +40,7 @@ public interface SPEObject extends EObject {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see model.ModelPackage#getSPEObject_Name()
-     * @model default="*" id="true"
+     * @model default="this" id="true"
      * @generated
      */
     String getName();
@@ -55,31 +56,31 @@ public interface SPEObject extends EObject {
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Class</b></em>' attribute.
+     * Returns the value of the '<em><b>Type</b></em>' attribute.
      * The default value is <code>"*"</code>.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Class</em>' attribute isn't clear,
+     * If the meaning of the '<em>Type</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Class</em>' attribute.
-     * @see #setClass(String)
-     * @see model.ModelPackage#getSPEObject_Class()
+     * @return the value of the '<em>Type</em>' attribute.
+     * @see #setType(String)
+     * @see model.ModelPackage#getSPEObject_Type()
      * @model default="*"
      * @generated
      */
-    String getClass_();
+    String getType();
 
     /**
-     * Sets the value of the '{@link model.SPEObject#getClass_ <em>Class</em>}' attribute.
+     * Sets the value of the '{@link model.SPEObject#getType <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Class</em>' attribute.
-     * @see #getClass_()
+     * @param value the new value of the '<em>Type</em>' attribute.
+     * @see #getType()
      * @generated
      */
-    void setClass(String value);
+    void setType(String value);
 
     /**
      * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
@@ -132,5 +133,35 @@ public interface SPEObject extends EObject {
      * @generated
      */
     EList<SPELink> getInboundLinks();
+
+    /**
+     * Returns the value of the '<em><b>Tag</b></em>' attribute.
+     * The default value is <code>"Default"</code>.
+     * The literals are from the enumeration {@link model.Tag}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Tag</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Tag</em>' attribute.
+     * @see model.Tag
+     * @see #setTag(Tag)
+     * @see model.ModelPackage#getSPEObject_Tag()
+     * @model default="Default"
+     * @generated
+     */
+    Tag getTag();
+
+    /**
+     * Sets the value of the '{@link model.SPEObject#getTag <em>Tag</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tag</em>' attribute.
+     * @see model.Tag
+     * @see #getTag()
+     * @generated
+     */
+    void setTag(Tag value);
 
 } // SPEObject

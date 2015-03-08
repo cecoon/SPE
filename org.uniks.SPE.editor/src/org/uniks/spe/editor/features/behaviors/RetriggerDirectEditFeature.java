@@ -7,8 +7,7 @@ import model.SPEObject;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
-import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.features.custom.AbstractCustomFeature; 
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
@@ -26,7 +25,7 @@ public class RetriggerDirectEditFeature extends AbstractCustomFeature {
             PictogramElement mainPictogram = context.getPictogramElements()[0]; 
             Object businessObject = getBusinessObjectForPictogramElement(mainPictogram);
             
-            if(businessObject instanceof SPELink 
+            if(mainPictogram instanceof ConnectionDecorator 
                     || businessObject instanceof SPEAttribute
                     || businessObject instanceof SPEObject){
                 return true;
@@ -42,23 +41,25 @@ public class RetriggerDirectEditFeature extends AbstractCustomFeature {
         PictogramElement mainPictogram = context.getPictogramElements()[0]; 
         Object businessObject = getBusinessObjectForPictogramElement(mainPictogram);
         
-        IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();        
-        directEditingInfo.setMainPictogramElement(mainPictogram);
-        
-        if (businessObject instanceof SPELink) { 
-            
-            ConnectionDecorator linkDecorator = getLinkTextDecorator(mainPictogram);             
-            directEditingInfo.setPictogramElement(linkDecorator);       
-            directEditingInfo.setGraphicsAlgorithm(linkDecorator.getGraphicsAlgorithm());            
-        } else {
-            
-            PictogramElement shape = context.getInnerPictogramElement();            
-            directEditingInfo.setPictogramElement(shape);
-            directEditingInfo.setGraphicsAlgorithm(shape.getGraphicsAlgorithm());            
+        PictogramElement textPE;
+        Text textGA;                
+        if (mainPictogram instanceof ConnectionDecorator) {      
+             textPE = mainPictogram;
+            textGA = (Text) textPE.getGraphicsAlgorithm();            
+        } else {            
+            textPE = context.getInnerPictogramElement();            
+            textGA = (Text) textPE.getGraphicsAlgorithm();            
         }  
-
-        directEditingInfo.setActive(true);        
-        getDiagramBehavior().refresh(); 
+        
+       
+        if (textPE != null && textGA != null) {
+            IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();
+            directEditingInfo.setMainPictogramElement(mainPictogram);
+            directEditingInfo.setPictogramElement(textPE);
+            directEditingInfo.setGraphicsAlgorithm(textGA);
+            directEditingInfo.setActive(true);
+            getDiagramBehavior().refresh();
+        }
         
     }
 

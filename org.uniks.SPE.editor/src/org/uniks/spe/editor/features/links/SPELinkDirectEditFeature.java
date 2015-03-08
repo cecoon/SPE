@@ -1,20 +1,25 @@
 package org.uniks.spe.editor.features.links;
-
+ 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import model.SPEAttribute;
 import model.SPELink;
+import model.Tag;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 
 public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
 
+    private final static String TAGGED_LINK_NAME_REGEX = "^[!?\\.]?(\\w*)$";
+    
     public SPELinkDirectEditFeature(IFeatureProvider fp) {
         super(fp); 
     }
@@ -27,39 +32,50 @@ public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
     @Override
     public String getInitialValue(IDirectEditingContext context) {
         PictogramElement pictogramElement = context.getPictogramElement();
-        SPELink link = (SPELink) getBusinessObjectForPictogramElement(pictogramElement);         
+        SPELink link =  (SPELink) getBusinessObjectForPictogramElement((FreeFormConnection)pictogramElement.eContainer());         
         return link.getName();
     }
     
     @Override
     public boolean canDirectEdit(IDirectEditingContext context) {
-        PictogramElement pictorgram = context.getPictogramElement();  
-        GraphicsAlgorithm graphic = context.getGraphicsAlgorithm();        
-        
-        return getBusinessObjectForPictogramElement(pictorgram) instanceof SPELink && graphic instanceof Text ;
+        PictogramElement pictorgram = context.getPictogramElement();         
+        EObject container = pictorgram.eContainer();          
+        return container instanceof FreeFormConnection 
+                && getBusinessObjectForPictogramElement((FreeFormConnection)container) instanceof SPELink;
     }
  
  
     @Override
     public String checkValueValid(String value, IDirectEditingContext context) {   
-        value = value.replaceAll(" ", "");        
-       
-        if(value.matches("^\\w$")){
+        value = value.replaceAll(" ", "");  
+        if(value.matches(TAGGED_LINK_NAME_REGEX)){
             return null;
         }
-        
         return "invalid format.";
     }
     
     @Override
     public void setValue(String value, IDirectEditingContext context) {
         PictogramElement pictorgram = context.getPictogramElement();  
-        SPELink link = (SPELink) getBusinessObjectForPictogramElement(pictorgram);  
+        FreeFormConnection eContainer = (FreeFormConnection) pictorgram.eContainer();
+        SPELink link = (SPELink) getBusinessObjectForPictogramElement(eContainer);          
+        value = value.replaceAll(" ", "");    
         
-        value = value.replaceAll(" ", "");     
-        link.setName(value);  
-       
-        updatePictogramElement(((Shape) pictorgram).getContainer());
+        Matcher match = Pattern.compile(TAGGED_LINK_NAME_REGEX).matcher(value);
+        match.matches();        
+        link.setName(match.group(1)); 
+        
+        if(value.startsWith("!")){
+            link.setTag(Tag.NOT);
+        } 
+        if(value.startsWith("?")){
+            link.setTag(Tag.OPTIONAL);
+        }
+        if(value.startsWith(".")){
+            link.setTag(Tag.DEFAULT);
+        }            
+        
+        updatePictogramElement(pictorgram);
     }
 
 }

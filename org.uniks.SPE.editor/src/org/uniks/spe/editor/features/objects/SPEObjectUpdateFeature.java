@@ -1,16 +1,25 @@
 package org.uniks.spe.editor.features.objects;
  
+import java.util.Optional;
+
 import model.SPEObject;
+import model.Tag;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature;
 import org.eclipse.graphiti.features.impl.Reason;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.Color;
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
+import org.eclipse.graphiti.util.IColorConstant;
+import org.uniks.spe.editor.features.CommonFeatureStyles;
 
 public class SPEObjectUpdateFeature extends AbstractUpdateFeature {
 
@@ -27,53 +36,68 @@ public class SPEObjectUpdateFeature extends AbstractUpdateFeature {
     @Override
     public IReason updateNeeded(IUpdateContext context) {
         PictogramElement pictogramElement = context.getPictogramElement();
+        SPEObject object = (SPEObject) getBusinessObjectForPictogramElement(pictogramElement);
         
-        String textItShouldHave = getTextItShouldHave(pictogramElement);         
+        String textItShouldHave = SPEObjectAddFeature.createHeaderTextOfObject(object);     
         String textItHas =  getTextItHas(pictogramElement);
         
-        if(textItShouldHave.equals(textItHas)) {
-            return Reason.createFalseReason();    
+        Color foregoundIsShouldHave = manageColor(CommonFeatureStyles.getForegroundByTag(object.getTag()));
+        Color foregroundItHas = pictogramElement.getGraphicsAlgorithm().getForeground();
+        
+        if(foregoundIsShouldHave.equals(foregroundItHas) && textItShouldHave.equals(textItHas)){
+            return Reason.createFalseReason();  
         }
 
         return Reason.createTrueReason("Element is out of date");        
     }
 
     protected String getTextItHas(PictogramElement pictogramElement) {
-        ContainerShape cs = (ContainerShape) pictogramElement;
-        for (Shape shape : cs.getChildren()) {
-            if (shape.getGraphicsAlgorithm() instanceof Text) {
-                Text text = (Text) shape.getGraphicsAlgorithm();
-                return text.getValue();
-            }
-        }
-        return "";
+        ContainerShape containerShape = (ContainerShape) pictogramElement;
+        
+        Optional<Text> fristText = containerShape.getChildren().stream()
+            .filter(it -> it.getGraphicsAlgorithm() instanceof Text)
+            .map(it -> (Text) it.getGraphicsAlgorithm())
+            .findFirst();    
+        
+        return fristText.get().getValue();
     }
-
-    protected String getTextItShouldHave(PictogramElement pictogramElement) {
-        SPEObject businessObject = (SPEObject) getBusinessObjectForPictogramElement(pictogramElement);   
-        if(businessObject.getName().equals("this")){
-            return businessObject.getName();
-        }
-        return businessObject.getName() + " : " + businessObject.getClass_();
-    }
+ 
 
     @Override
-    public boolean update(IUpdateContext context) {
-        // retrieve name from business model
+    public boolean update(IUpdateContext context) { 
         PictogramElement pictogramElement = context.getPictogramElement();
-        String newText = getTextItShouldHave(pictogramElement);
- 
-        // Set name in pictogram model
-        ContainerShape cs = (ContainerShape) pictogramElement;
-        for (Shape shape : cs.getChildren()) {
-            if (shape.getGraphicsAlgorithm() instanceof Text) {
-                Text text = (Text) shape.getGraphicsAlgorithm();
-                text.setValue(newText);
-                return true;
-            }
-        }
- 
-        return false;
+        SPEObject object = (SPEObject) getBusinessObjectForPictogramElement(pictogramElement);
+        
+        //update text
+        String newText = SPEObjectAddFeature.createHeaderTextOfObject(object);
+        ContainerShape containerShape = (ContainerShape) pictogramElement;
+        
+        containerShape.getChildren().stream()
+                .filter(it -> it.getGraphicsAlgorithm() instanceof Text)
+                .map(it -> (Text) it.getGraphicsAlgorithm())
+                .forEach(it -> it.setValue(newText));
+       
+
+        //update colors
+        Tag tag = object.getTag();
+        Color foregroundItShouldHave = manageColor(CommonFeatureStyles.getForegroundByTag(tag));
+        Color backgroundItShouldHave = manageColor(CommonFeatureStyles.getBackgroundByTag(tag));
+        LineStyle lineStyleItShouldhave = CommonFeatureStyles.getLineStyleByTag(tag);
+        
+        GraphicsAlgorithm mainContainer = pictogramElement.getGraphicsAlgorithm();
+        mainContainer.setForeground(foregroundItShouldHave);
+        mainContainer.setBackground(backgroundItShouldHave);
+        mainContainer.setLineStyle(lineStyleItShouldhave);
+        
+        containerShape.getChildren().stream()
+            .filter(it -> it.getGraphicsAlgorithm() instanceof Polyline)
+            .map(it -> (Polyline) it.getGraphicsAlgorithm())
+            .forEach(it -> {
+                it.setForeground(foregroundItShouldHave);
+                it.setLineStyle(lineStyleItShouldhave);    
+            });  
+     
+        return true;
     }
 
 }

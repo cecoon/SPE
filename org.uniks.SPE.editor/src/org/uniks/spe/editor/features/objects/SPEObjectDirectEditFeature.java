@@ -1,24 +1,16 @@
 package org.uniks.spe.editor.features.objects;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
  
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern; 
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-
-
-
-
-
-
-
-
-
-
-
-import model.ModelFactory;
 import model.SPEObject;
+import model.Tag;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -30,10 +22,9 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
  
-public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
-     
-    private final static String THIS = "this";
-    private final static String OBEJCT_WITH_CLASS_REGEX = "^(\\w+):(\\w+)$"; 
+public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {     
+    private final static String THIS = SPEObjectAddFeature.THIS;
+    private final static String OBEJCT_WITH_CLASS_REGEX = "^[?!.]{0,1}(\\w+):(\\w+)$"; 
     
     public SPEObjectDirectEditFeature(IFeatureProvider fp) {
         super(fp); 
@@ -48,12 +39,7 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
     public String getInitialValue(IDirectEditingContext context) {
         PictogramElement pictogramElement = context.getPictogramElement();
         SPEObject speObject = (SPEObject) getBusinessObjectForPictogramElement(pictogramElement);  
-        
-        if(speObject.getName().equals(THIS)){
-            return THIS;
-        }
-        
-        return speObject.getName() + " : " + speObject.getClass_();
+        return SPEObjectAddFeature.createHeaderTextOfObject(speObject);
     }
     
     @Override
@@ -83,12 +69,22 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         value = value.replaceAll(" ", "");  
         if(THIS.equals(value)){
             speObject.setName(THIS); 
-            speObject.setClass(""); 
+            speObject.setType(""); 
         } else {
             Matcher match = Pattern.compile(OBEJCT_WITH_CLASS_REGEX).matcher(value);
             match.matches();        
             speObject.setName(match.group(1)); 
-            speObject.setClass(match.group(2)); 
+            speObject.setType(match.group(2));
+            
+            if(value.startsWith("!")){
+                speObject.setTag(Tag.NOT);
+            } 
+            if(value.startsWith("?")){
+                speObject.setTag(Tag.OPTIONAL);
+            }
+            if(value.startsWith(".")){
+                speObject.setTag(Tag.DEFAULT);
+            }            
         }
         
         updatePictogramElement(((Shape) pictorgram).getContainer());
@@ -114,19 +110,21 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         String objectName = split[0];
         String enteredClassName = split[1];
         
-        HashSet<String> proposals = new HashSet<String>();
-        Diagram diagram = getDiagram();
-        EList<Shape> children = diagram.getChildren();
-        for (Shape shape : children) { 
-            Object businessObject = getBusinessObjectForPictogramElement(shape.getLink().getPictogramElement());
-            if(businessObject instanceof SPEObject){
-                SPEObject object = (SPEObject) businessObject;
-                if(object.getClass_().startsWith(enteredClassName)){
-                    proposals.add(objectName + " : " + object.getClass_());           
-                }                                
-            }
-        }  
+        Stream<SPEObject> speObjectsOnDiagram = getDiagram().getChildren().stream()
+                .map(it -> getBusinessObjectForPictogramElement(it.getLink().getPictogramElement()))
+                .filter(it -> it instanceof SPEObject)
+                .map(it -> (SPEObject) it);
+
+        Set<String> proposals = speObjectsOnDiagram
+                .filter(it -> it.getType().startsWith(enteredClassName))
+                .map(it -> objectName + " : " + it.getType())
+                .collect(Collectors.toSet());
+            
         String[] result = proposals.toArray(new String[proposals.size()]);
         return result;
+    }
+    
+    public boolean containsSPEObject(PictogramElement elem){
+       return getBusinessObjectForPictogramElement(elem.getLink().getPictogramElement()) instanceof SPEObject;
     }
 }

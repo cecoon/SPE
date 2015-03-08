@@ -1,12 +1,9 @@
 package org.uniks.spe.editor.diagram;
 
 import model.SPEAttribute;
-import model.SPELink;
-import model.SPENotLink;
-import model.SPENotObject;
-import model.SPEObject;
-import model.SPEOptionalLink;
-import model.SPEOptionalObject;
+import model.SPEGroup;
+import model.SPELink; 
+import model.SPEObject; 
 
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
@@ -21,6 +18,8 @@ import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
+import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape; 
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
@@ -30,21 +29,22 @@ import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeDirectEditFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeUpdateFeature;
 import org.uniks.spe.editor.features.behaviors.RetriggerDirectEditFeature;
+import org.uniks.spe.editor.features.groups.SPEGroupAddFeature;
+import org.uniks.spe.editor.features.groups.SPEGroupCreateFeature;
+import org.uniks.spe.editor.features.groups.not.NotSPEGroupCreateFeature;
+import org.uniks.spe.editor.features.groups.optional.OptionalSPEGroupCreateFeature;
 import org.uniks.spe.editor.features.links.SPELinkAddFeature;
 import org.uniks.spe.editor.features.links.SPELinkCreateFeature;
-import org.uniks.spe.editor.features.links.SPELinkUpdateFeature;
-import org.uniks.spe.editor.features.links.SPENotLink.SPENotLinkAddFeature;
-import org.uniks.spe.editor.features.links.SPENotLink.SPENotLinkCreateFeature;
-import org.uniks.spe.editor.features.links.SPEOptionalLink.SPEOptionalLinkAddFeature;
-import org.uniks.spe.editor.features.links.SPEOptionalLink.SPEOptionalLinkCreateFeature;
+import org.uniks.spe.editor.features.links.SPELinkDirectEditFeature;
+import org.uniks.spe.editor.features.links.SPELinkUpdateFeature; 
+import org.uniks.spe.editor.features.links.not.NotSPELinkCreateFeature; 
+import org.uniks.spe.editor.features.links.optional.OptionalSPELinkCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectAddFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectDirectEditFeature;
-import org.uniks.spe.editor.features.objects.SPEObjectUpdateFeature;
-import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectAddFeature;
-import org.uniks.spe.editor.features.objects.SPENotObject.SPENotObjectCreateFeature;
-import org.uniks.spe.editor.features.objects.SPEOptionalObject.SPEOptionalObjectAddFeature;
-import org.uniks.spe.editor.features.objects.SPEOptionalObject.SPEOptionalObjectCreateFeature;
+import org.uniks.spe.editor.features.objects.SPEObjectUpdateFeature; 
+import org.uniks.spe.editor.features.objects.not.NotSPEObjectCreateFeature; 
+import org.uniks.spe.editor.features.objects.optional.OptionalSPEObjectCreateFeature;
 
 
 public class EditorFeatureProvider extends DefaultFeatureProvider {
@@ -57,9 +57,11 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	public ICreateFeature[] getCreateFeatures() {
 		return new ICreateFeature[] { 
 				new SPEAttributeCreateFeature(this),			
-				new SPENotObjectCreateFeature(this),			
-				new SPEOptionalObjectCreateFeature(this),	
-				new SPEObjectCreateFeature(this)				
+				new NotSPEObjectCreateFeature(this),			
+				new OptionalSPEObjectCreateFeature(this),	
+				new SPEObjectCreateFeature(this),			
+				new NotSPEGroupCreateFeature(this),			
+				new OptionalSPEGroupCreateFeature(this)				
 		};
 	}
 			
@@ -67,8 +69,8 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	public ICreateConnectionFeature[] getCreateConnectionFeatures() {
 		return new ICreateConnectionFeature[] {
 		        new SPELinkCreateFeature(this),
-		        new SPENotLinkCreateFeature(this),
-		        new SPEOptionalLinkCreateFeature(this)
+		        new NotSPELinkCreateFeature(this),
+		        new OptionalSPELinkCreateFeature(this)
 		};
 	}
 	
@@ -79,19 +81,21 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 
     @Override
     public IUpdateFeature getUpdateFeature(IUpdateContext context) {
-        PictogramElement pictogramElement = context.getPictogramElement();
-        if ( ! (pictogramElement instanceof ContainerShape)) {
-            return super.getUpdateFeature(context);
+        PictogramElement pictogramElement = context.getPictogramElement(); 
+        
+        if(pictogramElement instanceof ConnectionDecorator
+                && pictogramElement.getGraphicsAlgorithm() instanceof Text ){
+            return new SPELinkUpdateFeature(this); 
         }
         
-        Object bo = getBusinessObjectForPictogramElement(pictogramElement);        
-        if (bo instanceof SPEAttribute) 
-            return new SPEAttributeUpdateFeature(this);   
-        if (bo instanceof SPELink) 
-            return new SPELinkUpdateFeature(this); 
-        if (bo instanceof SPEObject) 
-            return new SPEObjectUpdateFeature(this);
-        
+        if (pictogramElement instanceof ContainerShape) {            
+            Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+            if (bo instanceof SPEAttribute)
+                return new SPEAttributeUpdateFeature(this);
+            if (bo instanceof SPEObject)
+                return new SPEObjectUpdateFeature(this);
+            
+        }
 
         return super.getUpdateFeature(context);
     }
@@ -102,8 +106,10 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 
         if (businessObject instanceof SPEAttribute) 
             return new SPEAttributeDirectEditFeature(this);
-        if (businessObject instanceof SPELink) 
-            return new SPEAttributeDirectEditFeature(this);
+        
+        if (context.getPictogramElement() instanceof ConnectionDecorator) 
+            return new SPELinkDirectEditFeature(this);
+        
         if (businessObject instanceof SPEObject) 
             return new SPEObjectDirectEditFeature(this);
         
@@ -115,40 +121,20 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	public IAddFeature getAddFeature(IAddContext context) { 
 		Object newObject = context.getNewObject();
 		
-        if (newObject instanceof SPELink) 	    
-			return getFeatureForSPELink(context);        
-		if (newObject instanceof SPEAttribute)         
-            return new SPEAttributeAddFeature(this); 		
+        if (newObject instanceof SPELink)
+            return new SPELinkAddFeature(this);    
+        
 		if (newObject instanceof SPEObject) 
-		    return getFeatureForSPEObject(context);				
+		    return new SPEObjectAddFeature(this);              
+		
+        if (newObject instanceof SPEAttribute)         
+            return new SPEAttributeAddFeature(this);  
+        
+        if (newObject instanceof SPEGroup)            
+            return new SPEGroupAddFeature(this);     
 		
 		return super.getAddFeature(context);
-	}	
-	
-	private IAddFeature getFeatureForSPELink(IAddContext context) {
-        Object newObject = context.getNewObject();
-        
-        if(newObject instanceof SPEOptionalLink)
-            return new SPEOptionalLinkAddFeature(this);    
-        if((newObject instanceof SPENotLink))
-            return new SPENotLinkAddFeature(this);    
-        
-        //default value
-        return new SPELinkAddFeature(this);              
-    }
-
-    private IAddFeature getFeatureForSPEObject(IAddContext context) {
-        Object newObject = context.getNewObject();
-        
-        if(newObject instanceof SPEOptionalObject)
-            return new SPEOptionalObjectAddFeature(this);          
-        if((newObject instanceof SPENotObject))
-            return new SPENotObjectAddFeature(this);      
-        
-        //default value
-        return new SPEObjectAddFeature(this);              
-    }
-    
+	}		
  
     
     @Override

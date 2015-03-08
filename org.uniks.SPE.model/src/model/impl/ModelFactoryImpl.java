@@ -5,6 +5,7 @@ package model.impl;
 import model.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -59,12 +60,39 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
             case ModelPackage.SPE_OBJECT: return createSPEObject();
             case ModelPackage.SPE_ATTRIBUTE: return createSPEAttribute();
             case ModelPackage.SPE_LINK: return createSPELink();
-            case ModelPackage.SPE_OPTIONAL_OBJECT: return createSPEOptionalObject();
-            case ModelPackage.SPE_NOT_OBJECT: return createSPENotObject();
-            case ModelPackage.SPE_NOT_LINK: return createSPENotLink();
-            case ModelPackage.SPE_OPTIONAL_LINK: return createSPEOptionalLink();
+            case ModelPackage.SPE_GROUP: return createSPEGroup();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
+            case ModelPackage.TAG:
+                return createTagFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
+            case ModelPackage.TAG:
+                return convertTagToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
@@ -103,9 +131,9 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SPEOptionalObject createSPEOptionalObject() {
-        SPEOptionalObjectImpl speOptionalObject = new SPEOptionalObjectImpl();
-        return speOptionalObject;
+    public SPEGroup createSPEGroup() {
+        SPEGroupImpl speGroup = new SPEGroupImpl();
+        return speGroup;
     }
 
     /**
@@ -113,9 +141,10 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SPENotObject createSPENotObject() {
-        SPENotObjectImpl speNotObject = new SPENotObjectImpl();
-        return speNotObject;
+    public Tag createTagFromString(EDataType eDataType, String initialValue) {
+        Tag result = Tag.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
     }
 
     /**
@@ -123,19 +152,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SPENotLink createSPENotLink() {
-        SPENotLinkImpl speNotLink = new SPENotLinkImpl();
-        return speNotLink;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public SPEOptionalLink createSPEOptionalLink() {
-        SPEOptionalLinkImpl speOptionalLink = new SPEOptionalLinkImpl();
-        return speOptionalLink;
+    public String convertTagToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
     }
 
     /**

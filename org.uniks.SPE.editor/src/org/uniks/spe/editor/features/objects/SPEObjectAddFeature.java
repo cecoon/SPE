@@ -1,6 +1,8 @@
 package org.uniks.spe.editor.features.objects;
 
+import model.SPEGroup;
 import model.SPEObject;
+import model.Tag;
 
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
@@ -10,6 +12,7 @@ import org.eclipse.graphiti.features.impl.AbstractAddFeature;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
@@ -20,76 +23,83 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService; 
 import org.eclipse.graphiti.util.IColorConstant;
-import org.uniks.spe.editor.features.CommonFeatureColors;
+import org.uniks.spe.editor.features.CommonFeatureStyles;
 
-public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeature {
-
-    protected IColorConstant objectTextColor = CommonFeatureColors.TEXT_FOREGROUND;
-    protected IColorConstant objectForeground = CommonFeatureColors.NORMAL_FOREGROUND;
-    protected IColorConstant objectBackground = CommonFeatureColors.NORMAL_BACKGROUND;
-    protected LineStyle lineStyle = LineStyle.SOLID;
-    
+public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeature {    
+    public static final String THIS = "this";
     
     private static final int width = 100; 
-    private static final int height = 150;
+    private static final int height = 150;   
     
-    public SPEObjectAddFeature(IFeatureProvider fp) {
+    public SPEObjectAddFeature(IFeatureProvider fp) {        
         super(fp);
     }
-
+    
     @Override
     public boolean canAdd(IAddContext context) {
-        return context.getTargetContainer() instanceof Diagram;
+        ContainerShape targetContainer = context.getTargetContainer();
+        return targetContainer instanceof Diagram 
+                || getBusinessObjectForPictogramElement(targetContainer) instanceof SPEGroup;
     }
 
     protected SPEObject getObject(IAddContext context){
         return (SPEObject) context.getNewObject();        
     }
     
+    public static String createHeaderTextOfObject(SPEObject object){     
+        if(THIS.equals(object.getName())){
+            return THIS;
+        }
+        return object.getName() + " : " + object.getType();      
+    }
+    
     @Override
     public PictogramElement add(IAddContext context) {        
-        SPEObject object = getObject(context);
+        SPEObject object = getObject(context);  
+        Diagram diagram = (Diagram) context.getTargetContainer(); 
         
-        Diagram targetDiagram = (Diagram) context.getTargetContainer();        
-        ContainerShape containerShape = createBaseContainerShape(context, targetDiagram);         
-        link(containerShape, object);
+        Tag tag = object.getTag();
+        IColorConstant fColor = CommonFeatureStyles.getForegroundByTag(tag);
+        IColorConstant bColor = CommonFeatureStyles.getBackgroundByTag(tag);
+        LineStyle linestyle = CommonFeatureStyles.getLineStyleByTag(tag); 
+            
+        ContainerShape containerShape = createBaseContainerShape(context, diagram, fColor, bColor, linestyle);         
+        link(containerShape, object);       
         
-        String headerText = object.getName() + " : " + object.getClass_();        
-        Shape shape = createHeaderShape(containerShape, headerText);
-        link(shape, object);
-        
-        createHeaderSeperationLine(containerShape);
-        
+        Shape shape = createHeaderShape(containerShape, createHeaderTextOfObject(object));
+        link(shape, object);        
+        createHeaderSeperationLine(containerShape, fColor, linestyle);        
         Graphiti.getPeCreateService().createChopboxAnchor(containerShape);        
         return containerShape;
     }
 
-    protected ContainerShape createBaseContainerShape(IAddContext context, Diagram targetDiagram) {
+    protected ContainerShape createBaseContainerShape(IAddContext context, Diagram diagram, IColorConstant fColor,
+            IColorConstant bColor, LineStyle linestyle) {
+
         IPeCreateService peCreateService = Graphiti.getPeCreateService();
-        ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
-              
+        ContainerShape containerShape = peCreateService.createContainerShape(diagram, true);
+
         IGaService gaService = Graphiti.getGaService();
-        RoundedRectangle roundedRectangle; // need to access it later
-        roundedRectangle = gaService.createRoundedRectangle(containerShape, 5, 5);
-        roundedRectangle.setForeground(manageColor(objectForeground));
-        roundedRectangle.setBackground(manageColor(objectBackground));
+        RoundedRectangle roundedRectangle = gaService.createRoundedRectangle(containerShape, 5, 5);
+        roundedRectangle.setForeground(manageColor(fColor));
+        roundedRectangle.setBackground(manageColor(bColor));
         roundedRectangle.setLineWidth(2);
-        roundedRectangle.setLineStyle(lineStyle);
-        
-        gaService.setLocationAndSize(roundedRectangle, context.getX(), context.getY(), width, height);        
-      
+        roundedRectangle.setLineStyle(linestyle);
+
+        gaService.setLocationAndSize(roundedRectangle, context.getX(), context.getY(), width, height);
+
         return containerShape;
     }
 
-    protected void createHeaderSeperationLine(ContainerShape containerShape) {
+    protected void createHeaderSeperationLine(ContainerShape containerShape, IColorConstant fColor, LineStyle lineStyle) {
         IGaService gaService = Graphiti.getGaService();        
-        IPeCreateService peCreateService = Graphiti.getPeCreateService();
+        IPeCreateService peCreateService = Graphiti.getPeCreateService(); 
         
         Shape shape = peCreateService.createShape(containerShape, false);
         
         // create and set graphics algorithm
         Polyline polyline = gaService.createPolyline(shape, new int[] { 0, 20, width, 20 });
-        polyline.setForeground(manageColor(objectForeground));
+        polyline.setForeground(manageColor(fColor));
         polyline.setLineWidth(2);
         polyline.setLineStyle(lineStyle);        
         
@@ -105,7 +115,7 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
 
         // create and set text graphics algorithm
         Text text = gaService.createText(shape, headerText);
-        text.setForeground(manageColor(objectTextColor));
+        text.setForeground(manageColor(CommonFeatureStyles.TEXT_FOREGROUND));
         text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER); 
         text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
         gaService.setLocationAndSize(text, 0, 0, width, 20);

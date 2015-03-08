@@ -49,40 +49,13 @@ public interface ModelFactory extends EFactory {
     SPELink createSPELink();
 
     /**
-     * Returns a new object of class '<em>SPE Optional Object</em>'.
+     * Returns a new object of class '<em>SPE Group</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>SPE Optional Object</em>'.
+     * @return a new object of class '<em>SPE Group</em>'.
      * @generated
      */
-    SPEOptionalObject createSPEOptionalObject();
-
-    /**
-     * Returns a new object of class '<em>SPE Not Object</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>SPE Not Object</em>'.
-     * @generated
-     */
-    SPENotObject createSPENotObject();
-
-    /**
-     * Returns a new object of class '<em>SPE Not Link</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>SPE Not Link</em>'.
-     * @generated
-     */
-    SPENotLink createSPENotLink();
-
-    /**
-     * Returns a new object of class '<em>SPE Optional Link</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>SPE Optional Link</em>'.
-     * @generated
-     */
-    SPEOptionalLink createSPEOptionalLink();
+    SPEGroup createSPEGroup();
 
     /**
      * Returns the package supported by this factory.

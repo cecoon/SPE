@@ -1,19 +1,19 @@
 package org.uniks.spe.editor.features.links;
-
-import model.SPEAttribute;
+ 
 import model.SPELink;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature;
-import org.eclipse.graphiti.features.impl.Reason;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.Shape;
-import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.graphiti.features.impl.Reason; 
+import org.eclipse.graphiti.mm.algorithms.Text; 
+import org.eclipse.graphiti.mm.algorithms.styles.Color;
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle; 
+import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement; 
+import org.uniks.spe.editor.features.CommonFeatureStyles;
 
 public class SPELinkUpdateFeature extends AbstractUpdateFeature {
 
@@ -23,50 +23,61 @@ public class SPELinkUpdateFeature extends AbstractUpdateFeature {
 
     @Override
     public boolean canUpdate(IUpdateContext context) {
-        return getBusinessObjectForPictogramElement(context.getPictogramElement()) instanceof SPELink;
+        PictogramElement pictorgram = context.getPictogramElement();
+        EObject container = pictorgram.eContainer();
+        if(container instanceof FreeFormConnection
+                && getBusinessObjectForPictogramElement((FreeFormConnection) container) instanceof SPELink
+                && pictorgram.getGraphicsAlgorithm() instanceof Text){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public IReason updateNeeded(IUpdateContext context) {
-        PictogramElement pictogramElement = context.getPictogramElement();
+        FreeFormConnection connection = (FreeFormConnection) context.getPictogramElement().eContainer(); 
+        SPELink bo = (SPELink) getBusinessObjectForPictogramElement(connection);
         
-        String textItShouldHave = getTextItShouldHave(pictogramElement);         
-        String textItHas =  getTextItHas(pictogramElement);
+        String textItShouldHave = bo.getName();   
+        String textItHas =  getTextItHas(context.getPictogramElement());
         
-        if(textItShouldHave.equals(textItHas)) {
+        Color foregoundIsShouldHave = manageColor(CommonFeatureStyles.getForegroundByTag(bo.getTag()));
+        Color foregroundItHas = connection.getGraphicsAlgorithm().getForeground();
+        
+        if(foregoundIsShouldHave.equals(foregroundItHas) && textItShouldHave.equals(textItHas)) {
             return Reason.createFalseReason();    
         }
       
         return Reason.createTrueReason("Element is out of date");        
     }
 
-    protected String getTextItHas(PictogramElement pictogramElement) {
-     
-        return "";
-    }
-
-    protected String getTextItShouldHave(PictogramElement pictogramElement) {
-        SPELink businessObject = (SPELink) getBusinessObjectForPictogramElement(pictogramElement);           
-        return businessObject.getName();
+    protected String getTextItHas(PictogramElement pictogramElement) {     
+        String value = ((Text)pictogramElement.getGraphicsAlgorithm()).getValue();
+        value = value.replaceAll(" ", "");
+        return value;
     }
 
     @Override
     public boolean update(IUpdateContext context) {
-        // retrieve name from business model
         PictogramElement pictogramElement = context.getPictogramElement();
-        String newText = getTextItShouldHave(pictogramElement);
- 
-        // Set name in pictogram model
-        ContainerShape cs = (ContainerShape) pictogramElement;
-        for (Shape shape : cs.getChildren()) {
-            if (shape.getGraphicsAlgorithm() instanceof Text) {
-                Text text = (Text) shape.getGraphicsAlgorithm();
-                text.setValue(newText);
-                return true;
-            }
-        }
- 
-        return false;
+        FreeFormConnection connection = (FreeFormConnection) context.getPictogramElement().eContainer(); 
+        SPELink bo = (SPELink) getBusinessObjectForPictogramElement(connection);
+        
+        //update text
+        String textItShouldHave = bo.getName();          
+        Text text = (Text) pictogramElement.getGraphicsAlgorithm();
+        text.setValue("   " + textItShouldHave + "   ");
+
+        //update colors        
+        Color foregoundIsShouldHave = manageColor(CommonFeatureStyles.getForegroundByTag(bo.getTag()));
+        LineStyle lineStyleItShouldHave = CommonFeatureStyles.getLineStyleByTag(bo.getTag());        
+        connection.getGraphicsAlgorithm().setForeground(foregoundIsShouldHave);
+        connection.getGraphicsAlgorithm().setLineStyle(lineStyleItShouldHave);
+        
+        connection.getConnectionDecorators().stream()
+                .forEach(it -> it.getGraphicsAlgorithm().setForeground(foregoundIsShouldHave));
+        
+        return true;
     }
 
 }
