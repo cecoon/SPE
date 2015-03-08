@@ -3,6 +3,7 @@ package org.uniks.spe.editor.features.objects;
 import model.ModelFactory;
 import model.SPEGroup;
 import model.SPEObject;
+import model.Tag;
 
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -23,15 +24,19 @@ public class SPEObjectCreateFeature extends AbstractCreateFeature implements
 
     @Override
 	public boolean canCreate(ICreateContext context) {
-        ContainerShape targetContainer = context.getTargetContainer();
-        return targetContainer instanceof Diagram 
-                || getBusinessObjectForPictogramElement(targetContainer) instanceof SPEGroup;
+        return getBusinessObjectForPictogramElement(context.getTargetContainer()) instanceof SPEGroup;
 	}
 
 	@Override
 	public Object[] create(ICreateContext context) { 
-		SPEObject object = createBusinessObject();			
-		getDiagram().eResource().getContents().add(object);		
+		SPEObject object = createBusinessObject();		
+		SPEGroup group = (SPEGroup) getBusinessObjectForPictogramElement(context.getTargetContainer());	
+		
+		group.getObjects().add(object);	
+		if(!group.getTag().equals(Tag.DEFAULT)){
+	        object.setTag(group.getTag());
+		}
+		
 		addGraphicalRepresentation(context, object);
         getFeatureProvider().getDirectEditingInfo().setActive(true);
 		return new Object[] { object };

@@ -37,9 +37,7 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
     
     @Override
     public boolean canAdd(IAddContext context) {
-        ContainerShape targetContainer = context.getTargetContainer();
-        return targetContainer instanceof Diagram 
-                || getBusinessObjectForPictogramElement(targetContainer) instanceof SPEGroup;
+        return getBusinessObjectForPictogramElement(context.getTargetContainer()) instanceof SPEGroup;
     }
 
     protected SPEObject getObject(IAddContext context){
@@ -56,14 +54,14 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
     @Override
     public PictogramElement add(IAddContext context) {        
         SPEObject object = getObject(context);  
-        Diagram diagram = (Diagram) context.getTargetContainer(); 
+        ContainerShape container = (ContainerShape) context.getTargetContainer(); 
         
         Tag tag = object.getTag();
         IColorConstant fColor = CommonFeatureStyles.getForegroundByTag(tag);
         IColorConstant bColor = CommonFeatureStyles.getBackgroundByTag(tag);
         LineStyle linestyle = CommonFeatureStyles.getLineStyleByTag(tag); 
             
-        ContainerShape containerShape = createBaseContainerShape(context, diagram, fColor, bColor, linestyle);         
+        ContainerShape containerShape = createBaseContainerShape(context, container, fColor, bColor, linestyle);         
         link(containerShape, object);       
         
         Shape shape = createHeaderShape(containerShape, createHeaderTextOfObject(object));
@@ -73,11 +71,11 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         return containerShape;
     }
 
-    protected ContainerShape createBaseContainerShape(IAddContext context, Diagram diagram, IColorConstant fColor,
+    protected ContainerShape createBaseContainerShape(IAddContext context, ContainerShape container, IColorConstant fColor,
             IColorConstant bColor, LineStyle linestyle) {
 
         IPeCreateService peCreateService = Graphiti.getPeCreateService();
-        ContainerShape containerShape = peCreateService.createContainerShape(diagram, true);
+        ContainerShape containerShape = peCreateService.createContainerShape(container, true);
 
         IGaService gaService = Graphiti.getGaService();
         RoundedRectangle roundedRectangle = gaService.createRoundedRectangle(containerShape, 5, 5);

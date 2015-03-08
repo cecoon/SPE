@@ -278,13 +278,22 @@ public interface ModelPackage extends EPackage {
     int SPE_GROUP__TAG = 1;
 
     /**
+     * The feature id for the '<em><b>Sub Groups</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_GROUP__SUB_GROUPS = 2;
+
+    /**
      * The number of structural features of the '<em>SPE Group</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_GROUP_FEATURE_COUNT = 2;
+    int SPE_GROUP_FEATURE_COUNT = 3;
 
     /**
      * The number of operations of the '<em>SPE Group</em>' class.
@@ -501,6 +510,17 @@ public interface ModelPackage extends EPackage {
     EAttribute getSPEGroup_Tag();
 
     /**
+     * Returns the meta object for the containment reference list '{@link model.SPEGroup#getSubGroups <em>Sub Groups</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Sub Groups</em>'.
+     * @see model.SPEGroup#getSubGroups()
+     * @see #getSPEGroup()
+     * @generated
+     */
+    EReference getSPEGroup_SubGroups();
+
+    /**
      * Returns the meta object for enum '{@link model.Tag <em>Tag</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -684,6 +704,14 @@ public interface ModelPackage extends EPackage {
          * @generated
          */
         EAttribute SPE_GROUP__TAG = eINSTANCE.getSPEGroup_Tag();
+
+        /**
+         * The meta object literal for the '<em><b>Sub Groups</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SPE_GROUP__SUB_GROUPS = eINSTANCE.getSPEGroup_SubGroups();
 
         /**
          * The meta object literal for the '{@link model.Tag <em>Tag</em>}' enum.

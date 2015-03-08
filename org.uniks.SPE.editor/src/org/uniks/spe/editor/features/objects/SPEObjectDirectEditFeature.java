@@ -9,6 +9,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.SPEGroup;
 import model.SPEObject;
 import model.Tag;
 
@@ -75,7 +76,9 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
             match.matches();        
             speObject.setName(match.group(1)); 
             speObject.setType(match.group(2));
-            
+        }
+        
+        if(isInRootGroup(speObject)){
             if(value.startsWith("!")){
                 speObject.setTag(Tag.NOT);
             } 
@@ -84,10 +87,18 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
             }
             if(value.startsWith(".")){
                 speObject.setTag(Tag.DEFAULT);
-            }            
-        }
+            }             
+        };
         
         updatePictogramElement(((Shape) pictorgram).getContainer());
+    }
+
+    protected boolean isInRootGroup(SPEObject speObject) {
+        return getRootGroup().getObjects().contains(speObject);
+    }
+
+    protected SPEGroup getRootGroup() {
+        return (SPEGroup) getBusinessObjectForPictogramElement(getDiagram().getLink().getPictogramElement());
     }
 
     @Override
@@ -108,16 +119,16 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         }
 
         String objectName = split[0];
-        String enteredClassName = split[1];
+        String enteredClassName = split[1];        
+        SPEGroup rootGroup = getRootGroup();        
+        Stream<SPEObject> flatMap = rootGroup.getSubGroups().stream()
+                .map(it -> it.getObjects())
+                .flatMap(it -> it.stream());        
+        Stream<SPEObject> allObjects = Stream.concat(flatMap, rootGroup.getObjects().stream());    
         
-        Stream<SPEObject> speObjectsOnDiagram = getDiagram().getChildren().stream()
-                .map(it -> getBusinessObjectForPictogramElement(it.getLink().getPictogramElement()))
-                .filter(it -> it instanceof SPEObject)
-                .map(it -> (SPEObject) it);
-
-        Set<String> proposals = speObjectsOnDiagram
-                .filter(it -> it.getType().startsWith(enteredClassName))
-                .map(it -> objectName + " : " + it.getType())
+        Set<String> proposals = allObjects.map(it -> it.getType())
+                .filter(it -> it.startsWith(enteredClassName))
+                .map(it -> objectName + " : " + it)
                 .collect(Collectors.toSet());
             
         String[] result = proposals.toArray(new String[proposals.size()]);

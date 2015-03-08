@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link model.SPEGroup#getObjects <em>Objects</em>}</li>
  *   <li>{@link model.SPEGroup#getTag <em>Tag</em>}</li>
+ *   <li>{@link model.SPEGroup#getSubGroups <em>Sub Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -69,5 +70,21 @@ public interface SPEGroup extends EObject {
      * @generated
      */
     void setTag(Tag value);
+
+    /**
+     * Returns the value of the '<em><b>Sub Groups</b></em>' containment reference list.
+     * The list contents are of type {@link model.SPEGroup}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Sub Groups</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Sub Groups</em>' containment reference list.
+     * @see model.ModelPackage#getSPEGroup_SubGroups()
+     * @model containment="true"
+     * @generated
+     */
+    EList<SPEGroup> getSubGroups();
 
 } // SPEGroup

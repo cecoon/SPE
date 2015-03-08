@@ -288,6 +288,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getSPEGroup_SubGroups() {
+        return (EReference)speGroupEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getTag() {
         return tagEEnum;
     }
@@ -341,6 +350,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         speGroupEClass = createEClass(SPE_GROUP);
         createEReference(speGroupEClass, SPE_GROUP__OBJECTS);
         createEAttribute(speGroupEClass, SPE_GROUP__TAG);
+        createEReference(speGroupEClass, SPE_GROUP__SUB_GROUPS);
 
         // Create enums
         tagEEnum = createEEnum(TAG);
@@ -397,6 +407,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         initEClass(speGroupEClass, SPEGroup.class, "SPEGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSPEGroup_Objects(), this.getSPEObject(), null, "objects", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSPEGroup_Tag(), this.getTag(), "tag", "Default", 0, 1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSPEGroup_SubGroups(), this.getSPEGroup(), null, "subGroups", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(tagEEnum, Tag.class, "Tag");

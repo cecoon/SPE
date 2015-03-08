@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link model.impl.SPEGroupImpl#getObjects <em>Objects</em>}</li>
  *   <li>{@link model.impl.SPEGroupImpl#getTag <em>Tag</em>}</li>
+ *   <li>{@link model.impl.SPEGroupImpl#getSubGroups <em>Sub Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,6 +68,16 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * @ordered
      */
     protected Tag tag = TAG_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getSubGroups() <em>Sub Groups</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSubGroups()
+     * @generated
+     * @ordered
+     */
+    protected EList<SPEGroup> subGroups;
 
     /**
      * <!-- begin-user-doc -->
@@ -125,11 +136,25 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<SPEGroup> getSubGroups() {
+        if (subGroups == null) {
+            subGroups = new EObjectContainmentEList<SPEGroup>(SPEGroup.class, this, ModelPackage.SPE_GROUP__SUB_GROUPS);
+        }
+        return subGroups;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case ModelPackage.SPE_GROUP__OBJECTS:
                 return ((InternalEList<?>)getObjects()).basicRemove(otherEnd, msgs);
+            case ModelPackage.SPE_GROUP__SUB_GROUPS:
+                return ((InternalEList<?>)getSubGroups()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -146,6 +171,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 return getObjects();
             case ModelPackage.SPE_GROUP__TAG:
                 return getTag();
+            case ModelPackage.SPE_GROUP__SUB_GROUPS:
+                return getSubGroups();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -166,6 +193,10 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
             case ModelPackage.SPE_GROUP__TAG:
                 setTag((Tag)newValue);
                 return;
+            case ModelPackage.SPE_GROUP__SUB_GROUPS:
+                getSubGroups().clear();
+                getSubGroups().addAll((Collection<? extends SPEGroup>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -184,6 +215,9 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
             case ModelPackage.SPE_GROUP__TAG:
                 setTag(TAG_EDEFAULT);
                 return;
+            case ModelPackage.SPE_GROUP__SUB_GROUPS:
+                getSubGroups().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -200,6 +234,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 return objects != null && !objects.isEmpty();
             case ModelPackage.SPE_GROUP__TAG:
                 return tag != TAG_EDEFAULT;
+            case ModelPackage.SPE_GROUP__SUB_GROUPS:
+                return subGroups != null && !subGroups.isEmpty();
         }
         return super.eIsSet(featureID);
     }

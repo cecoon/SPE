@@ -33,6 +33,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
         eType="#//SPEObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" defaultValueLiteral="Default"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subGroups" upperBound="-1"
+        eType="#//SPEGroup" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Tag">
     <eLiterals name="Default"/>

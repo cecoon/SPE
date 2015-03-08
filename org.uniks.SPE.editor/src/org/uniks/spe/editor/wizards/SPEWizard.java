@@ -1,12 +1,15 @@
 package org.uniks.spe.editor.wizards;
 
 import model.ModelFactory;
+import model.SPEGroup;
+import model.Tag;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.graphiti.examples.common.FileService;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -117,16 +120,28 @@ public class SPEWizard extends Wizard implements INewWizard {
     private void createDiagram(IFile file, IProgressMonitor monitor){
         Diagram diagram = Graphiti.getPeCreateService().createDiagram(DIAGRAM_TYPE_ID, file.getName(), true);
         URI diagramUri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-       
+            
+        SPEGroup modelRoot = ModelFactory.eINSTANCE.createSPEGroup();
+        modelRoot.setTag(Tag.DEFAULT);        
+        URI modelUri = URI.createPlatformResourceURI(file.getFullPath().toString() + ".model", true);
+        
         FileService.createEmfFileForDiagram(diagramUri, diagram);
         
+        diagram.setLink(PictogramsFactory.eINSTANCE.createPictogramLink());
+        diagram.getLink().getBusinessObjects().add(modelRoot);
+                
         ResourceSet resourceSet = diagram.eResource().getResourceSet();
-        Resource resource = resourceSet.getResource(diagramUri, true);        
-        resource.setTrackingModification(true);
-        resource.getContents().add(diagram);
+        Resource diagramResource = resourceSet.getResource(diagramUri, true);        
+        diagramResource.setTrackingModification(true);
+        diagramResource.getContents().add(diagram);
+        
+        Resource modelResource = resourceSet.createResource(modelUri);
+        modelResource.setTrackingModification(true);
+        modelResource.getContents().add(modelRoot);
         
         try {
-            resource.save(Collections.emptyMap());
+            modelResource.save(Collections.emptyMap());
+            diagramResource.save(Collections.emptyMap());
         } catch (IOException e) { 
             e.printStackTrace();
         }        

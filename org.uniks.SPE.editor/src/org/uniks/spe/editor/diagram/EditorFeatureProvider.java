@@ -11,17 +11,20 @@ import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.ILayoutFeature; 
+import org.eclipse.graphiti.features.IMoveShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
+import org.eclipse.graphiti.features.context.IMoveShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape; 
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.uniks.spe.editor.features.LayoutDomainObjectFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
@@ -40,6 +43,7 @@ import org.uniks.spe.editor.features.links.SPELinkUpdateFeature;
 import org.uniks.spe.editor.features.links.not.NotSPELinkCreateFeature; 
 import org.uniks.spe.editor.features.links.optional.OptionalSPELinkCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectAddFeature;
+import org.uniks.spe.editor.features.objects.SPEObjectCanMoveFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectCreateFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectDirectEditFeature;
 import org.uniks.spe.editor.features.objects.SPEObjectUpdateFeature; 
@@ -73,6 +77,16 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 		        new OptionalSPELinkCreateFeature(this)
 		};
 	}
+	
+	@Override
+	public IMoveShapeFeature getMoveShapeFeature(IMoveShapeContext context) {
+	    Shape shape = context.getShape();
+	    Object bo = getBusinessObjectForPictogramElement(shape);
+	    if (bo instanceof SPEObject) {
+	        return new SPEObjectCanMoveFeature(this);
+	    }
+	    return super.getMoveShapeFeature(context);
+	 } 
 	
 	@Override
     public ICustomFeature[] getCustomFeatures(ICustomContext context) {
