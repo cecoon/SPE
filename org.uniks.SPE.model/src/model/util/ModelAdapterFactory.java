@@ -2,17 +2,13 @@
  */
 package model.util;
 
-import model.IHasMatchTag;
-import model.IHasOperation;
-import model.ModelPackage;
-import model.SPEAttribute;
-import model.SPEGroup;
-import model.SPELink;
-import model.SPEObject;
+import model.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**

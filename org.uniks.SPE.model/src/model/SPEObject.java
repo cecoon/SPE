@@ -54,7 +54,7 @@ public interface SPEObject extends IHasOperation, IHasMatchTag {
 
     /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
-     * The default value is <code>"*"</code>.
+     * The default value is <code>"Class"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -64,7 +64,7 @@ public interface SPEObject extends IHasOperation, IHasMatchTag {
      * @return the value of the '<em>Type</em>' attribute.
      * @see #setType(String)
      * @see model.ModelPackage#getSPEObject_Type()
-     * @model default="*"
+     * @model default="Class"
      * @generated
      */
     String getType();

@@ -342,13 +342,31 @@ public interface ModelPackage extends EPackage {
     int SPE_GROUP__OBJECTS = IHAS_OPERATION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_GROUP__NAME = IHAS_OPERATION_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_GROUP__LINKS = IHAS_OPERATION_FEATURE_COUNT + 3;
+
+    /**
      * The feature id for the '<em><b>Sub Groups</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_GROUP__SUB_GROUPS = IHAS_OPERATION_FEATURE_COUNT + 2;
+    int SPE_GROUP__SUB_GROUPS = IHAS_OPERATION_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>SPE Group</em>' class.
@@ -357,7 +375,7 @@ public interface ModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SPE_GROUP_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 3;
+    int SPE_GROUP_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 5;
 
     /**
      * The number of operations of the '<em>SPE Group</em>' class.
@@ -588,6 +606,28 @@ public interface ModelPackage extends EPackage {
     EReference getSPEGroup_Objects();
 
     /**
+     * Returns the meta object for the attribute '{@link model.SPEGroup#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see model.SPEGroup#getName()
+     * @see #getSPEGroup()
+     * @generated
+     */
+    EAttribute getSPEGroup_Name();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link model.SPEGroup#getLinks <em>Links</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Links</em>'.
+     * @see model.SPEGroup#getLinks()
+     * @see #getSPEGroup()
+     * @generated
+     */
+    EReference getSPEGroup_Links();
+
+    /**
      * Returns the meta object for the containment reference list '{@link model.SPEGroup#getSubGroups <em>Sub Groups</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -810,6 +850,22 @@ public interface ModelPackage extends EPackage {
          * @generated
          */
         EReference SPE_GROUP__OBJECTS = eINSTANCE.getSPEGroup_Objects();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SPE_GROUP__NAME = eINSTANCE.getSPEGroup_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Links</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SPE_GROUP__LINKS = eINSTANCE.getSPEGroup_Links();
 
         /**
          * The meta object literal for the '<em><b>Sub Groups</b></em>' containment reference list feature.

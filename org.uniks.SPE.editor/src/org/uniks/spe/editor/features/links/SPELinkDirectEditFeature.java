@@ -15,7 +15,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 
 public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
 
-    private final static String TAGGED_LINK_NAME_REGEX = "^[!?\\.]?(\\w*)$";
+    private final static String TAGGED_LINK_NAME_REGEX = "^[!?\\.]?(\\w+)$";
     
     public SPELinkDirectEditFeature(IFeatureProvider fp) {
         super(fp); 

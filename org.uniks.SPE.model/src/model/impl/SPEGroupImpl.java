@@ -9,15 +9,20 @@ import model.MatchTag;
 import model.ModelPackage;
 import model.Operations;
 import model.SPEGroup;
+import model.SPELink;
 import model.SPEObject;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -31,6 +36,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link model.impl.SPEGroupImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link model.impl.SPEGroupImpl#getTag <em>Tag</em>}</li>
  *   <li>{@link model.impl.SPEGroupImpl#getObjects <em>Objects</em>}</li>
+ *   <li>{@link model.impl.SPEGroupImpl#getName <em>Name</em>}</li>
+ *   <li>{@link model.impl.SPEGroupImpl#getLinks <em>Links</em>}</li>
  *   <li>{@link model.impl.SPEGroupImpl#getSubGroups <em>Sub Groups</em>}</li>
  * </ul>
  * </p>
@@ -87,6 +94,36 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * @ordered
      */
     protected EList<SPEObject> objects;
+
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = "MySPEDiagram";
+
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getLinks() <em>Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<SPELink> links;
 
     /**
      * The cached value of the '{@link #getSubGroups() <em>Sub Groups</em>}' containment reference list.
@@ -176,6 +213,39 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_GROUP__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<SPELink> getLinks() {
+        if (links == null) {
+            links = new EObjectContainmentEList<SPELink>(SPELink.class, this, ModelPackage.SPE_GROUP__LINKS);
+        }
+        return links;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<SPEGroup> getSubGroups() {
         if (subGroups == null) {
             subGroups = new EObjectContainmentEList<SPEGroup>(SPEGroup.class, this, ModelPackage.SPE_GROUP__SUB_GROUPS);
@@ -193,6 +263,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
         switch (featureID) {
             case ModelPackage.SPE_GROUP__OBJECTS:
                 return ((InternalEList<?>)getObjects()).basicRemove(otherEnd, msgs);
+            case ModelPackage.SPE_GROUP__LINKS:
+                return ((InternalEList<?>)getLinks()).basicRemove(otherEnd, msgs);
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 return ((InternalEList<?>)getSubGroups()).basicRemove(otherEnd, msgs);
         }
@@ -213,6 +285,10 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 return getTag();
             case ModelPackage.SPE_GROUP__OBJECTS:
                 return getObjects();
+            case ModelPackage.SPE_GROUP__NAME:
+                return getName();
+            case ModelPackage.SPE_GROUP__LINKS:
+                return getLinks();
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 return getSubGroups();
         }
@@ -237,6 +313,13 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
             case ModelPackage.SPE_GROUP__OBJECTS:
                 getObjects().clear();
                 getObjects().addAll((Collection<? extends SPEObject>)newValue);
+                return;
+            case ModelPackage.SPE_GROUP__NAME:
+                setName((String)newValue);
+                return;
+            case ModelPackage.SPE_GROUP__LINKS:
+                getLinks().clear();
+                getLinks().addAll((Collection<? extends SPELink>)newValue);
                 return;
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 getSubGroups().clear();
@@ -263,6 +346,12 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
             case ModelPackage.SPE_GROUP__OBJECTS:
                 getObjects().clear();
                 return;
+            case ModelPackage.SPE_GROUP__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case ModelPackage.SPE_GROUP__LINKS:
+                getLinks().clear();
+                return;
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 getSubGroups().clear();
                 return;
@@ -284,6 +373,10 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 return tag != TAG_EDEFAULT;
             case ModelPackage.SPE_GROUP__OBJECTS:
                 return objects != null && !objects.isEmpty();
+            case ModelPackage.SPE_GROUP__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case ModelPackage.SPE_GROUP__LINKS:
+                return links != null && !links.isEmpty();
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 return subGroups != null && !subGroups.isEmpty();
         }
@@ -336,6 +429,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
         result.append(operation);
         result.append(", tag: ");
         result.append(tag);
+        result.append(", name: ");
+        result.append(name);
         result.append(')');
         return result.toString();
     }

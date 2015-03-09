@@ -129,8 +129,15 @@ public class SPEWizard extends Wizard implements INewWizard {
         URI diagramUri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             
         SPEGroup modelRoot = ModelFactory.eINSTANCE.createSPEGroup();
-        modelRoot.setTag(MatchTag.DEFAULT);        
-        URI modelUri = URI.createPlatformResourceURI(file.getFullPath().toString() + ".model", true);
+        modelRoot.setTag(MatchTag.DEFAULT); 
+        String rootName = file.getName();
+        if(file.getName().contains(".")){
+            String[] split = file.getName().split("\\.");
+            rootName = split[0];
+        }              
+        modelRoot.setName(rootName);
+        
+        URI modelUri = URI.createPlatformResourceURI(file.getFullPath().toString() + "model", true);
         
         FileService.createEmfFileForDiagram(diagramUri, diagram);
         

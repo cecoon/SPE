@@ -110,7 +110,7 @@ public class SPEWizardPage extends WizardPage {
 				containerText.setText(container.getFullPath().toString());
 			}
 		}
-		fileText.setText("new_file.spe");
+		fileText.setText("MyDiagram.spe");
 	}
 
 	/**

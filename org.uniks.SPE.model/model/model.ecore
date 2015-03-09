@@ -5,7 +5,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="this" iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="*"/>
+        defaultValueLiteral="Class"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//SPEAttribute" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outboundLinks" upperBound="-1"
@@ -21,15 +21,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SPELink" eSuperTypes="#//IHasOperation #//IHasMatchTag">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="*"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
-        eType="#//SPEObject" eOpposite="#//SPEObject/outboundLinks"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        eType="#//SPEObject" eOpposite="#//SPEObject/inboundLinks"/>
+        defaultValueLiteral="has"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//SPEObject"
+        eOpposite="#//SPEObject/outboundLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//SPEObject"
+        eOpposite="#//SPEObject/inboundLinks"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SPEGroup" eSuperTypes="#//IHasOperation #//IHasMatchTag">
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
         eType="#//SPEObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="MySPEDiagram"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="links" upperBound="-1"
+        eType="#//SPELink" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subGroups" upperBound="-1"
         eType="#//SPEGroup" containment="true"/>
   </eClassifiers>

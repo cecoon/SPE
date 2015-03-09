@@ -76,7 +76,7 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         ConnectionDecorator textDecorator = peCreateService.createConnectionDecorator(connection, true, 0.5, true);
         Text text = gaService.createDefaultText(getDiagram(),textDecorator);
         text.setForeground(manageColor(IColorConstant.BLACK));        
-        text.setValue("     " + labelText + "    "); //text wont accept any size increase nor updates its size on overflow...
+        text.setValue("   " + labelText + "   "); //text wont accept any size increase nor updates its size on overflow...
         gaService.setLocationAndSize(text, 0, 0, 0, 0);
              
         IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();

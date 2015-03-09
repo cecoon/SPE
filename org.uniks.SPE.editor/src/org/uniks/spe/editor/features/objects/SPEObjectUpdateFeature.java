@@ -48,7 +48,7 @@ public class SPEObjectUpdateFeature extends AbstractUpdateFeature {
         }
 
         return Reason.createTrueReason("Element is out of date");        
-    }
+    } 
 
     protected String getTextItHas(PictogramElement pictogramElement) {
         ContainerShape containerShape = (ContainerShape) pictogramElement;

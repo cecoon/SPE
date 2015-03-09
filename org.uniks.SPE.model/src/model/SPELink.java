@@ -24,7 +24,7 @@ package model;
 public interface SPELink extends IHasOperation, IHasMatchTag {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * The default value is <code>"*"</code>.
+     * The default value is <code>"has"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -34,7 +34,7 @@ public interface SPELink extends IHasOperation, IHasMatchTag {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see model.ModelPackage#getSPELink_Name()
-     * @model default="*"
+     * @model default="has"
      * @generated
      */
     String getName();
@@ -62,7 +62,7 @@ public interface SPELink extends IHasOperation, IHasMatchTag {
      * @see #setSource(SPEObject)
      * @see model.ModelPackage#getSPELink_Source()
      * @see model.SPEObject#getOutboundLinks
-     * @model opposite="outboundLinks" required="true"
+     * @model opposite="outboundLinks"
      * @generated
      */
     SPEObject getSource();
@@ -90,7 +90,7 @@ public interface SPELink extends IHasOperation, IHasMatchTag {
      * @see #setTarget(SPEObject)
      * @see model.ModelPackage#getSPELink_Target()
      * @see model.SPEObject#getInboundLinks
-     * @model opposite="inboundLinks" required="true"
+     * @model opposite="inboundLinks"
      * @generated
      */
     SPEObject getTarget();

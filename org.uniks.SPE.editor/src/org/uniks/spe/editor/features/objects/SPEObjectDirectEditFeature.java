@@ -19,7 +19,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
  
 public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {     
-    private final static String THIS = SPEObjectAddFeature.THIS;
     private final static String OBEJCT_WITH_CLASS_REGEX = "^[?!.]{0,1}(\\w+):(\\w+)$"; 
     
     public SPEObjectDirectEditFeature(IFeatureProvider fp) {
@@ -50,7 +49,7 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
     public String checkValueValid(String value, IDirectEditingContext context) {   
         value = value.replaceAll(" ", "");        
        
-       if(THIS.equals(value) || value.matches(OBEJCT_WITH_CLASS_REGEX)){
+       if(value.matches(OBEJCT_WITH_CLASS_REGEX)){
            return null;  // null means, that the value is valid
        };
  
@@ -62,16 +61,12 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         PictogramElement pictorgram = context.getPictogramElement();  
         SPEObject speObject = (SPEObject) getBusinessObjectForPictogramElement(pictorgram);  
         
-        value = value.replaceAll(" ", "");  
-        if(THIS.equals(value)){
-            speObject.setName(THIS); 
-            speObject.setType(""); 
-        } else {
-            Matcher match = Pattern.compile(OBEJCT_WITH_CLASS_REGEX).matcher(value);
-            match.matches();        
-            speObject.setName(match.group(1)); 
-            speObject.setType(match.group(2));
-        }
+        value = value.replaceAll(" ", ""); 
+        
+        Matcher match = Pattern.compile(OBEJCT_WITH_CLASS_REGEX).matcher(value);
+        match.matches();        
+        speObject.setName(match.group(1)); 
+        speObject.setType(match.group(2));       
         
         if(isInRootGroup(speObject)){
             if(value.startsWith("!")){

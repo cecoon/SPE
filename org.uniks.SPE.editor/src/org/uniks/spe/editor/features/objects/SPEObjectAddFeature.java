@@ -45,10 +45,7 @@ public class SPEObjectAddFeature extends AbstractAddFeature implements IAddFeatu
         return (SPEObject) context.getNewObject();        
     }
     
-    public static String createHeaderTextOfObject(SPEObject object){     
-        if(THIS.equals(object.getName())){
-            return THIS;
-        }
+    public static String createHeaderTextOfObject(SPEObject object){    
         return object.getName() + " : " + object.getType();      
     }
     

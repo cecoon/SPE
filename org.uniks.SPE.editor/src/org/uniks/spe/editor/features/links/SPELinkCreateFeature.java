@@ -1,6 +1,7 @@
 package org.uniks.spe.editor.features.links;
 
 import model.ModelFactory;
+import model.SPEGroup;
 import model.SPELink;
 import model.SPEObject;
 
@@ -42,19 +43,22 @@ public class SPELinkCreateFeature extends AbstractCreateConnectionFeature implem
     public Connection create(ICreateConnectionContext context) {
         SPEObject src = (SPEObject) getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
         SPEObject tgt = (SPEObject) getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
-
+        
+        AddConnectionContext addContext = new AddConnectionContext(context.getSourceAnchor(), context.getTargetAnchor());
+        
         SPELink speLink = createBusinessObject();
         src.getOutboundLinks().add(speLink);
-        tgt.getInboundLinks().add(speLink);
-        speLink.setSource(src);
-        speLink.setTarget(tgt);
-        getDiagram().eResource().getContents().add(speLink);
-
-        AddConnectionContext addContext = new AddConnectionContext(context.getSourceAnchor(), context.getTargetAnchor());
-        addContext.setNewObject(speLink);
+        tgt.getInboundLinks().add(speLink);           
+        getRootGroup().getLinks().add(speLink);         
+       
+        addContext.setNewObject(speLink);        
         Connection newConnection = (Connection) getFeatureProvider().addIfPossible(addContext); 
         getFeatureProvider().getDirectEditingInfo().setActive(true);
         return newConnection;
+    } 
+    
+    protected SPEGroup getRootGroup() {
+        return (SPEGroup) getBusinessObjectForPictogramElement(getDiagram().getLink().getPictogramElement());
     }
 
 }

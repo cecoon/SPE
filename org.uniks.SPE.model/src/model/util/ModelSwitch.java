@@ -2,16 +2,11 @@
  */
 package model.util;
 
-import model.IHasMatchTag;
-import model.IHasOperation;
-import model.ModelPackage;
-import model.SPEAttribute;
-import model.SPEGroup;
-import model.SPELink;
-import model.SPEObject;
+import model.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
