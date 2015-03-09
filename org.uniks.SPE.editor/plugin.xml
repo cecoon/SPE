@@ -18,7 +18,10 @@
             id="org.uniks.SPE.editor.editorDiagramTypeProvider">
          <diagramType
                id="org.uniks.SPE.editor.editorDiagramType">
-         </diagramType>
+         </diagramType> 
+          <imageProvider 
+            id="org.uniks.spe.editor.PlatformImageProvider">
+      </imageProvider>
       </diagramTypeProvider>
    </extension>
    <extension
@@ -35,5 +38,11 @@
             name="Story Pattern Editor File">
       </wizard>
    </extension>
-
+   <extension
+         point="org.eclipse.graphiti.ui.imageProviders">
+      <imageProvider
+            class="org.uniks.spe.editor.PlatformImageProvider"
+            id="org.uniks.spe.editor.PlatformImageProvider">
+      </imageProvider>
+   </extension> 
 </plugin>

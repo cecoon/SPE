@@ -88,14 +88,7 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         updatePictogramElement(((Shape) pictorgram).getContainer());
     }
 
-    protected boolean isInRootGroup(SPEObject speObject) {
-        return getRootGroup().getObjects().contains(speObject);
-    }
-
-    protected SPEGroup getRootGroup() {
-        return (SPEGroup) getBusinessObjectForPictogramElement(getDiagram().getLink().getPictogramElement());
-    }
-
+ 
     @Override
     public boolean isAutoCompletionEnabled() {
         return true;
@@ -115,19 +108,31 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
 
         String objectName = split[0];
         String enteredClassName = split[1];        
-        SPEGroup rootGroup = getRootGroup();        
-        Stream<SPEObject> flatMap = rootGroup.getSubGroups().stream()
-                .map(it -> it.getObjects())
-                .flatMap(it -> it.stream());        
-        Stream<SPEObject> allObjects = Stream.concat(flatMap, rootGroup.getObjects().stream());    
-        
-        Set<String> proposals = allObjects.map(it -> it.getType())
+        Set<String> proposals = getAllObjects().map(it -> it.getType())
                 .filter(it -> it.startsWith(enteredClassName))
                 .map(it -> objectName + " : " + it)
                 .collect(Collectors.toSet());
             
         String[] result = proposals.toArray(new String[proposals.size()]);
         return result;
+    }
+    
+    protected boolean isInRootGroup(SPEObject speObject) {
+        return getRootGroup().getObjects().contains(speObject);
+    }
+
+    protected SPEGroup getRootGroup() {
+        return (SPEGroup) getBusinessObjectForPictogramElement(getDiagram().getLink().getPictogramElement());
+    }
+
+    protected Stream<SPEObject> getAllObjects() {
+        SPEGroup rootGroup = getRootGroup();        
+        Stream<SPEObject> flatMap = rootGroup.getSubGroups().stream()
+                .map(it -> it.getObjects())
+                .flatMap(it -> it.stream());
+        
+        Stream<SPEObject> allObjects = Stream.concat(flatMap, rootGroup.getObjects().stream());
+        return allObjects;
     }
     
     public boolean containsSPEObject(PictogramElement elem){

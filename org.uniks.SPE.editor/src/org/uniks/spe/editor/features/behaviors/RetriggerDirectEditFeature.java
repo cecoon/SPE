@@ -18,6 +18,11 @@ public class RetriggerDirectEditFeature extends AbstractCustomFeature {
     }
     
     @Override
+    public String getName() {
+          return "Rename";
+    } 
+  
+    @Override
     public boolean canExecute(ICustomContext context) {
 
         if(context.getPictogramElements().length > 0){

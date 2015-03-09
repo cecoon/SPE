@@ -25,13 +25,15 @@ import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
-import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
-import org.uniks.spe.editor.features.LayoutDomainObjectFeature;
+import org.eclipse.graphiti.ui.features.DefaultFeatureProvider; 
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeDirectEditFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeUpdateFeature;
 import org.uniks.spe.editor.features.behaviors.RetriggerDirectEditFeature;
+import org.uniks.spe.editor.features.behaviors.contextButtons.SetCreateOperationFeature;
+import org.uniks.spe.editor.features.behaviors.contextButtons.SetDeleteOperationFeature;
+import org.uniks.spe.editor.features.behaviors.contextButtons.SetNopOperationFeature;
 import org.uniks.spe.editor.features.groups.SPEGroupAddFeature;
 import org.uniks.spe.editor.features.groups.not.NotSPEGroupCreateFeature;
 import org.uniks.spe.editor.features.groups.optional.OptionalSPEGroupCreateFeature;
@@ -89,7 +91,12 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	
 	@Override
     public ICustomFeature[] getCustomFeatures(ICustomContext context) {
-        return new ICustomFeature[] { new RetriggerDirectEditFeature(this) };
+        return new ICustomFeature[] {
+                new RetriggerDirectEditFeature(this),
+                new SetCreateOperationFeature(this),
+                new SetDeleteOperationFeature(this),
+                new SetNopOperationFeature(this)
+        };
     } 
 
     @Override
@@ -148,15 +155,5 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 		
 		return super.getAddFeature(context);
 	}		
- 
-    
-    @Override
-	public ILayoutFeature getLayoutFeature(ILayoutContext context) {
-		// TODO: check for right domain object instances below
-		if (context.getPictogramElement() instanceof ContainerShape /* && getBusinessObjectForPictogramElement(context.getPictogramElement()) instanceof <DomainObject> */) {
-			return  new LayoutDomainObjectFeature(this);
-		}
-	
-		return super.getLayoutFeature(context);
-	}
+  
 }
