@@ -5,7 +5,7 @@ import model.util.*;
 import de.uniks.networkparser.logic.Condition;
 
 @SuppressWarnings("all")
-public class MatchClassMyDiagram {
+public class MatchClassAttributes_smaller_bigger_interval_equals {
 	
 	/**
 	* finds a match from a given start 
@@ -15,15 +15,14 @@ public class MatchClassMyDiagram {
 		StorePO thisPO = startSet.hasStorePO();
 		
 		//matching objects 
-		ItemPO i1PO = thisPO.hasHas();
-		ItemPO i2PO = i1PO.hasNext().hasValue(3);
+		ItemPO i1PO = thisPO.hasHas().hasValue(2 - 1 ,Integer.MAX_VALUE);
+		ItemPO i2PO = thisPO.hasHas().hasValue(3 - 1, 1 + 1);
+		ItemPO i4PO = thisPO.hasHas().hasValue(Integer.MIN_VALUE, 3 + 1);
+		ItemPO i3PO = thisPO.hasHas().hasValue(3);
 		
 		//matching missing links to known					
-		i2PO.hasNext(i1PO);
-		thisPO.hasHas(i2PO);
 		
-		//update modasdel asd.
-		i2PO.startCreate().hasItem(i1PO).endCreate();
+		//update model
 		
 		return thisPO.allMatches();
 	}

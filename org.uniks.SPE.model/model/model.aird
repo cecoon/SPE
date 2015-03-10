@@ -550,7 +550,7 @@
           <foregroundColor xmi:type="viewpoint:RGBValues" xmi:id="_Cir29MaHEeS6iPWbEi8NeA" red="255" green="252" blue="216"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_8ww7oMaGEeS6iPWbEi8NeA" name="name : EString = MySPEDiagram" tooltipText="&#xA;ERROR : The required feature 'eAttributeType' of 'org.eclipse.emf.ecore.impl.EAttributeImpl@621be8d{platform:/resource/org.uniks.SPE.model/model/model.ecore#//SPEGroup/newAttribute}' must be set&#xA;ERROR : The typed element must have a type">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_8ww7oMaGEeS6iPWbEi8NeA" name="name : EString = MySPEDiagram" tooltipText="">
           <target xmi:type="ecore:EAttribute" href="model.ecore#//SPEGroup/name"/>
           <semanticElements xmi:type="ecore:EAttribute" href="model.ecore#//SPEGroup/name"/>
           <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_Ciu6QMaHEeS6iPWbEi8NeA" labelAlignment="LEFT">

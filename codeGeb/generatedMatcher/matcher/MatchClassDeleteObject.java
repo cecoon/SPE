@@ -5,7 +5,7 @@ import model.util.*;
 import de.uniks.networkparser.logic.Condition;
 
 @SuppressWarnings("all")
-public class MatchClassMyDiagram {
+public class MatchClassDeleteObject {
 	
 	/**
 	* finds a match from a given start 
@@ -16,14 +16,14 @@ public class MatchClassMyDiagram {
 		
 		//matching objects 
 		ItemPO i1PO = thisPO.hasHas();
-		ItemPO i2PO = i1PO.hasNext().hasValue(3);
+		ItemPO i2PO = thisPO.hasHas().hasValue(3);
 		
 		//matching missing links to known					
 		i2PO.hasNext(i1PO);
-		thisPO.hasHas(i2PO);
 		
-		//update modasdel asd.
-		i2PO.startCreate().hasItem(i1PO).endCreate();
+		//update model
+		i1PO.startCreate().createValue(5).endCreate();
+		i1PO.destroy();
 		
 		return thisPO.allMatches();
 	}

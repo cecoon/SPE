@@ -5,7 +5,7 @@ import model.util.*;
 import de.uniks.networkparser.logic.Condition;
 
 @SuppressWarnings("all")
-public class MatchClassMyDiagram {
+public class MatchClassNotLink {
 	
 	/**
 	* finds a match from a given start 
@@ -15,15 +15,15 @@ public class MatchClassMyDiagram {
 		StorePO thisPO = startSet.hasStorePO();
 		
 		//matching objects 
-		ItemPO i1PO = thisPO.hasHas();
-		ItemPO i2PO = i1PO.hasNext().hasValue(3);
+		PersonPO pPO = thisPO.hasCustomer().hasBalance(42);
+		ItemPO i1PO = pPO.hasHas().hasValue(23);
+		ItemPO i2PO = i1PO.hasNext().hasValue(19);
 		
 		//matching missing links to known					
-		i2PO.hasNext(i1PO);
-		thisPO.hasHas(i2PO);
+		thisPO.hasHas(i1PO);
+		pPO.startNAC().hasHas(i2PO).endNAC();
 		
-		//update modasdel asd.
-		i2PO.startCreate().hasItem(i1PO).endCreate();
+		//update model
 		
 		return thisPO.allMatches();
 	}

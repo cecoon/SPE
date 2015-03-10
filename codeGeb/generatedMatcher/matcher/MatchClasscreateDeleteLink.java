@@ -5,7 +5,7 @@ import model.util.*;
 import de.uniks.networkparser.logic.Condition;
 
 @SuppressWarnings("all")
-public class MatchClassMyDiagram {
+public class MatchClasscreateDeleteLink {
 	
 	/**
 	* finds a match from a given start 
@@ -19,11 +19,11 @@ public class MatchClassMyDiagram {
 		ItemPO i2PO = i1PO.hasNext().hasValue(3);
 		
 		//matching missing links to known					
-		i2PO.hasNext(i1PO);
 		thisPO.hasHas(i2PO);
 		
-		//update modasdel asd.
-		i2PO.startCreate().hasItem(i1PO).endCreate();
+		//update model
+		i1PO.startDelete().hasNext(i2PO).endDelete();
+		i2PO.startCreate().hasNext(i1PO).endCreate();
 		
 		return thisPO.allMatches();
 	}

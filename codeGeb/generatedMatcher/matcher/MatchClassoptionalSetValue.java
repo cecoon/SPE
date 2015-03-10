@@ -5,7 +5,7 @@ import model.util.*;
 import de.uniks.networkparser.logic.Condition;
 
 @SuppressWarnings("all")
-public class MatchClassMyDiagram {
+public class MatchClassoptionalSetValue {
 	
 	/**
 	* finds a match from a given start 
@@ -15,15 +15,14 @@ public class MatchClassMyDiagram {
 		StorePO thisPO = startSet.hasStorePO();
 		
 		//matching objects 
-		ItemPO i1PO = thisPO.hasHas();
-		ItemPO i2PO = i1PO.hasNext().hasValue(3);
+		ItemPO i1PO = thisPO.startSubPattern().hasHas().endSubPattern();
+		ItemPO i2PO = thisPO.hasHas().hasValue(3);
 		
 		//matching missing links to known					
 		i2PO.hasNext(i1PO);
-		thisPO.hasHas(i2PO);
 		
-		//update modasdel asd.
-		i2PO.startCreate().hasItem(i1PO).endCreate();
+		//update model
+		i1PO.startCreate().createValue(5).endCreate();
 		
 		return thisPO.allMatches();
 	}
