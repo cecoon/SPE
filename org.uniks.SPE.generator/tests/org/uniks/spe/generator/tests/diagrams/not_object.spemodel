@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<model:SPEGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:model="http://www.example.org/model" name="NotObject">
+  <objects type="Store" outboundLinks="//@links.0"/>
+  <objects tag="Not" name="i" type="Item" inboundLinks="//@links.0">
+    <attributes name="value" operation="==2"/>
+  </objects>
+  <links source="//@objects.0" target="i"/>
+</model:SPEGroup>
+ 

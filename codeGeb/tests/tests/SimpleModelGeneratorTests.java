@@ -1,6 +1,5 @@
 package tests;
-  
-import matcher.MatchClassMyDiagram;
+   
 import matcher.MatchClassSimpleDiagram;
 import model.Item;
 import model.Person;

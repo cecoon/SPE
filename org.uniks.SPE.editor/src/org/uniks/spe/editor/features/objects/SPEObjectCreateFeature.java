@@ -28,12 +28,8 @@ public class SPEObjectCreateFeature extends AbstractCreateFeature implements
 	@Override
 	public Object[] create(ICreateContext context) { 
 		SPEObject object = createBusinessObject();		
-		SPEGroup group = (SPEGroup) getBusinessObjectForPictogramElement(context.getTargetContainer());	
-		
+		SPEGroup group = (SPEGroup) getBusinessObjectForPictogramElement(context.getTargetContainer());			
 		group.getObjects().add(object);	
-		if(!group.getTag().equals(MatchTag.DEFAULT)){
-	        object.setTag(group.getTag());
-		}
 		
 		addGraphicalRepresentation(context, object);
         getFeatureProvider().getDirectEditingInfo().setActive(true);

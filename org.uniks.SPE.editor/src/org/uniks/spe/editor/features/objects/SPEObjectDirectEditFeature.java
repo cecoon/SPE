@@ -1,5 +1,12 @@
 package org.uniks.spe.editor.features.objects;
  
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +17,9 @@ import model.MatchTag;
 import model.SPEGroup;
 import model.SPEObject;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature;
@@ -17,12 +27,13 @@ import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
+import org.uniks.spe.editor.features.Common;
  
 public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {     
-    private final static String OBEJCT_WITH_CLASS_REGEX = "^[?!.]{0,1}(\\w+):(\\w+)$"; 
-    
+    private final static String OBEJCT_WITH_CLASS_REGEX = "^[+\\-?!.]{0,2}(\\w+):(\\w+)$"; 
+  
     public SPEObjectDirectEditFeature(IFeatureProvider fp) {
-        super(fp); 
+        super(fp);
     }
 
     @Override
@@ -69,16 +80,9 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         speObject.setType(match.group(2));       
         
         if(isInRootGroup(speObject)){
-            if(value.startsWith("!")){
-                speObject.setTag(MatchTag.NOT);
-            } 
-            if(value.startsWith("?")){
-                speObject.setTag(MatchTag.OPTIONAL);
-            }
-            if(value.startsWith(".")){
-                speObject.setTag(MatchTag.DEFAULT);
-            }             
-        };
+            Common.setTagBasedOnPrefix(speObject, value);
+        }; 
+        Common.setOperationBasedOnPrefix(speObject, value);
         
         updatePictogramElement(((Shape) pictorgram).getContainer());
     }
@@ -102,12 +106,14 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         }
 
         String objectName = split[0];
-        String enteredClassName = split[1];        
-        Set<String> proposals = getAllObjects().map(it -> it.getType())
+        String enteredClassName = split[1];
+        
+        
+        Set<String> proposals = getAllObjects()
+                .map(it -> it.getType())
                 .filter(it -> it.startsWith(enteredClassName))
-                .map(it -> objectName + " : " + it)
-                .collect(Collectors.toSet());
-            
+                .map(it -> objectName + " : " + it).collect(Collectors.toSet());
+
         String[] result = proposals.toArray(new String[proposals.size()]);
         return result;
     }
@@ -133,4 +139,5 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
     public boolean containsSPEObject(PictogramElement elem){
        return getBusinessObjectForPictogramElement(elem.getLink().getPictogramElement()) instanceof SPEObject;
     }
+   
 }

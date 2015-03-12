@@ -44,5 +44,20 @@
             class="org.uniks.spe.editor.PlatformImageProvider"
             id="org.uniks.spe.editor.PlatformImageProvider">
       </imageProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.uniks.SPE.editor.triggerGeneratorMenuItem"
+            nameFilter="*.spemodel"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.uniks.spe.editor.GeneratorAction"
+               icon="icons/java_code.png"
+               id="org.uniks.SPE.editor.triggerGenerator"
+               label="Generate Code">
+         </action>
+      </objectContribution>
    </extension> 
 </plugin>

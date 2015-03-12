@@ -9,12 +9,14 @@ import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
+import org.eclipse.graphiti.features.IDeleteFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.ILayoutFeature;
 import org.eclipse.graphiti.features.IMoveShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICustomContext;
+import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.features.context.IMoveShapeContext;
@@ -25,11 +27,13 @@ import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
+import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider; 
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeDirectEditFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeUpdateFeature;
+import org.uniks.spe.editor.features.behaviors.OwnerDeleteFeature;
 import org.uniks.spe.editor.features.behaviors.RetriggerDirectEditFeature;
 import org.uniks.spe.editor.features.behaviors.contextButtons.SetCreateOperationFeature;
 import org.uniks.spe.editor.features.behaviors.contextButtons.SetDeleteOperationFeature;
@@ -57,6 +61,7 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	public EditorFeatureProvider(IDiagramTypeProvider dtp) {
 		super(dtp);
 	}
+	
 	  
 	@Override
 	public ICreateFeature[] getCreateFeatures() {
@@ -88,6 +93,13 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 	    }
 	    return super.getMoveShapeFeature(context);
 	 } 
+	
+
+    @Override
+    public IDeleteFeature getDeleteFeature(IDeleteContext context) {
+        return new OwnerDeleteFeature(this);
+    }
+
 	
 	@Override
     public ICustomFeature[] getCustomFeatures(ICustomContext context) {

@@ -1,6 +1,7 @@
 package org.uniks.spe.editor.features.links;
  
 import model.MatchTag;
+import model.Operations;
 import model.SPELink;
 
 import org.eclipse.graphiti.features.IAddFeature;
@@ -45,7 +46,7 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         LineStyle linestyle = CommonFeatureStyles.getLineStyleByTag(tag); 
 
         Connection connection = createConnectionLine(addConContext, fColor, linestyle);
-        addLabel(connection, speLink.getName());
+        addLabel(connection,getNameOfLink(speLink));
         addDirectionArrow(connection, fColor);
 
         link(connection, speLink);
@@ -95,6 +96,14 @@ public class SPELinkAddFeature extends AbstractAddFeature implements IAddFeature
         polyline.setForeground(manageColor(fColor));
         polyline.setLineStyle(LineStyle.SOLID);
         polyline.setLineWidth(2);
+    }
+    
+    public static String getNameOfLink(SPELink speLink){
+        if(speLink.getOperation().equals(Operations.CREATE))
+            return "<Create> " +  speLink.getName();
+        if(speLink.getOperation().equals(Operations.DELETE))
+            return "<Delete> " +  speLink.getName();
+        return speLink.getName();
     }
 
 }

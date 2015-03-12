@@ -12,10 +12,11 @@ import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.uniks.spe.editor.features.Common;
 
 public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
 
-    private final static String TAGGED_LINK_NAME_REGEX = "^[!?\\.]?(\\w+)$";
+    private final static String TAGGED_LINK_NAME_REGEX = "^[+\\-?!.]{0,2}(\\w+)$";
     
     public SPELinkDirectEditFeature(IFeatureProvider fp) {
         super(fp); 
@@ -61,17 +62,9 @@ public class SPELinkDirectEditFeature extends AbstractDirectEditingFeature {
         Matcher match = Pattern.compile(TAGGED_LINK_NAME_REGEX).matcher(value);
         match.matches();        
         link.setName(match.group(1)); 
-        
-        if(value.startsWith("!")){
-            link.setTag(MatchTag.NOT);
-        } 
-        if(value.startsWith("?")){
-            link.setTag(MatchTag.OPTIONAL);
-        }
-        if(value.startsWith(".")){
-            link.setTag(MatchTag.DEFAULT);
-        }            
-        
+        Common.setOperationBasedOnPrefix(link, value);
+        Common.setTagBasedOnPrefix(link, value);
+     
         updatePictogramElement(pictorgram);
     }
 

@@ -27,9 +27,9 @@ public class DeleteObjectTest {
         Item i2 = store.createHas().withValue(3);        
         i2.setNext(deleteItem);
     } 
-      
+       
     @Test
-    public void modelTest() {          
+    public void modelTest() {           
         StorePO mainPO = new StoreSet().with(store).hasStorePO();           
         ItemPO i1 = mainPO.hasHas();
         ItemPO i2= mainPO.hasHas().hasValue(3);                     

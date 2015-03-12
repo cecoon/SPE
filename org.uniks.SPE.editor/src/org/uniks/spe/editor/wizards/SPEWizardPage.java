@@ -1,12 +1,15 @@
 package org.uniks.spe.editor.wizards;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -30,7 +33,9 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 public class SPEWizardPage extends WizardPage {
 	private Text containerText;
 
-	private Text fileText;
+	private Text diagramText;
+	private Text diagramName;
+
 
 	private ISelection selection;
 
@@ -75,12 +80,12 @@ public class SPEWizardPage extends WizardPage {
 			}
 		});
 		label = new Label(container, SWT.NULL);
-		label.setText("&File name:");
+		label.setText("&Diagram name:");
 
-		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		diagramText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		fileText.setLayoutData(gd);
-		fileText.addModifyListener(new ModifyListener() {
+		diagramText.setLayoutData(gd);
+		diagramText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -100,17 +105,19 @@ public class SPEWizardPage extends WizardPage {
 			IStructuredSelection ssel = (IStructuredSelection) selection;
 			if (ssel.size() > 1)
 				return;
-			Object obj = ssel.getFirstElement();
-			if (obj instanceof IResource) {
+			Object obj = ssel.getFirstElement();	
+			if (obj instanceof IFile) {
 				IContainer container;
 				if (obj instanceof IContainer)
 					container = (IContainer) obj;
 				else
 					container = ((IResource) obj).getParent();
+				
 				containerText.setText(container.getFullPath().toString());
 			}
 		}
-		fileText.setText("MyDiagram.spe");
+		
+		diagramText.setText("MyDiagram");
 	}
 
 	/**
@@ -135,9 +142,9 @@ public class SPEWizardPage extends WizardPage {
 	 */
 
 	private void dialogChanged() {
-		IResource container = ResourcesPlugin.getWorkspace().getRoot()
+		IResource container = ResourcesPlugin.getWorkspace().getRoot() 
 				.findMember(new Path(getContainerName()));
-		String fileName = getFileName();
+		String fileName = getDiagramName();
 
 		if (getContainerName().length() == 0) {
 			updateStatus("File container must be specified");
@@ -160,14 +167,7 @@ public class SPEWizardPage extends WizardPage {
 			updateStatus("File name must be valid");
 			return;
 		}
-		int dotLoc = fileName.lastIndexOf('.');
-		if (dotLoc != -1) {
-			String ext = fileName.substring(dotLoc + 1);
-			if (ext.equalsIgnoreCase("spe") == false) {
-				updateStatus("File extension must be \"spe\"");
-				return;
-			}
-		}
+		 
 		updateStatus(null);
 	}
 
@@ -180,7 +180,7 @@ public class SPEWizardPage extends WizardPage {
 		return containerText.getText();
 	}
 
-	public String getFileName() {
-		return fileText.getText();
+	public String getDiagramName() {
+		return diagramText.getText();
 	}
 }

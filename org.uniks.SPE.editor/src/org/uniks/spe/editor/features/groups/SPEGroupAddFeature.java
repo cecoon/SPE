@@ -2,6 +2,7 @@ package org.uniks.spe.editor.features.groups;
 
 import model.MatchTag;
 import model.SPEGroup;
+import model.SPEObject;
 
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -40,18 +41,19 @@ public class SPEGroupAddFeature extends AbstractAddFeature implements IAddFeatur
     @Override
     public PictogramElement add(IAddContext context) {        
         SPEGroup object = getObject(context);
-        
-        Diagram targetDiagram = (Diagram) context.getTargetContainer();        
-        ContainerShape containerShape = createBaseContainerShape(context, targetDiagram, object.getTag());         
+
+        ContainerShape container = (ContainerShape) context.getTargetContainer();  
+        ContainerShape containerShape = createBaseContainerShape(context, container, object.getTag());         
         link(containerShape, object); 
         
         Graphiti.getPeCreateService().createChopboxAnchor(containerShape);        
         return containerShape;
     }
+    
 
-    protected ContainerShape createBaseContainerShape(IAddContext context, Diagram targetDiagram, MatchTag tag) {
+    protected ContainerShape createBaseContainerShape(IAddContext context, ContainerShape container, MatchTag tag) {
         IPeCreateService peCreateService = Graphiti.getPeCreateService();
-        ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
+        ContainerShape containerShape = peCreateService.createContainerShape(container, true);
               
         IGaService gaService = Graphiti.getGaService();
         Rectangle rec = gaService.createRectangle(containerShape);         

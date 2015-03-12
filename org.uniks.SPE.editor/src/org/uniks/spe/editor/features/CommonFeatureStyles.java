@@ -29,7 +29,7 @@ public class CommonFeatureStyles {
         LINESTYLE_PER_Tag.put(MatchTag.DEFAULT, LineStyle.SOLID);
         LINESTYLE_PER_Tag.put(MatchTag.NOT, LineStyle.SOLID);
         LINESTYLE_PER_Tag.put(MatchTag.OPTIONAL, LineStyle.DASH);
-
+        
         FOREGROUND_PER_Tag.put(MatchTag.DEFAULT, NORMAL_FOREGROUND);
         FOREGROUND_PER_Tag.put(MatchTag.NOT, NOT_FOREGROUND);
         FOREGROUND_PER_Tag.put(MatchTag.OPTIONAL, OPTIONAL_FOREGROUND);

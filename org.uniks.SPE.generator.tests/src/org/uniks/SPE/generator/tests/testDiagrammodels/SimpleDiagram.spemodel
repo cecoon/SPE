@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<model:SPEGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:model="http://www.example.org/model" name="SimpleDiagram">
+  <objects type="Store" outboundLinks="//@links.0 //@links.1"/>
+  <objects name="i1" type="Item" outboundLinks="//@links.4" inboundLinks="//@links.1 //@links.2">
+    <attributes name="value" operation="==23"/>
+  </objects>
+  <objects name="p" type="Person" outboundLinks="//@links.2 //@links.3" inboundLinks="//@links.0">
+    <attributes name="balance" operation="==42"/>
+  </objects>
+  <objects name="i2" type="Item" inboundLinks="//@links.3 //@links.4">
+    <attributes name="value" operation="==19"/>
+  </objects>
+  <links name="customer" source="//@objects.0" target="p"/>
+  <links source="//@objects.0" target="i1"/>
+  <links source="p" target="i1"/>
+  <links source="p" target="i2"/>
+  <links name="next" source="i1" target="i2"/>
+</model:SPEGroup>
+ 

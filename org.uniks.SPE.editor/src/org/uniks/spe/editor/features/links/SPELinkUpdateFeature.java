@@ -2,6 +2,7 @@ package org.uniks.spe.editor.features.links;
  
 import model.SPELink;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -11,6 +12,7 @@ import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
+import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.uniks.spe.editor.features.CommonFeatureStyles;
@@ -64,7 +66,7 @@ public class SPELinkUpdateFeature extends AbstractUpdateFeature {
         SPELink bo = (SPELink) getBusinessObjectForPictogramElement(connection);
         
         //update text
-        String textItShouldHave = bo.getName();          
+        String textItShouldHave = SPELinkAddFeature.getNameOfLink(bo);          
         Text text = (Text) pictogramElement.getGraphicsAlgorithm();
         text.setValue("   " + textItShouldHave + "   ");
 
@@ -74,8 +76,14 @@ public class SPELinkUpdateFeature extends AbstractUpdateFeature {
         connection.getGraphicsAlgorithm().setForeground(foregoundIsShouldHave);
         connection.getGraphicsAlgorithm().setLineStyle(lineStyleItShouldHave);
         
-        connection.getConnectionDecorators().stream()
-                .forEach(it -> it.getGraphicsAlgorithm().setForeground(foregoundIsShouldHave));
+        EList<ConnectionDecorator> connectionDecorators = connection.getConnectionDecorators();
+        for(ConnectionDecorator cd : connectionDecorators){
+            if(cd.getGraphicsAlgorithm() instanceof Text){
+                cd.getGraphicsAlgorithm().setForeground(manageColor(CommonFeatureStyles.NORMAL_FOREGROUND));
+            } else {
+                cd.getGraphicsAlgorithm().setForeground(foregoundIsShouldHave);
+            }            
+        }
         
         return true;
     }

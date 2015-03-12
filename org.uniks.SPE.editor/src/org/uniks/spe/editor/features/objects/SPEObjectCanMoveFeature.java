@@ -33,8 +33,8 @@ public class SPEObjectCanMoveFeature extends DefaultMoveShapeFeature {
         if( ! newGroup.equals(oldGroup)){
             oldGroup.getObjects().remove(objectToMove);
             newGroup.getObjects().add(objectToMove);
-            objectToMove.setTag(newGroup.getTag());  
         }
+        
         super.postMoveShape(context);
     }
 }

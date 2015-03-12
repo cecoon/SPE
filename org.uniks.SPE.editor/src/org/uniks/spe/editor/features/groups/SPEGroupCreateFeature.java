@@ -3,6 +3,7 @@ package org.uniks.spe.editor.features.groups;
 import model.MatchTag;
 import model.ModelFactory;
 import model.SPEGroup;
+import model.SPEObject;
 
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -33,17 +34,22 @@ public class SPEGroupCreateFeature extends AbstractCreateFeature implements
     }
 
 	@Override
-	public Object[] create(ICreateContext context) { 
+	public Object[] create(ICreateContext context) {      
+	    
 	    SPEGroup object = createBusinessObject();	
-	    SPEGroup root = (SPEGroup) getBusinessObjectForPictogramElement(context.getTargetContainer());	    
+	    SPEGroup root = getRootGroup(); 
 	    root.getSubGroups().add(object);
 	    
 		addGraphicalRepresentation(context, object);
-        getFeatureProvider().getDirectEditingInfo().setActive(true);
 		return new Object[] { object };
 	}
 
     protected SPEGroup createBusinessObject() {
         return ModelFactory.eINSTANCE.createSPEGroup();
     }
+    
+    protected SPEGroup getRootGroup() {
+        return (SPEGroup) getBusinessObjectForPictogramElement(getDiagram().getLink().getPictogramElement());
+    }
+    
 }

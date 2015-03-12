@@ -67,11 +67,11 @@ public class SPEWizard extends Wizard implements INewWizard {
 
 	public boolean performFinish() {
 		final String containerName = page.getContainerName();
-		final String fileName = page.getFileName();
+		final String diagramName = page.getDiagramName();
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
-					doFinish(containerName, fileName, monitor);
+					doFinish(containerName, diagramName, monitor);
 
 				} catch (CoreException e) {				    
 					throw new InvocationTargetException(e);
@@ -107,7 +107,7 @@ public class SPEWizard extends Wizard implements INewWizard {
             throwCoreException("Container \"" + containerName + "\" does not exist.");
         }
         IContainer container = (IContainer) resource;
-        final IFile file = container.getFile(new Path(fileName)); 
+        final IFile file = container.getFile(new Path(fileName + "." + DIAGRAM_TYPE_ID)); 
         createDiagram(file, monitor);
         monitor.worked(1);
         

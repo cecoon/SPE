@@ -44,7 +44,7 @@ public class CreateDeleteLinkTest {
           
          
     
-      
+       
     @Test
     public void generatedMatcherTest() {         
         boolean empty = new MatchClasscreateDeleteLink().findMatch(store).isEmpty();
