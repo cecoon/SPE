@@ -26,7 +26,7 @@ public class MatchClassNACGroupDiagram {
 		
 		//matching missing links to known					
 		
-		//update model
+		//update model 
 		
 		return thisPO.allMatches();
 	} 

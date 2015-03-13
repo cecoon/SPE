@@ -36,7 +36,7 @@ public class MatchClassAttributes_notEqual_biggerE_smallerE_stringOps {
 		
 		//matching missing links to known					
 		
-		//update model
+		//update model 
 		
 		return thisPO.allMatches();
 	} 

@@ -24,7 +24,7 @@ public class MatchClassDeleteObject {
 		//matching missing links to known					
 		i2PO.hasNext(i1PO);
 		
-		//update model
+		//update model 
 		i1PO.startCreate().createValue(5).endCreate();
 		i1PO.destroy();
 		

@@ -26,7 +26,7 @@ public class MatchClassSimpleDiagram {
 		thisPO.hasHas(i1PO);
 		pPO.hasHas(i2PO);
 		
-		//update model
+		//update model 
 		
 		return thisPO.allMatches();
 	} 

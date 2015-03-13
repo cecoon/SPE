@@ -22,8 +22,8 @@ public class MatchClassCreateObjectAndLink {
 		
 		//matching missing links to known					
 		
-		//update model
-		ItemPO i2PO = new ItemSet().with(new Item()).hasItemPO();
+		//update model 
+		 ItemPO i2PO = new ItemSet().with(new Item()).hasItemPO();
 		i1PO.startCreate().hasNext(i2PO).endCreate();
 		i2PO.startCreate().createValue(4).endCreate();
 		

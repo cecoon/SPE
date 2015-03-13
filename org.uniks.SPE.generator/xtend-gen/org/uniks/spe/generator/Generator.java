@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import model.IHasMatchTag;
@@ -30,8 +29,11 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
-import org.uniks.spe.generator.EntryPoint;
+import org.uniks.spe.generator.ModelUpdateGenerator;
+import org.uniks.spe.generator.model.EntryPoint;
+import org.uniks.spe.generator.model.MatchState;
+import org.uniks.spe.generator.utils.CodeSnippets;
+import org.uniks.spe.generator.utils.Extentions;
 
 @SuppressWarnings("all")
 public class Generator implements IGenerator {
@@ -39,17 +41,13 @@ public class Generator implements IGenerator {
   
   private final static List<Pair<String, Function1<SPEAttribute, CharSequence>>> attributeMatchHandler = Generator.initAttributeHandler();
   
-  private Set<SPEObject> matchedObjects = new HashSet<SPEObject>();
+  private final ModelUpdateGenerator modelUpdater = new ModelUpdateGenerator();
   
-  private Set<SPELink> matchedLinks = new HashSet<SPELink>();
-  
-  private String startPO = "";
-  
-  private SPEGroup root;
-  
-  private List<SPEObject> allObjects;
+  private MatchState matchState;
   
   public void doGenerate(final Resource input, final IFileSystemAccess fsa) {
+    MatchState _matchState = new MatchState();
+    this.matchState = _matchState;
     TreeIterator<EObject> _allContents = input.getAllContents();
     final Function1<EObject, Boolean> _function = new Function1<EObject, Boolean>() {
       public Boolean apply(final EObject it) {
@@ -57,31 +55,36 @@ public class Generator implements IGenerator {
       }
     };
     EObject _findFirst = IteratorExtensions.<EObject>findFirst(_allContents, _function);
-    this.root = ((SPEGroup) _findFirst);
-    boolean _notEquals = (!Objects.equal(this.root, null));
-    if (_notEquals) {
-      List<SPEObject> _allObjects = Generator.getAllObjects(this.root);
-      this.allObjects = _allObjects;
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("MatchClass");
-      String _name = this.root.getName();
-      _builder.append(_name, "");
-      _builder.append(".java");
-      CharSequence _generateClassCode = this.generateClassCode();
-      fsa.generateFile(_builder.toString(), _generateClassCode);
+    this.matchState.setRoot(((SPEGroup) _findFirst));
+    SPEGroup _root = this.matchState.getRoot();
+    boolean _equals = Objects.equal(_root, null);
+    if (_equals) {
+      return;
     }
+    SPEGroup _root_1 = this.matchState.getRoot();
+    List<SPEObject> _allObjects = Generator.getAllObjects(_root_1);
+    this.matchState.setAllObjects(_allObjects);
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("MatchClass");
+    SPEGroup _root_2 = this.matchState.getRoot();
+    String _name = _root_2.getName();
+    _builder.append(_name, "");
+    _builder.append(".java");
+    CharSequence _generateClassCode = this.generateClassCode();
+    fsa.generateFile(_builder.toString(), _generateClassCode);
   }
   
   public CharSequence generateClassCode() {
     CharSequence _xblockexpression = null;
     {
+      List<SPEObject> _allObjects = this.matchState.getAllObjects();
       final Function1<SPEObject, Boolean> _function = new Function1<SPEObject, Boolean>() {
         public Boolean apply(final SPEObject it) {
           String _name = it.getName();
           return Boolean.valueOf(Objects.equal(_name, Generator.this.START_OBJECT_NAME));
         }
       };
-      final SPEObject start = IterableExtensions.<SPEObject>findFirst(this.allObjects, _function);
+      final SPEObject start = IterableExtensions.<SPEObject>findFirst(_allObjects, _function);
       String matchCode = "//invalidDiagram";
       boolean _notEquals = (!Objects.equal(start, null));
       if (_notEquals) {
@@ -104,7 +107,8 @@ public class Generator implements IGenerator {
       _builder_1.append("@SuppressWarnings(\"all\")");
       _builder_1.newLine();
       _builder_1.append("public class MatchClass");
-      String _name = this.root.getName();
+      SPEGroup _root = this.matchState.getRoot();
+      String _name = _root.getName();
       _builder_1.append(_name, "");
       _builder_1.append(" {");
       _builder_1.newLineIfNotEmpty();
@@ -134,10 +138,8 @@ public class Generator implements IGenerator {
   public CharSequence generateMatcherCode(final SPEObject start) {
     CharSequence _xblockexpression = null;
     {
-      this.matchedObjects.add(start);
+      this.matchState.markAsMatched(start);
       final String type = start.getType();
-      String _varName = Generator.varName(start);
-      this.startPO = _varName;
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("public ");
       _builder.append(type, "");
@@ -152,9 +154,8 @@ public class Generator implements IGenerator {
       _builder.append("Set().with(start);");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
-      _builder.append(type, "\t");
-      _builder.append("PO ");
-      _builder.append(this.startPO, "\t");
+      CharSequence _declarePO = CodeSnippets.declarePO(start);
+      _builder.append(_declarePO, "\t");
       _builder.append(" = startSet.has");
       _builder.append(type, "\t");
       _builder.append("PO()");
@@ -179,7 +180,8 @@ public class Generator implements IGenerator {
       _builder.append("//match objects of subgroups");
       _builder.newLine();
       _builder.append("\t");
-      EList<SPEGroup> _subGroups = this.root.getSubGroups();
+      SPEGroup _root = this.matchState.getRoot();
+      EList<SPEGroup> _subGroups = _root.getSubGroups();
       final Function2<String, SPEGroup, String> _function = new Function2<String, SPEGroup, String>() {
         public String apply(final String left, final SPEGroup it) {
           StringConcatenation _builder = new StringConcatenation();
@@ -200,17 +202,18 @@ public class Generator implements IGenerator {
       _builder.append("//matching missing links to known\t\t\t\t\t");
       _builder.newLine();
       _builder.append("\t");
-      EList<SPELink> _links = this.root.getLinks();
+      SPEGroup _root_1 = this.matchState.getRoot();
+      EList<SPELink> _links = _root_1.getLinks();
       final Function1<SPELink, Boolean> _function_1 = new Function1<SPELink, Boolean>() {
         public Boolean apply(final SPELink it) {
           boolean _and = false;
-          boolean _contains = Generator.this.matchedLinks.contains(it);
-          boolean _not = (!_contains);
+          boolean _isMatched = Generator.this.matchState.isMatched(it);
+          boolean _not = (!_isMatched);
           if (!_not) {
             _and = false;
           } else {
             Operations _operation = it.getOperation();
-            boolean _isNotCreate = Generator.isNotCreate(_operation);
+            boolean _isNotCreate = Extentions.isNotCreate(_operation);
             _and = _isNotCreate;
           }
           return Boolean.valueOf(_and);
@@ -232,17 +235,18 @@ public class Generator implements IGenerator {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      _builder.append("//update model");
+      _builder.append("//update model ");
       _builder.newLine();
       _builder.append("\t");
-      CharSequence _generateModelUpdateCode = this.generateModelUpdateCode();
+      CharSequence _generateModelUpdateCode = this.modelUpdater.generateModelUpdateCode(this.matchState);
       _builder.append(_generateModelUpdateCode, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
       _builder.append("return ");
-      _builder.append(this.startPO, "\t");
+      String _varName = Extentions.varName(start);
+      _builder.append(_varName, "\t");
       _builder.append(".allMatches();");
       _builder.newLineIfNotEmpty();
       _builder.append("} ");
@@ -255,7 +259,7 @@ public class Generator implements IGenerator {
   public String generateMatchCodeForNonAlienObjects(final SPEObject object) {
     String _xblockexpression = null;
     {
-      final String varName = Generator.varName(object);
+      final String varName = Extentions.varName(object);
       final SPEGroup groupOfObject = this.getGroup(object);
       EList<SPELink> _outboundLinks = object.getOutboundLinks();
       final Function1<SPELink, Boolean> _function = new Function1<SPELink, Boolean>() {
@@ -263,12 +267,12 @@ public class Generator implements IGenerator {
           boolean _and = false;
           boolean _and_1 = false;
           MatchTag _tag = it.getTag();
-          boolean _notEquals = (!Objects.equal(_tag, MatchTag.NOT));
-          if (!_notEquals) {
+          boolean _isntNot = Extentions.getIsntNot(_tag);
+          if (!_isntNot) {
             _and_1 = false;
           } else {
             Operations _operation = it.getOperation();
-            boolean _isNotCreate = Generator.isNotCreate(_operation);
+            boolean _isNotCreate = Extentions.isNotCreate(_operation);
             _and_1 = _isNotCreate;
           }
           if (!_and_1) {
@@ -301,15 +305,15 @@ public class Generator implements IGenerator {
     CharSequence _xblockexpression = null;
     {
       final SPEObject target = link.getTarget();
-      boolean _contains = this.matchedObjects.contains(target);
-      if (_contains) {
+      boolean _isMatched = this.matchState.isMatched(target);
+      if (_isMatched) {
         return "";
       }
-      this.matchedObjects.add(target);
-      this.matchedLinks.add(link);
+      this.matchState.markAsMatched(target);
+      this.matchState.markAsMatched(link);
       StringConcatenation _builder = new StringConcatenation();
       _builder.append(".has");
-      String _Name = Generator.Name(link);
+      String _Name = Extentions.Name(link);
       _builder.append(_Name, "");
       _builder.append("()");
       EList<SPEAttribute> _attributes = target.getAttributes();
@@ -317,17 +321,13 @@ public class Generator implements IGenerator {
       String _createAttributeMatchCode = Generator.createAttributeMatchCode(_attributes, _type);
       _builder.append(_createAttributeMatchCode, "");
       String matchExpression = _builder.toString();
-      String _addMatchTags = Generator.addMatchTags(matchExpression, target);
-      matchExpression = _addMatchTags;
+      CharSequence matchExp = Generator.addMatchTags(matchExpression, target);
       StringConcatenation _builder_1 = new StringConcatenation();
-      String _type_1 = target.getType();
-      _builder_1.append(_type_1, "");
-      _builder_1.append("PO ");
-      String _varName = Generator.varName(target);
-      _builder_1.append(_varName, "");
+      CharSequence _declarePO = CodeSnippets.declarePO(target);
+      _builder_1.append(_declarePO, "");
       _builder_1.append(" = ");
       _builder_1.append(fromVarName, "");
-      _builder_1.append(matchExpression, "");
+      _builder_1.append(matchExp, "");
       _builder_1.append(";");
       _builder_1.newLineIfNotEmpty();
       String _generateMatchCodeForNonAlienObjects = this.generateMatchCodeForNonAlienObjects(target);
@@ -341,7 +341,7 @@ public class Generator implements IGenerator {
   public CharSequence createCodeForSubgroupMatching(final SPEGroup group) {
     CharSequence _xblockexpression = null;
     {
-      ArrayList<SPELink> alienLinks = this.findAlienLinks(this.matchedObjects, group);
+      ArrayList<SPELink> alienLinks = this.findAlienLinks(group);
       int _size = alienLinks.size();
       boolean _equals = (_size == 0);
       if (_equals) {
@@ -350,21 +350,23 @@ public class Generator implements IGenerator {
       }
       SPELink link = alienLinks.get(0);
       EntryPoint entryPoint = this.extractEntryPoint(link, group);
-      this.matchedLinks.add(link);
+      this.matchState.markAsMatched(link);
       alienLinks.remove(link);
       StringConcatenation _builder_1 = new StringConcatenation();
-      String _varName = Generator.varName(entryPoint.alien);
+      SPEObject _alien = entryPoint.getAlien();
+      String _varName = Extentions.varName(_alien);
       _builder_1.append(_varName, "");
       _builder_1.append(".start");
-      String _sDMLibMatchTag = Generator.toSDMLibMatchTag(group);
+      String _sDMLibMatchTag = Extentions.toSDMLibMatchTag(group);
       _builder_1.append(_sDMLibMatchTag, "");
       _builder_1.append("();");
       _builder_1.newLineIfNotEmpty();
-      _builder_1.append(entryPoint.entrySourceCode, "");
+      CharSequence _entrySourceCode = entryPoint.getEntrySourceCode();
+      _builder_1.append(_entrySourceCode, "");
       _builder_1.newLineIfNotEmpty();
-      String _generateMatchCodeForNonAlienObjects = this.generateMatchCodeForNonAlienObjects(entryPoint.start);
+      SPEObject _start = entryPoint.getStart();
+      String _generateMatchCodeForNonAlienObjects = this.generateMatchCodeForNonAlienObjects(_start);
       _builder_1.append(_generateMatchCodeForNonAlienObjects, "");
-      _builder_1.append("\t\t\t");
       _builder_1.newLineIfNotEmpty();
       final Function2<String, SPELink, String> _function = new Function2<String, SPELink, String>() {
         public String apply(final String left, final SPELink it) {
@@ -377,12 +379,12 @@ public class Generator implements IGenerator {
       };
       String _fold = IterableExtensions.<SPELink, String>fold(alienLinks, "", _function);
       _builder_1.append(_fold, "");
-      _builder_1.append("\t\t\t");
       _builder_1.newLineIfNotEmpty();
-      String _varName_1 = Generator.varName(entryPoint.alien);
+      SPEObject _alien_1 = entryPoint.getAlien();
+      String _varName_1 = Extentions.varName(_alien_1);
       _builder_1.append(_varName_1, "");
       _builder_1.append(".end");
-      String _sDMLibMatchTag_1 = Generator.toSDMLibMatchTag(group);
+      String _sDMLibMatchTag_1 = Extentions.toSDMLibMatchTag(group);
       _builder_1.append(_sDMLibMatchTag_1, "");
       _builder_1.append("();");
       _builder_1.newLineIfNotEmpty();
@@ -391,9 +393,10 @@ public class Generator implements IGenerator {
     return _xblockexpression;
   }
   
-  public ArrayList<SPELink> findAlienLinks(final Set<SPEObject> objects, final SPEGroup group) {
+  public ArrayList<SPELink> findAlienLinks(final SPEGroup group) {
     ArrayList<SPELink> alienLinks = CollectionLiterals.<SPELink>newArrayList();
-    for (final SPEObject object : objects) {
+    Set<SPEObject> _matchedObjects = this.matchState.getMatchedObjects();
+    for (final SPEObject object : _matchedObjects) {
       {
         EList<SPELink> _outboundLinks = object.getOutboundLinks();
         final Function1<SPELink, Boolean> _function = new Function1<SPELink, Boolean>() {
@@ -427,62 +430,59 @@ public class Generator implements IGenerator {
     boolean _equals = Objects.equal(_group, grp);
     if (_equals) {
       SPEObject _source = link.getSource();
-      result.alien = _source;
+      result.setAlien(_source);
       SPEObject _target_1 = link.getTarget();
-      result.start = _target_1;
-      String type = result.start.getType();
-      EList<SPEAttribute> attr = result.start.getAttributes();
+      result.setStart(_target_1);
+      SPEObject _start = result.getStart();
+      String type = _start.getType();
+      SPEObject _start_1 = result.getStart();
+      EList<SPEAttribute> attr = _start_1.getAttributes();
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append(type, "");
-      _builder.append("PO ");
-      String _varName = Generator.varName(result.start);
-      _builder.append(_varName, "");
+      SPEObject _start_2 = result.getStart();
+      CharSequence _declarePO = CodeSnippets.declarePO(_start_2);
+      _builder.append(_declarePO, "");
       _builder.append(" = ");
-      String _varName_1 = Generator.varName(result.alien);
-      _builder.append(_varName_1, "");
+      SPEObject _alien = result.getAlien();
+      String _varName = Extentions.varName(_alien);
+      _builder.append(_varName, "");
       _builder.append(".has");
-      String _Name = Generator.Name(link);
+      String _Name = Extentions.Name(link);
       _builder.append(_Name, "");
       _builder.append("()");
       String _createAttributeMatchCode = Generator.createAttributeMatchCode(attr, type);
       _builder.append(_createAttributeMatchCode, "");
       _builder.append(";");
       _builder.newLineIfNotEmpty();
-      result.entrySourceCode = _builder;
+      result.setEntrySourceCode(_builder);
     } else {
       SPEObject _target_2 = link.getTarget();
-      result.alien = _target_2;
+      result.setAlien(_target_2);
       SPEObject _source_1 = link.getSource();
-      result.start = _source_1;
-      String type_1 = result.start.getType();
-      EList<SPEAttribute> attr_1 = result.start.getAttributes();
+      result.setStart(_source_1);
+      SPEObject _start_3 = result.getStart();
+      String type_1 = _start_3.getType();
+      SPEObject _start_4 = result.getStart();
+      EList<SPEAttribute> attr_1 = _start_4.getAttributes();
       StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append(type_1, "");
-      _builder_1.append("PO ");
-      String _varName_2 = Generator.varName(result.start);
-      _builder_1.append(_varName_2, "");
-      _builder_1.append(" = new ");
-      _builder_1.append(type_1, "");
-      _builder_1.append("Set().with(new ");
-      _builder_1.append(type_1, "");
-      _builder_1.append("()).has");
-      _builder_1.append(type_1, "");
-      _builder_1.append("PO()");
+      SPEObject _start_5 = result.getStart();
+      CharSequence _declarePO_1 = CodeSnippets.declarePO(_start_5);
+      _builder_1.append(_declarePO_1, "");
+      _builder_1.append(" = ");
+      SPEObject _start_6 = result.getStart();
+      CharSequence _createPO = CodeSnippets.createPO(_start_6);
+      _builder_1.append(_createPO, "");
       String _createAttributeMatchCode_1 = Generator.createAttributeMatchCode(attr_1, type_1);
       _builder_1.append(_createAttributeMatchCode_1, "");
       _builder_1.append(";");
       _builder_1.newLineIfNotEmpty();
-      String _varName_3 = Generator.varName(result.start);
-      _builder_1.append(_varName_3, "");
-      _builder_1.append(".has");
-      String _Name_1 = Generator.Name(link);
-      _builder_1.append(_Name_1, "");
-      _builder_1.append("(");
-      String _varName_4 = Generator.varName(result.alien);
-      _builder_1.append(_varName_4, "");
-      _builder_1.append("); ");
+      SPEObject _start_7 = result.getStart();
+      String _varName_1 = Extentions.varName(_start_7);
+      _builder_1.append(_varName_1, "");
+      CharSequence _hasLinkToObj = CodeSnippets.hasLinkToObj(link);
+      _builder_1.append(_hasLinkToObj, "");
+      _builder_1.append("; ");
       _builder_1.newLineIfNotEmpty();
-      result.entrySourceCode = _builder_1;
+      result.setEntrySourceCode(_builder_1);
     }
     return result;
   }
@@ -490,27 +490,17 @@ public class Generator implements IGenerator {
   public CharSequence createMatchCodeForMissingLink(final SPELink link) {
     CharSequence _xblockexpression = null;
     {
+      this.matchState.markAsMatched(link);
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append(".has");
-      String _Name = Generator.Name(link);
-      _builder.append(_Name, "");
-      _builder.append("(");
-      SPEObject _target = link.getTarget();
-      String _varName = Generator.varName(_target);
-      _builder.append(_varName, "");
-      _builder.append(")");
-      String matchCode = _builder.toString();
-      String _addMatchTags = Generator.addMatchTags(matchCode, link);
-      matchCode = _addMatchTags;
-      this.matchedLinks.add(link);
-      StringConcatenation _builder_1 = new StringConcatenation();
       SPEObject _source = link.getSource();
-      String _varName_1 = Generator.varName(_source);
-      _builder_1.append(_varName_1, "");
-      _builder_1.append(matchCode, "");
-      _builder_1.append(";");
-      _builder_1.newLineIfNotEmpty();
-      _xblockexpression = _builder_1;
+      String _varName = Extentions.varName(_source);
+      _builder.append(_varName, "");
+      CharSequence _hasLinkToObj = CodeSnippets.hasLinkToObj(link);
+      CharSequence _addMatchTags = Generator.addMatchTags(_hasLinkToObj, link);
+      _builder.append(_addMatchTags, "");
+      _builder.append(";");
+      _builder.newLineIfNotEmpty();
+      _xblockexpression = _builder;
     }
     return _xblockexpression;
   }
@@ -567,10 +557,10 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
-          String _attrValue = Generator.getAttrValue(it);
+          String _attrValue = Extentions.getAttrValue(it);
           _builder.append(_attrValue, "");
           _builder.append(")");
           return _builder;
@@ -581,10 +571,10 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
-          String _attrValue = Generator.getAttrValue(it);
+          String _attrValue = Extentions.getAttrValue(it);
           _builder.append(_attrValue, "");
           _builder.append(" - 1 ,");
           _builder.append(maxInt, "");
@@ -597,10 +587,10 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
-          String _attrValue = Generator.getAttrValue(it);
+          String _attrValue = Extentions.getAttrValue(it);
           _builder.append(_attrValue, "");
           _builder.append(" ,");
           _builder.append(maxInt, "");
@@ -613,12 +603,12 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
           _builder.append(minInt, "");
           _builder.append(", ");
-          String _attrValue = Generator.getAttrValue(it);
+          String _attrValue = Extentions.getAttrValue(it);
           _builder.append(_attrValue, "");
           _builder.append(" + 1)");
           return _builder;
@@ -629,12 +619,12 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
           _builder.append(minInt, "");
           _builder.append(", ");
-          String _attrValue = Generator.getAttrValue(it);
+          String _attrValue = Extentions.getAttrValue(it);
           _builder.append(_attrValue, "");
           _builder.append(")");
           return _builder;
@@ -645,10 +635,10 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".startNAC().has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
-          String _attrValue = Generator.getAttrValue(it);
+          String _attrValue = Extentions.getAttrValue(it);
           _builder.append(_attrValue, "");
           _builder.append(").endNAC()");
           return _builder;
@@ -666,7 +656,7 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
           String _operation = it.getOperation();
@@ -682,7 +672,7 @@ public class Generator implements IGenerator {
         public CharSequence apply(final SPEAttribute it) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append(".has");
-          String _attrName = Generator.getAttrName(it);
+          String _attrName = Extentions.getAttrName(it);
           _builder.append(_attrName, "");
           _builder.append("(");
           String _operation = it.getOperation();
@@ -718,7 +708,7 @@ public class Generator implements IGenerator {
     _builder.append("boolean matches = ((");
     _builder.append(type, "                    ");
     _builder.append(")value).getName().matches(\"");
-    String _attrValue = Generator.getAttrValue(raw);
+    String _attrValue = Extentions.getAttrValue(raw);
     _builder.append(_attrValue, "                    ");
     _builder.append("\");");
     _builder.newLineIfNotEmpty();
@@ -739,175 +729,15 @@ public class Generator implements IGenerator {
     return _builder;
   }
   
-  public CharSequence generateModelUpdateCode() {
-    CharSequence _xblockexpression = null;
-    {
-      final String generateCreateLinksCode = this.generateLinksCode(Operations.CREATE, "Create");
-      final String generateDeleteLinksCode = this.generateLinksCode(Operations.DELETE, "Destroy");
-      StringConcatenation _builder = new StringConcatenation();
-      String _generateCreateObjectCode = this.generateCreateObjectCode();
-      _builder.append(_generateCreateObjectCode, "");
-      _builder.newLineIfNotEmpty();
-      _builder.append(generateCreateLinksCode, "");
-      _builder.newLineIfNotEmpty();
-      _builder.append(generateDeleteLinksCode, "");
-      _builder.newLineIfNotEmpty();
-      String _generateAttributesUpdateCode = this.generateAttributesUpdateCode();
-      _builder.append(_generateAttributesUpdateCode, "");
-      _builder.newLineIfNotEmpty();
-      String _generateDeleteObjectCode = this.generateDeleteObjectCode();
-      _builder.append(_generateDeleteObjectCode, "");
-      _builder.newLineIfNotEmpty();
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
-  }
-  
-  public String generateLinksCode(final Operations op, final String action) {
-    EList<SPELink> _links = this.root.getLinks();
-    final Function1<SPELink, Boolean> _function = new Function1<SPELink, Boolean>() {
-      public Boolean apply(final SPELink it) {
-        Operations _operation = it.getOperation();
-        return Boolean.valueOf(Objects.equal(_operation, op));
-      }
-    };
-    Iterable<SPELink> _filter = IterableExtensions.<SPELink>filter(_links, _function);
-    StringConcatenation _builder = new StringConcatenation();
-    final Function2<String, SPELink, String> _function_1 = new Function2<String, SPELink, String>() {
-      public String apply(final String left, final SPELink it) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append(left, "");
-        SPEObject _source = it.getSource();
-        String _varName = Generator.varName(_source);
-        _builder.append(_varName, "");
-        _builder.append(".start");
-        _builder.append(action, "");
-        _builder.append("().has");
-        String _Name = Generator.Name(it);
-        _builder.append(_Name, "");
-        _builder.append("(");
-        SPEObject _target = it.getTarget();
-        String _varName_1 = Generator.varName(_target);
-        _builder.append(_varName_1, "");
-        _builder.append(").end");
-        _builder.append(action, "");
-        _builder.append("();");
-        return _builder.toString();
-      }
-    };
-    return IterableExtensions.<SPELink, String>fold(_filter, _builder.toString(), _function_1);
-  }
-  
-  public String generateDeleteObjectCode() {
-    final Function1<SPEObject, Boolean> _function = new Function1<SPEObject, Boolean>() {
-      public Boolean apply(final SPEObject it) {
-        Operations _operation = it.getOperation();
-        return Boolean.valueOf(Objects.equal(_operation, Operations.DELETE));
-      }
-    };
-    Iterable<SPEObject> _filter = IterableExtensions.<SPEObject>filter(this.matchedObjects, _function);
-    final Function2<String, SPEObject, String> _function_1 = new Function2<String, SPEObject, String>() {
-      public String apply(final String left, final SPEObject it) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append(left, "");
-        String _varName = Generator.varName(it);
-        _builder.append(_varName, "");
-        _builder.append(".destroy();");
-        return _builder.toString();
-      }
-    };
-    return IterableExtensions.<SPEObject, String>fold(_filter, "", _function_1);
-  }
-  
-  public String generateCreateObjectCode() {
-    final Function1<SPEObject, Boolean> _function = new Function1<SPEObject, Boolean>() {
-      public Boolean apply(final SPEObject it) {
-        Operations _operation = it.getOperation();
-        return Boolean.valueOf(Objects.equal(_operation, Operations.CREATE));
-      }
-    };
-    Iterable<SPEObject> _filter = IterableExtensions.<SPEObject>filter(this.allObjects, _function);
-    final Function2<String, SPEObject, String> _function_1 = new Function2<String, SPEObject, String>() {
-      public String apply(final String left, final SPEObject it) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append(left, "");
-        String _type = it.getType();
-        _builder.append(_type, "");
-        _builder.append("PO ");
-        String _varName = Generator.varName(it);
-        _builder.append(_varName, "");
-        _builder.append(" = new ");
-        String _type_1 = it.getType();
-        _builder.append(_type_1, "");
-        _builder.append("Set().with(new ");
-        String _type_2 = it.getType();
-        _builder.append(_type_2, "");
-        _builder.append("()).has");
-        String _type_3 = it.getType();
-        _builder.append(_type_3, "");
-        _builder.append("PO();");
-        return _builder.toString();
-      }
-    };
-    return IterableExtensions.<SPEObject, String>fold(_filter, "", _function_1);
-  }
-  
-  public String generateAttributesUpdateCode() {
-    String _xblockexpression = null;
-    {
-      StringConcatenation _builder = new StringConcatenation();
-      String result = _builder.toString();
-      for (final SPEObject object : this.allObjects) {
-        {
-          final String varName = Generator.varName(object);
-          EList<SPEAttribute> _attributes = object.getAttributes();
-          final Function1<SPEAttribute, Boolean> _function = new Function1<SPEAttribute, Boolean>() {
-            public Boolean apply(final SPEAttribute it) {
-              String _operation = it.getOperation();
-              return Boolean.valueOf(_operation.matches("^:=.*$"));
-            }
-          };
-          Iterable<SPEAttribute> addAttributes = IterableExtensions.<SPEAttribute>filter(_attributes, _function);
-          int _size = IterableExtensions.size(addAttributes);
-          boolean _greaterThan = (_size > 0);
-          if (_greaterThan) {
-            final Function2<String, SPEAttribute, String> _function_1 = new Function2<String, SPEAttribute, String>() {
-              public String apply(final String left, final SPEAttribute it) {
-                StringConcatenation _builder = new StringConcatenation();
-                _builder.append(left, "");
-                _builder.append(".create");
-                String _attrName = Generator.getAttrName(it);
-                _builder.append(_attrName, "");
-                _builder.append("(");
-                String _attrValue = Generator.getAttrValue(it);
-                _builder.append(_attrValue, "");
-                _builder.append(")");
-                return _builder.toString();
-              }
-            };
-            String createAttr = IterableExtensions.<SPEAttribute, String>fold(addAttributes, "", _function_1);
-            String _result = result;
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append(varName, "");
-            _builder_1.append(".startCreate()");
-            _builder_1.append(createAttr, "");
-            _builder_1.append(".endCreate();");
-            result = (_result + _builder_1);
-          }
-        }
-      }
-      _xblockexpression = result;
-    }
-    return _xblockexpression;
-  }
-  
   public SPEGroup getGroup(final SPEObject object) {
-    EList<SPEObject> _objects = this.root.getObjects();
+    SPEGroup _root = this.matchState.getRoot();
+    EList<SPEObject> _objects = _root.getObjects();
     boolean _contains = _objects.contains(object);
     if (_contains) {
-      return this.root;
+      return this.matchState.getRoot();
     } else {
-      EList<SPEGroup> _subGroups = this.root.getSubGroups();
+      SPEGroup _root_1 = this.matchState.getRoot();
+      EList<SPEGroup> _subGroups = _root_1.getSubGroups();
       final Function1<SPEGroup, Boolean> _function = new Function1<SPEGroup, Boolean>() {
         public Boolean apply(final SPEGroup it) {
           EList<SPEObject> _objects = it.getObjects();
@@ -918,76 +748,18 @@ public class Generator implements IGenerator {
     }
   }
   
-  public static String getAttrValue(final SPEAttribute raw) {
-    String _operation = raw.getOperation();
-    return _operation.replaceAll("[:!=<>]", "");
-  }
-  
-  public static String getAttrName(final SPEAttribute raw) {
-    String _name = raw.getName();
-    return StringExtensions.toFirstUpper(_name);
-  }
-  
-  public static String toSDMLibMatchTag(final SPEGroup group) {
-    MatchTag _tag = group.getTag();
-    boolean _equals = Objects.equal(_tag, MatchTag.NOT);
-    if (_equals) {
-      return "NAC";
-    }
-    MatchTag _tag_1 = group.getTag();
-    boolean _equals_1 = Objects.equal(_tag_1, MatchTag.OPTIONAL);
-    if (_equals_1) {
-      return "SubPattern";
-    }
-    return "WTF?";
-  }
-  
-  public static String addMatchTags(final String string, final IHasMatchTag tag) {
+  public static CharSequence addMatchTags(final CharSequence string, final IHasMatchTag tag) {
     MatchTag _tag = tag.getTag();
     boolean _equals = Objects.equal(_tag, MatchTag.NOT);
     if (_equals) {
-      return Generator.asNAC(string);
+      return Extentions.asNAC(string);
     }
     MatchTag _tag_1 = tag.getTag();
     boolean _equals_1 = Objects.equal(_tag_1, MatchTag.OPTIONAL);
     if (_equals_1) {
-      return Generator.asSubPattern(string);
+      return Extentions.asSubPattern(string);
     }
     return string;
-  }
-  
-  public static String Name(final SPELink link) {
-    String _name = link.getName();
-    return StringExtensions.toFirstUpper(_name);
-  }
-  
-  public static String asSubPattern(final String value) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append(".startSubPattern()");
-    _builder.append(value, "");
-    _builder.append(".endSubPattern()");
-    return _builder.toString();
-  }
-  
-  public static String asNAC(final String value) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append(".startNAC()");
-    _builder.append(value, "");
-    _builder.append(".endNAC()");
-    return _builder.toString();
-  }
-  
-  public static boolean isNop(final Operations operations) {
-    return Objects.equal(operations, Operations.NOP);
-  }
-  
-  public static boolean isNotCreate(final Operations operations) {
-    return (!Objects.equal(operations, Operations.CREATE));
-  }
-  
-  public static String varName(final SPEObject object) {
-    String _name = object.getName();
-    return (_name + "PO");
   }
   
   public static List<SPEObject> getAllObjects(final SPEGroup root) {

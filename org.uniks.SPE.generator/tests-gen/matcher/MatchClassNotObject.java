@@ -22,7 +22,7 @@ public class MatchClassNotObject {
 		
 		//matching missing links to known					
 		
-		//update model
+		//update model 
 		
 		return thisPO.allMatches();
 	} 

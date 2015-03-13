@@ -26,7 +26,7 @@ public class MatchClassNotLink {
 		thisPO.hasHas(i1PO);
 		pPO.startNAC().hasHas(i2PO).endNAC();
 		
-		//update model
+		//update model 
 		
 		return thisPO.allMatches();
 	} 

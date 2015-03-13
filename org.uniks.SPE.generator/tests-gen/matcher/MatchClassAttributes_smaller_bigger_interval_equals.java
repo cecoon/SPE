@@ -25,7 +25,7 @@ public class MatchClassAttributes_smaller_bigger_interval_equals {
 		
 		//matching missing links to known					
 		
-		//update model
+		//update model 
 		
 		return thisPO.allMatches();
 	} 
