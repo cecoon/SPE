@@ -57,8 +57,7 @@ public class AttributesTest {
     @Test 
     public void generatedMatcherTest1() {   
         createStore();      
-        boolean empty = new MatchClassAttributes_notEqual_biggerE_smallerE_stringOps().findMatch(store).isEmpty();
-        assertFalse(empty);              
+        assertTrue(new MatchClassAttributes_notEqual_biggerE_smallerE_stringOps().execute(store));
     } 
     
     public void createStore2() { 
@@ -86,8 +85,7 @@ public class AttributesTest {
     @Test
     public void generatedMatcherTest2() {      
         createStore2();   
-        boolean empty = new MatchClassAttributes_smaller_bigger_interval_equals().findMatch(store).isEmpty();
-        assertFalse(empty);              
+        assertTrue(new MatchClassAttributes_smaller_bigger_interval_equals().execute(store));              
     }
     
 

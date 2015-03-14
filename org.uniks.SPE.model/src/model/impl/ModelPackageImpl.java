@@ -312,6 +312,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getSPEGroup_Model() {
+        return (EAttribute)speGroupEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getIHasMatchTag() {
         return iHasMatchTagEClass;
     }
@@ -410,6 +419,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
         createEAttribute(speGroupEClass, SPE_GROUP__NAME);
         createEReference(speGroupEClass, SPE_GROUP__LINKS);
         createEReference(speGroupEClass, SPE_GROUP__SUB_GROUPS);
+        createEAttribute(speGroupEClass, SPE_GROUP__MODEL);
 
         iHasMatchTagEClass = createEClass(IHAS_MATCH_TAG);
         createEAttribute(iHasMatchTagEClass, IHAS_MATCH_TAG__TAG);
@@ -476,9 +486,10 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
         initEClass(speGroupEClass, SPEGroup.class, "SPEGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSPEGroup_Objects(), this.getSPEObject(), null, "objects", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSPEGroup_Name(), ecorePackage.getEString(), "name", "MySPEDiagram", 0, 1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEGroup_Name(), ecorePackage.getEString(), "name", null, 0, 1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEGroup_Links(), this.getSPELink(), null, "links", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSPEGroup_SubGroups(), this.getSPEGroup(), null, "subGroups", null, 0, -1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSPEGroup_Model(), ecorePackage.getEString(), "model", null, 0, 1, SPEGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(iHasMatchTagEClass, IHasMatchTag.class, "IHasMatchTag", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIHasMatchTag_Tag(), this.getMatchTag(), "tag", "Default", 0, 1, IHasMatchTag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

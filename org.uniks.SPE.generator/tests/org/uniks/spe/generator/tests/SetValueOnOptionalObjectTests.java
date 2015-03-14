@@ -40,8 +40,7 @@ public class SetValueOnOptionalObjectTests {
     public void generatedMatcherTest() {
         createStoreWithOptional();
 
-        boolean empty = new MatchClassoptionalSetValue().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassoptionalSetValue().execute(store));
         assertEquals(5, optionalItem.getValue());
     }
 

@@ -11,5 +11,15 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.swtbot.forms.finder;bundle-version="2.2.1",
  org.eclipse.swtbot.junit4_x;bundle-version="2.2.1",
  org.eclipse.ui.workbench,
- org.eclipse.swt
+ org.eclipse.swt,
+ org.junit,
+ org.eclipse.gef;bundle-version="3.9.100",
+ org.eclipse.gef.doc.isv;bundle-version="3.9.100",
+ org.eclipse.gef.examples.ui.pde;bundle-version="3.8.1",
+ org.eclipse.gmf.runtime.gef.ui;bundle-version="1.7.0",
+ org.eclipse.sirius.ext.gef;bundle-version="1.0.1",
+ org.apache.log4j;bundle-version="1.2.15",
+ org.eclipse.graphiti.ui,
+ org.eclipse.graphiti.mm,
+ org.uniks.SPE.model
 Import-Package: org.junit

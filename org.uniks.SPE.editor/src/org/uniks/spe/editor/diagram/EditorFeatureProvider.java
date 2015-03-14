@@ -1,5 +1,9 @@
 package org.uniks.spe.editor.diagram;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 import model.SPEAttribute;
 import model.SPEGroup;
 import model.SPELink;
@@ -29,6 +33,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider; 
+import org.uniks.spe.editor.ClassFinder;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeAddFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeCreateFeature;
 import org.uniks.spe.editor.features.SPEAttribute.SPEAttributeDirectEditFeature;
@@ -56,13 +61,13 @@ import org.uniks.spe.editor.features.objects.not.NotSPEObjectCreateFeature;
 import org.uniks.spe.editor.features.objects.optional.OptionalSPEObjectCreateFeature;
 
 
-public class EditorFeatureProvider extends DefaultFeatureProvider {
-
-	public EditorFeatureProvider(IDiagramTypeProvider dtp) {
-		super(dtp);
-	}
-	
-	  
+public class EditorFeatureProvider extends DefaultFeatureProvider { 
+     
+    public EditorFeatureProvider(IDiagramTypeProvider dtp) {
+        super(dtp);               
+     
+    }
+   
 	@Override
 	public ICreateFeature[] getCreateFeatures() {
 		return new ICreateFeature[] { 
@@ -167,5 +172,7 @@ public class EditorFeatureProvider extends DefaultFeatureProvider {
 		
 		return super.getAddFeature(context);
 	}		
-  
+
+    
+
 }

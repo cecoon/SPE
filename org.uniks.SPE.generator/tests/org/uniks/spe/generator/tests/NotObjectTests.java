@@ -28,10 +28,9 @@ public class NotObjectTests {
         assertTrue(!mainPO.allMatches().isEmpty());
     }
  
-    @Test
+    @Test 
     public void generatedMatcherTest() {
-        boolean empty = new MatchClassNotObject().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassNotObject().execute(store));
     }
 }
     

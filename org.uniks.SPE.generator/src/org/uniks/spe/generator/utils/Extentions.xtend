@@ -10,8 +10,8 @@ import model.SPEAttribute
 
 public final class Extentions {	 
 	
-	def static getIsntNot(MatchTag tag) {
-		tag != MatchTag.NOT
+	def static getIsNot(MatchTag tag) {
+		tag == MatchTag.NOT
 	}
 		
 	def static String Name(SPELink link) {

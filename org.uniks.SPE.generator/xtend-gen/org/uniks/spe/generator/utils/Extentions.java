@@ -12,8 +12,8 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public final class Extentions {
-  public static boolean getIsntNot(final MatchTag tag) {
-    return (!Objects.equal(tag, MatchTag.NOT));
+  public static boolean getIsNot(final MatchTag tag) {
+    return Objects.equal(tag, MatchTag.NOT);
   }
   
   public static String Name(final SPELink link) {

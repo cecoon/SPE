@@ -63,8 +63,10 @@ public class CodeGeneration {
         generateMatcherForDiagram("optional_setValue.spemodel");         
         generateMatcherForDiagram("createDeleteLink.spemodel");        
         generateMatcherForDiagram("CreateObjectAndLink.spemodel");  
+        System.out.println("matcher created");
 
     }  
+    
      
     protected void generateMatcherForDiagram(String nameOfDiagram) {
         ModelPackage.eINSTANCE.eClass();  
@@ -79,7 +81,7 @@ public class CodeGeneration {
                 return IEncodingProvider.Runtime.class;
             }
         }).injectMembers(fsa);
-         
+          
         Generator generator = new Generator();  
         Resource resource = rset.getResource(URI.createURI("./tests/org/uniks/spe/generator/tests/diagrams/" + nameOfDiagram), true);   
         fsa.setOutputPath("./tests-gen/matcher/");         

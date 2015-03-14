@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link model.impl.SPEGroupImpl#getName <em>Name</em>}</li>
  *   <li>{@link model.impl.SPEGroupImpl#getLinks <em>Links</em>}</li>
  *   <li>{@link model.impl.SPEGroupImpl#getSubGroups <em>Sub Groups</em>}</li>
+ *   <li>{@link model.impl.SPEGroupImpl#getModel <em>Model</em>}</li>
  * </ul>
  * </p>
  *
@@ -97,7 +98,7 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * @generated
      * @ordered
      */
-    protected static final String NAME_EDEFAULT = "MySPEDiagram";
+    protected static final String NAME_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -128,6 +129,26 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * @ordered
      */
     protected EList<SPEGroup> subGroups;
+
+    /**
+     * The default value of the '{@link #getModel() <em>Model</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getModel()
+     * @generated
+     * @ordered
+     */
+    protected static final String MODEL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getModel() <em>Model</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getModel()
+     * @generated
+     * @ordered
+     */
+    protected String model = MODEL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -252,6 +273,27 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setModel(String newModel) {
+        String oldModel = model;
+        model = newModel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SPE_GROUP__MODEL, oldModel, model));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -285,6 +327,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 return getLinks();
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 return getSubGroups();
+            case ModelPackage.SPE_GROUP__MODEL:
+                return getModel();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -319,6 +363,9 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 getSubGroups().clear();
                 getSubGroups().addAll((Collection<? extends SPEGroup>)newValue);
                 return;
+            case ModelPackage.SPE_GROUP__MODEL:
+                setModel((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -349,6 +396,9 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 getSubGroups().clear();
                 return;
+            case ModelPackage.SPE_GROUP__MODEL:
+                setModel(MODEL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -373,6 +423,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
                 return links != null && !links.isEmpty();
             case ModelPackage.SPE_GROUP__SUB_GROUPS:
                 return subGroups != null && !subGroups.isEmpty();
+            case ModelPackage.SPE_GROUP__MODEL:
+                return MODEL_EDEFAULT == null ? model != null : !MODEL_EDEFAULT.equals(model);
         }
         return super.eIsSet(featureID);
     }
@@ -425,6 +477,8 @@ public class SPEGroupImpl extends MinimalEObjectImpl.Container implements SPEGro
         result.append(tag);
         result.append(", name: ");
         result.append(name);
+        result.append(", model: ");
+        result.append(model);
         result.append(')');
         return result.toString();
     }

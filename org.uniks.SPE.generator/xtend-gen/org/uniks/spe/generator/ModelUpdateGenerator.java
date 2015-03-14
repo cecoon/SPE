@@ -56,9 +56,9 @@ public class ModelUpdateGenerator {
     Iterable<SPELink> _filter = IterableExtensions.<SPELink>filter(_links, _function);
     StringConcatenation _builder = new StringConcatenation();
     final Function2<String, SPELink, String> _function_1 = new Function2<String, SPELink, String>() {
-      public String apply(final String left, final SPELink it) {
+      public String apply(final String _, final SPELink it) {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append(left, "");
+        _builder.append(_, "");
         SPEObject _source = it.getSource();
         String _varName = Extentions.varName(_source);
         _builder.append(_varName, "");
@@ -85,9 +85,9 @@ public class ModelUpdateGenerator {
     };
     Iterable<SPEObject> _filter = IterableExtensions.<SPEObject>filter(allObjects, _function);
     final Function2<String, SPEObject, String> _function_1 = new Function2<String, SPEObject, String>() {
-      public String apply(final String left, final SPEObject it) {
+      public String apply(final String _, final SPEObject it) {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append(left, "");
+        _builder.append(_, "");
         String _varName = Extentions.varName(it);
         _builder.append(_varName, "");
         _builder.append(".destroy();");
@@ -106,9 +106,9 @@ public class ModelUpdateGenerator {
     };
     Iterable<SPEObject> _filter = IterableExtensions.<SPEObject>filter(allObjects, _function);
     final Function2<String, SPEObject, String> _function_1 = new Function2<String, SPEObject, String>() {
-      public String apply(final String left, final SPEObject it) {
+      public String apply(final String _, final SPEObject it) {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append(left, "");
+        _builder.append(_, "");
         _builder.append(" ");
         CharSequence _declarePO = CodeSnippets.declarePO(it);
         _builder.append(_declarePO, "");
@@ -142,9 +142,9 @@ public class ModelUpdateGenerator {
           boolean _greaterThan = (_size > 0);
           if (_greaterThan) {
             final Function2<String, SPEAttribute, String> _function_1 = new Function2<String, SPEAttribute, String>() {
-              public String apply(final String left, final SPEAttribute it) {
+              public String apply(final String _, final SPEAttribute it) {
                 StringConcatenation _builder = new StringConcatenation();
-                _builder.append(left, "");
+                _builder.append(_, "");
                 _builder.append(".create");
                 String _attrName = Extentions.getAttrName(it);
                 _builder.append(_attrName, "");

@@ -31,156 +31,161 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
  */
 
 public class SPEWizardPage extends WizardPage {
-	private Text containerText;
+    private Text containerText;
 
-	private Text diagramText;
-	private Text diagramName;
+    private Text diagramText;
+    private Text modelPackageText;
 
+    private ISelection selection;
 
-	private ISelection selection;
+    /**
+     * Constructor for SampleNewWizardPage.
+     * 
+     * @param pageName
+     */
+    public SPEWizardPage(ISelection selection) {
+        super("wizardPage");
+        setTitle("Multi-page Editor File");
+        setDescription("This wizard creates a new file with *.spe extension that can be opened by a multi-page editor.");
+        this.selection = selection;
+    }
 
-	/**
-	 * Constructor for SampleNewWizardPage.
-	 * 
-	 * @param pageName
-	 */
-	public SPEWizardPage(ISelection selection) {
-		super("wizardPage");
-		setTitle("Multi-page Editor File");
-		setDescription("This wizard creates a new file with *.spe extension that can be opened by a multi-page editor.");
-		this.selection = selection;
-	}
+    /**
+     * @see IDialogPage#createControl(Composite)
+     */
+    public void createControl(Composite parent) {
+        Composite container = new Composite(parent, SWT.NULL);
+        GridLayout layout = new GridLayout();
+        container.setLayout(layout);
+        layout.numColumns = 3;
+        layout.verticalSpacing = 9;
+        Label label = new Label(container, SWT.NULL);
+        label.setText("&Container:");
 
-	/**
-	 * @see IDialogPage#createControl(Composite)
-	 */
-	public void createControl(Composite parent) {
-		Composite container = new Composite(parent, SWT.NULL);
-		GridLayout layout = new GridLayout();
-		container.setLayout(layout);
-		layout.numColumns = 3;
-		layout.verticalSpacing = 9;
-		Label label = new Label(container, SWT.NULL);
-		label.setText("&Container:");
+        containerText = new Text(container, SWT.BORDER | SWT.SINGLE);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        containerText.setLayoutData(gd);
+        containerText.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                dialogChanged();
+            }
+        });
 
-		containerText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		containerText.setLayoutData(gd);
-		containerText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				dialogChanged();
-			}
-		});
+        Button button = new Button(container, SWT.PUSH);
+        button.setText("Browse...");
+        button.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                handleBrowse();
+            }
+        });
+        
+        label = new Label(container, SWT.NULL);
+        label.setText("&Diagram name:");
+        diagramText = new Text(container, SWT.BORDER | SWT.SINGLE);
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        diagramText.setLayoutData(gd);
+       
+        
+        label = new Label(container, SWT.NULL);
+        label.setText("&Model Package:");
+        modelPackageText = new Text(container, SWT.BORDER | SWT.SINGLE);
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+        modelPackageText.setLayoutData(gd);       
 
-		Button button = new Button(container, SWT.PUSH);
-		button.setText("Browse...");
-		button.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				handleBrowse();
-			}
-		});
-		label = new Label(container, SWT.NULL);
-		label.setText("&Diagram name:");
+        initialize();
+        dialogChanged();
+        setControl(container);
+    }
 
-		diagramText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		diagramText.setLayoutData(gd);
-		diagramText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				dialogChanged();
-			}
-		});
-		initialize();
-		dialogChanged();
-		setControl(container);
-	}
+    /**
+     * Tests if the current workbench selection is a suitable container to use.
+     */
 
-	/**
-	 * Tests if the current workbench selection is a suitable container to use.
-	 */
+    private void initialize() {
+        if (selection != null && selection.isEmpty() == false && selection instanceof IStructuredSelection) {
+            IStructuredSelection ssel = (IStructuredSelection) selection;
+            if (ssel.size() > 1)
+                return;
+            Object obj = ssel.getFirstElement();
+            if (obj instanceof IFile) {
+                IContainer container;
+                if (obj instanceof IContainer)
+                    container = (IContainer) obj;
+                else
+                    container = ((IResource) obj).getParent();
 
-	private void initialize() {
-		if (selection != null && selection.isEmpty() == false
-				&& selection instanceof IStructuredSelection) {
-			IStructuredSelection ssel = (IStructuredSelection) selection;
-			if (ssel.size() > 1)
-				return;
-			Object obj = ssel.getFirstElement();	
-			if (obj instanceof IFile) {
-				IContainer container;
-				if (obj instanceof IContainer)
-					container = (IContainer) obj;
-				else
-					container = ((IResource) obj).getParent();
-				
-				containerText.setText(container.getFullPath().toString());
-			}
-		}
-		
-		diagramText.setText("MyDiagram");
-	}
+                containerText.setText(container.getFullPath().toString());
+            }
+        }
 
-	/**
-	 * Uses the standard container selection dialog to choose the new value for
-	 * the container field.
-	 */
+        modelPackageText.setText("model");
+        diagramText.setText("SPEDiagram");
+    }
 
-	private void handleBrowse() {
-		ContainerSelectionDialog dialog = new ContainerSelectionDialog(
-				getShell(), ResourcesPlugin.getWorkspace().getRoot(), false,
-				"Select new file container");
-		if (dialog.open() == ContainerSelectionDialog.OK) {
-			Object[] result = dialog.getResult();
-			if (result.length == 1) {
-				containerText.setText(((Path) result[0]).toString());
-			}
-		}
-	}
+    /**
+     * Uses the standard container selection dialog to choose the new value for
+     * the container field.
+     */
 
-	/**
-	 * Ensures that both text fields are set.
-	 */
+    private void handleBrowse() {
+        ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace()
+                .getRoot(), false, "Select new file container");
+        if (dialog.open() == ContainerSelectionDialog.OK) {
+            Object[] result = dialog.getResult();
+            if (result.length == 1) {
+                containerText.setText(((Path) result[0]).toString());
+            }
+        }
+    }
 
-	private void dialogChanged() {
-		IResource container = ResourcesPlugin.getWorkspace().getRoot() 
-				.findMember(new Path(getContainerName()));
-		String fileName = getDiagramName();
+    /**
+     * Ensures that both text fields are set.
+     */
 
-		if (getContainerName().length() == 0) {
-			updateStatus("File container must be specified");
-			return;
-		}
-		if (container == null
-				|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
-			updateStatus("File container must exist");
-			return;
-		}
-		if (!container.isAccessible()) {
-			updateStatus("Project must be writable");
-			return;
-		}
-		if (fileName.length() == 0) {
-			updateStatus("File name must be specified");
-			return;
-		}
-		if (fileName.replace('\\', '/').indexOf('/', 1) > 0) {
-			updateStatus("File name must be valid");
-			return;
-		}
-		 
-		updateStatus(null);
-	}
+    private void dialogChanged() {
+        IResource container = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(getContainerName()));
+        String fileName = getDiagramName();
 
-	private void updateStatus(String message) {
-		setErrorMessage(message);
-		setPageComplete(message == null);
-	}
+        if (getContainerName().length() == 0) {
+            updateStatus("File container must be specified");
+            return;
+        }
+        if (container == null || (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
+            updateStatus("File container must exist");
+            return;
+        }
+        if (!container.isAccessible()) {
+            updateStatus("Project must be writable");
+            return;
+        }
+        if (fileName.length() == 0) {
+            updateStatus("File name must be specified");
+            return;
+        }
+        if (fileName.replace('\\', '/').indexOf('/', 1) > 0) {
+            updateStatus("File name must be valid");
+            return;
+        }
 
-	public String getContainerName() {
-		return containerText.getText();
-	}
+        updateStatus(null);
+    }
 
-	public String getDiagramName() {
-		return diagramText.getText();
-	}
+    private void updateStatus(String message) {
+        setErrorMessage(message);
+        setPageComplete(message == null);
+    }
+
+    public String getContainerName() {
+        return containerText.getText();
+    }
+
+    public String getDiagramName() {
+        return diagramText.getText();
+    }
+    
+    public String getModelPackage() {
+        return modelPackageText.getText();
+    }
+    
+    
 }

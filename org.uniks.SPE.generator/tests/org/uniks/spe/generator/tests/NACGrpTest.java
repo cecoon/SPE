@@ -61,21 +61,19 @@ public class NACGrpTest  {
         //chk links to aliens
         mainPO.hasHas(i2PO); 
         
-        mainPO.endNAC();  
+        mainPO.endNAC();   
         
         return mainPO;
     } 
 
     @Test
     public void generatedNotMatcherTest() {
-        boolean empty = new MatchClassNACGroupDiagram().findMatch(notMatchStore).isEmpty();
-        assertTrue(empty);
+        assertFalse(new MatchClassNACGroupDiagram().execute(notMatchStore));
     }
     
     @Test
     public void generatedMatcherTest() {
-        boolean empty = new MatchClassNACGroupDiagram().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassNACGroupDiagram().execute(store));
     }
     
 

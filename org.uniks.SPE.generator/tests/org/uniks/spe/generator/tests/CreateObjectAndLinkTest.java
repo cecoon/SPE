@@ -50,10 +50,9 @@ public class CreateObjectAndLinkTest  {
         assertEquals(4, i1.getNext().getValue()); 
     }
 
-    @Test
+    @Test 
     public void generatedMatcherTest() {
-        boolean empty = new MatchClassCreateObjectAndLink().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassCreateObjectAndLink().execute(store));
 
         assertNotNull(i1.getNext());
         assertEquals(4, i1.getNext().getValue());

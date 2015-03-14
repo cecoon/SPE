@@ -1,13 +1,31 @@
 package org.uniks.spe.generator.model
 
 import model.SPEObject
+import model.SPELink
 
 class EntryPoint {
 	private SPEObject alien
 	private SPEObject start
-	private CharSequence entrySourceCode 
+	private SPELink link
+	private boolean inbound 
 	
 	
+def boolean isInbound() {
+    return inbound;
+}
+
+def void setInbound(boolean inbound) {
+    this.inbound = inbound;
+}
+	
+def SPELink getLink() {
+    return link;
+}
+
+def void setLink(SPELink link) {
+    this.link = link;
+}	
+
 def SPEObject getAlien() {
     return alien;
 }
@@ -23,14 +41,7 @@ def SPEObject getStart() {
 def void setStart(SPEObject start) {
     this.start = start;
 }
-
-def CharSequence getEntrySourceCode() {
-    return entrySourceCode;
-}
-
-def void setEntrySourceCode(CharSequence entrySourceCode) {
-    this.entrySourceCode = entrySourceCode;
-}
+ 
   
 }
 

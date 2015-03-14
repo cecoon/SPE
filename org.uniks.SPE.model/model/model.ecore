@@ -30,12 +30,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="SPEGroup" eSuperTypes="#//IHasOperation #//IHasMatchTag">
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
         eType="#//SPEObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="MySPEDiagram"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="links" upperBound="-1"
         eType="#//SPELink" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subGroups" upperBound="-1"
         eType="#//SPEGroup" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="model" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MatchTag">
     <eLiterals name="Default"/>

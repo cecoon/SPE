@@ -40,8 +40,8 @@ public class SimpleModelGeneratorTests {
 
     @Test
     public void generatedMatcherTest() {
-        boolean empty = new MatchClassSimpleDiagram().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassSimpleDiagram().execute(store));
     }
 
 }
+  

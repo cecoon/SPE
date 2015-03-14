@@ -27,15 +27,19 @@ import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
+import org.uniks.spe.editor.ClassFinder;
 import org.uniks.spe.editor.features.Common;
  
 public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {     
-    private final static String OBEJCT_WITH_CLASS_REGEX = "^[+\\-?!.]{0,2}(\\w+):(\\w+)$"; 
-  
+    private final static String OBEJCT_WITH_CLASS_REGEX = "^[+\\-?!.]{0,2}(\\w+):(\\w+)$";
+    private ClassFinder classFinder;
+     
+   
     public SPEObjectDirectEditFeature(IFeatureProvider fp) {
         super(fp);
-    }
-
+        this.classFinder = new ClassFinder(); 
+    }  
+    
     @Override
     public int getEditingType() { 
         return TYPE_TEXT;
@@ -106,13 +110,17 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         }
 
         String objectName = split[0];
-        String enteredClassName = split[1];
+        String enteredClassName = split[1];        
         
+        Stream<String> classesInDiagram = getAllObjects().stream().map(it -> it.getType());  
+     //   Stream<String> classesInModel = classFinder.getModelClasses(getRootGroup().getModel()).stream();
         
-        Set<String> proposals = getAllObjects()
-                .map(it -> it.getType())
+        Set<String> proposals = 
+               // Stream.concat(classesInDiagram , classesInModel)
+                classesInDiagram
                 .filter(it -> it.startsWith(enteredClassName))
-                .map(it -> objectName + " : " + it).collect(Collectors.toSet());
+                .map(it -> objectName + " : " + it)
+                .collect(Collectors.toSet());
 
         String[] result = proposals.toArray(new String[proposals.size()]);
         return result;
@@ -126,14 +134,16 @@ public class SPEObjectDirectEditFeature extends AbstractDirectEditingFeature {
         return (SPEGroup) getBusinessObjectForPictogramElement(getDiagram().getLink().getPictogramElement());
     }
 
-    protected Stream<SPEObject> getAllObjects() {
+    protected List<SPEObject> getAllObjects() {
         SPEGroup rootGroup = getRootGroup();        
-        Stream<SPEObject> flatMap = rootGroup.getSubGroups().stream()
+        List<SPEObject> subGrpObjects = rootGroup.getSubGroups().stream()
                 .map(it -> it.getObjects())
-                .flatMap(it -> it.stream());
+                .flatMap(it -> it.stream())
+                .collect(Collectors.toList());
         
-        Stream<SPEObject> allObjects = Stream.concat(flatMap, rootGroup.getObjects().stream());
-        return allObjects;
+        subGrpObjects.addAll(rootGroup.getObjects());        
+        
+        return subGrpObjects;
     }
     
     public boolean containsSPEObject(PictogramElement elem){

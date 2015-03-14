@@ -67,11 +67,12 @@ public class SPEWizard extends Wizard implements INewWizard {
 
 	public boolean performFinish() {
 		final String containerName = page.getContainerName();
+		final String modelPackage = page.getModelPackage();
 		final String diagramName = page.getDiagramName();
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
-					doFinish(containerName, diagramName, monitor);
+					doFinish(containerName, diagramName, modelPackage, monitor);
 
 				} catch (CoreException e) {				    
 					throw new InvocationTargetException(e);
@@ -96,9 +97,10 @@ public class SPEWizard extends Wizard implements INewWizard {
 	 * The worker method. It will find the container, create the
 	 * file if missing or just replace its contents, and open
 	 * the editor on the newly created file.
+	 * @param modelPackage 
 	 */
 
-    private void doFinish(String containerName, String fileName, IProgressMonitor monitor) throws CoreException {
+    private void doFinish(String containerName, String fileName, String modelPackage, IProgressMonitor monitor) throws CoreException {
         // create a sample file
         monitor.beginTask("Creating " + fileName, 2);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -108,7 +110,7 @@ public class SPEWizard extends Wizard implements INewWizard {
         }
         IContainer container = (IContainer) resource;
         final IFile file = container.getFile(new Path(fileName + "." + DIAGRAM_TYPE_ID)); 
-        createDiagram(file, monitor);
+        createDiagram(file, monitor, modelPackage);
         monitor.worked(1);
         
         monitor.setTaskName("Opening file for editing...");
@@ -124,7 +126,7 @@ public class SPEWizard extends Wizard implements INewWizard {
         monitor.worked(1);
 	}	
     
-    private void createDiagram(IFile file, IProgressMonitor monitor){
+    private void createDiagram(IFile file, IProgressMonitor monitor, String modelPackage){
         Diagram diagram = Graphiti.getPeCreateService().createDiagram(DIAGRAM_TYPE_ID, file.getName(), true);
         URI diagramUri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             
@@ -134,8 +136,10 @@ public class SPEWizard extends Wizard implements INewWizard {
         if(file.getName().contains(".")){
             String[] split = file.getName().split("\\.");
             rootName = split[0];
-        }              
-        modelRoot.setName(rootName);
+        }               
+        
+        modelRoot.setName(rootName); 
+        modelRoot.setModel(modelPackage); 
         
         URI modelUri = URI.createPlatformResourceURI(file.getFullPath().toString() + "model", true);
         

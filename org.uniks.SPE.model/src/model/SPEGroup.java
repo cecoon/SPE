@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link model.SPEGroup#getName <em>Name</em>}</li>
  *   <li>{@link model.SPEGroup#getLinks <em>Links</em>}</li>
  *   <li>{@link model.SPEGroup#getSubGroups <em>Sub Groups</em>}</li>
+ *   <li>{@link model.SPEGroup#getModel <em>Model</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,7 +43,6 @@ public interface SPEGroup extends IHasOperation, IHasMatchTag {
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * The default value is <code>"MySPEDiagram"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -52,7 +52,7 @@ public interface SPEGroup extends IHasOperation, IHasMatchTag {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see model.ModelPackage#getSPEGroup_Name()
-     * @model default="MySPEDiagram"
+     * @model
      * @generated
      */
     String getName();
@@ -98,5 +98,31 @@ public interface SPEGroup extends IHasOperation, IHasMatchTag {
      * @generated
      */
     EList<SPEGroup> getSubGroups();
+
+    /**
+     * Returns the value of the '<em><b>Model</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Model</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Model</em>' attribute.
+     * @see #setModel(String)
+     * @see model.ModelPackage#getSPEGroup_Model()
+     * @model
+     * @generated
+     */
+    String getModel();
+
+    /**
+     * Sets the value of the '{@link model.SPEGroup#getModel <em>Model</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Model</em>' attribute.
+     * @see #getModel()
+     * @generated
+     */
+    void setModel(String value);
 
 } // SPEGroup

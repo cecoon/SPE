@@ -39,8 +39,7 @@ public class DeleteObjectTest {
 
     @Test
     public void generatedMatcherTest() {
-        boolean empty = new MatchClassDeleteObject().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassDeleteObject().execute(store));
         assertFalse(store.getHas().contains(deleteItem));
     }
 

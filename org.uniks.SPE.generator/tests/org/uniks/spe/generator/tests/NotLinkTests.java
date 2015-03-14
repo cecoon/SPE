@@ -44,8 +44,7 @@ public class NotLinkTests  {
 
     @Test
     public void generatedMatcherTest() {
-        boolean empty = new MatchClassNotLink().findMatch(store).isEmpty();
-        assertFalse(empty);
+        assertTrue(new MatchClassNotLink().execute(store));
     }
     
 

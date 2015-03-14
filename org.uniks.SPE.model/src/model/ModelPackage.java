@@ -369,13 +369,22 @@ public interface ModelPackage extends EPackage {
     int SPE_GROUP__SUB_GROUPS = IHAS_OPERATION_FEATURE_COUNT + 4;
 
     /**
+     * The feature id for the '<em><b>Model</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SPE_GROUP__MODEL = IHAS_OPERATION_FEATURE_COUNT + 5;
+
+    /**
      * The number of structural features of the '<em>SPE Group</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SPE_GROUP_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 5;
+    int SPE_GROUP_FEATURE_COUNT = IHAS_OPERATION_FEATURE_COUNT + 6;
 
     /**
      * The number of operations of the '<em>SPE Group</em>' class.
@@ -639,6 +648,17 @@ public interface ModelPackage extends EPackage {
     EReference getSPEGroup_SubGroups();
 
     /**
+     * Returns the meta object for the attribute '{@link model.SPEGroup#getModel <em>Model</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Model</em>'.
+     * @see model.SPEGroup#getModel()
+     * @see #getSPEGroup()
+     * @generated
+     */
+    EAttribute getSPEGroup_Model();
+
+    /**
      * Returns the meta object for class '{@link model.IHasMatchTag <em>IHas Match Tag</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -874,6 +894,14 @@ public interface ModelPackage extends EPackage {
          * @generated
          */
         EReference SPE_GROUP__SUB_GROUPS = eINSTANCE.getSPEGroup_SubGroups();
+
+        /**
+         * The meta object literal for the '<em><b>Model</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SPE_GROUP__MODEL = eINSTANCE.getSPEGroup_Model();
 
         /**
          * The meta object literal for the '{@link model.IHasMatchTag <em>IHas Match Tag</em>}' class.

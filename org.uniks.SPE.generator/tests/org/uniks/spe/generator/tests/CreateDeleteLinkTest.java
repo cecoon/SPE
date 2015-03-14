@@ -42,14 +42,13 @@ public class CreateDeleteLinkTest {
         assertNull(i1.getNext());
         assertEquals(i1,i2.getNext());
     } 
-           
+            
          
     
         
     @Test
     public void generatedMatcherTest() {         
-        boolean empty = new MatchClasscreateDeleteLink().findMatch(store).isEmpty();
-        assertFalse(empty);   
+        assertTrue(new MatchClasscreateDeleteLink().execute(store));   
         assertNull(i1.getNext());
         assertEquals(i1,i2.getNext());
         

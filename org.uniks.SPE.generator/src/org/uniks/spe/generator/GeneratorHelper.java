@@ -24,7 +24,7 @@ public class GeneratorHelper {
         extentionMap.put("spemodel", new XMIResourceFactoryImpl());        
         
         JavaIoFileSystemAccess fsa = getFileSystemAccess();
-        fsa.setOutputPath(targetUri + "/spe-gen/");
+        fsa.setOutputPath(targetUri + "/spe-gen/matcher");
         
         ResourceSetImpl rset = new ResourceSetImpl();   
         Resource resource = rset.getResource(URI.createURI(modelUri), true);

@@ -1,5 +1,6 @@
 package org.uniks.spe.generator.model;
 
+import model.SPELink;
 import model.SPEObject;
 
 @SuppressWarnings("all")
@@ -8,7 +9,25 @@ public class EntryPoint {
   
   private SPEObject start;
   
-  private CharSequence entrySourceCode;
+  private SPELink link;
+  
+  private boolean inbound;
+  
+  public boolean isInbound() {
+    return this.inbound;
+  }
+  
+  public void setInbound(final boolean inbound) {
+    this.inbound = inbound;
+  }
+  
+  public SPELink getLink() {
+    return this.link;
+  }
+  
+  public void setLink(final SPELink link) {
+    this.link = link;
+  }
   
   public SPEObject getAlien() {
     return this.alien;
@@ -24,13 +43,5 @@ public class EntryPoint {
   
   public void setStart(final SPEObject start) {
     this.start = start;
-  }
-  
-  public CharSequence getEntrySourceCode() {
-    return this.entrySourceCode;
-  }
-  
-  public void setEntrySourceCode(final CharSequence entrySourceCode) {
-    this.entrySourceCode = entrySourceCode;
   }
 }
