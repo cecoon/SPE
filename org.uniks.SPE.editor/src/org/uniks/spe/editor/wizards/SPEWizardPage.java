@@ -104,22 +104,22 @@ public class SPEWizardPage extends WizardPage {
      */
 
     private void initialize() {
-        if (selection != null && selection.isEmpty() == false && selection instanceof IStructuredSelection) {
+        if (selection != null && selection.isEmpty() == false
+                && selection instanceof IStructuredSelection) {
             IStructuredSelection ssel = (IStructuredSelection) selection;
             if (ssel.size() > 1)
                 return;
             Object obj = ssel.getFirstElement();
-            if (obj instanceof IFile) {
+            if (obj instanceof IResource) {
                 IContainer container;
                 if (obj instanceof IContainer)
                     container = (IContainer) obj;
                 else
                     container = ((IResource) obj).getParent();
-
                 containerText.setText(container.getFullPath().toString());
             }
         }
-
+        
         modelPackageText.setText("model");
         diagramText.setText("SPEDiagram");
     }
