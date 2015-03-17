@@ -29,9 +29,10 @@ public class MatchClassDeleteObject {
 		i2PO.hasNext(i1PO);
 		
 		//update model 
-		i1PO.startCreate().createValue(5).endCreate();
-		i1PO.destroy();
-	
-		return ! thisPO.allMatches().isEmpty();
+		boolean hasMatch = thisPO.getHasMatch();
+		if(hasMatch){
+			i1PO.destroy();
+		}
+		return hasMatch;
 	}
 }

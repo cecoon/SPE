@@ -36,7 +36,7 @@ public class DeleteObjectTest {
         assertTrue(!mainPO.allMatches().isEmpty());
         assertFalse(store.getHas().contains(deleteItem));
     }
-
+ 
     @Test
     public void generatedMatcherTest() {
         assertTrue(new MatchClassDeleteObject().execute(store));

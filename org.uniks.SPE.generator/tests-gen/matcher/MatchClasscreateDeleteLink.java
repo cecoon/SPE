@@ -29,9 +29,11 @@ public class MatchClasscreateDeleteLink {
 		thisPO.hasHas(i2PO);
 		
 		//update model 
-		i2PO.startCreate().hasNext(i1PO).endCreate();
-		i1PO.startDestroy().hasNext(i2PO).endDestroy();
-	
-		return ! thisPO.allMatches().isEmpty();
+		boolean hasMatch = thisPO.getHasMatch();
+		if(hasMatch){
+			i1PO.startDestroy().hasNext(i2PO).endDestroy();
+			i2PO.startCreate().hasNext(i1PO).endCreate();
+		}
+		return hasMatch;
 	}
 }

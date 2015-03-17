@@ -12,6 +12,20 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public final class Extentions {
+  /**
+   * createLinks doesnt exist yet
+   */
+  public static boolean canBeMatched(final SPELink link) {
+    Operations _operation = link.getOperation();
+    return (!Objects.equal(_operation, Operations.CREATE));
+  }
+  
+  public static boolean canCreatePO(final SPELink link) {
+    MatchTag _tag = link.getTag();
+    boolean _isNot = Extentions.getIsNot(_tag);
+    return (!_isNot);
+  }
+  
   public static boolean getIsNot(final MatchTag tag) {
     return Objects.equal(tag, MatchTag.NOT);
   }

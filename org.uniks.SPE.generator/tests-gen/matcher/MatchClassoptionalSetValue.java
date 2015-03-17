@@ -29,8 +29,10 @@ public class MatchClassoptionalSetValue {
 		i2PO.hasNext(i1PO);
 		
 		//update model 
-		i1PO.startCreate().createValue(5).endCreate();
-	
-		return ! thisPO.allMatches().isEmpty();
+		boolean hasMatch = thisPO.getHasMatch();
+		if(hasMatch){
+			i1PO.startCreate().createValue(5).endCreate();
+		}
+		return hasMatch;
 	}
 }

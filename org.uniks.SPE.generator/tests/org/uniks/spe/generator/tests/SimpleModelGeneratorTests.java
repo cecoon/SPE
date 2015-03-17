@@ -24,7 +24,11 @@ public class SimpleModelGeneratorTests {
         Item i2 = i1.createNext().withValue(19);
         Person p = store.createCustomer().withBalance(42).withHas(i1, i2);
     }
- 
+
+    @Test
+    public void generatedMatcherTest() {
+        assertTrue(new MatchClassSimpleDiagram().execute(store));
+    }
     @Test
     public void modelTest() {
         StorePO mainPO = new StoreSet().with(store).hasStorePO();
@@ -36,11 +40,6 @@ public class SimpleModelGeneratorTests {
         mainPO.hasHas(item1);
         person.hasHas(item2);
         assertTrue(!mainPO.allMatches().isEmpty());
-    }
-
-    @Test
-    public void generatedMatcherTest() {
-        assertTrue(new MatchClassSimpleDiagram().execute(store));
     }
 
 }

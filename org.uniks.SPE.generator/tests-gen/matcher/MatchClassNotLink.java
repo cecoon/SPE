@@ -31,7 +31,9 @@ public class MatchClassNotLink {
 		pPO.startNAC().hasHas(i2PO).endNAC();
 		
 		//update model 
-	
-		return ! thisPO.allMatches().isEmpty();
+		boolean hasMatch = thisPO.getHasMatch();
+		if(hasMatch){
+		}
+		return hasMatch;
 	}
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<model:SPEGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:model="http://www.example.org/model" name="SPEDiagram" model="model">
+  <objects type="Board" outboundLinks="//@links.0 //@links.1 //@links.2"/>
+  <objects name="alice" type="Player" outboundLinks="//@links.5 //@links.6" inboundLinks="//@links.0 //@links.3">
+    <attributes operation="==&quot;alice&quot;"/>
+  </objects>
+  <objects name="bob" type="Player" outboundLinks="//@links.8 //@links.9" inboundLinks="//@links.1 //@links.4 //@links.7">
+    <attributes operation="==&quot;bob&quot;"/>
+  </objects>
+  <objects name="dice" type="Dice" outboundLinks="//@links.3 //@links.4 //@links.7" inboundLinks="//@links.2">
+    <attributes name="value" operation="==5"/>
+  </objects>
+  <objects name="f1" type="Figure" inboundLinks="//@links.5">
+    <attributes name="field" operation="==0"/>
+    <attributes name="field" operation=":=5"/>
+  </objects>
+  <objects tag="Not" name="f3" type="Figure" inboundLinks="//@links.6">
+    <attributes name="field" operation="==5"/>
+  </objects>
+  <objects operation="Delete" tag="Optional" name="f2" type="Figure" inboundLinks="//@links.8 //@links.13">
+    <attributes name="field" operation="==5"/>
+  </objects>
+  <links name="players" source="//@objects.0" target="alice"/>
+  <links name="players" source="//@objects.0" target="bob"/>
+  <links source="//@objects.0" target="dice"/>
+  <links operation="Delete" name="player" source="dice" target="alice"/>
+  <links operation="Create" name="player" source="dice" target="bob"/>
+  <links source="alice" target="f1"/>
+  <links source="alice" target="f3"/>
+  <links tag="Not" name="player" source="dice" target="bob"/>
+  <links source="bob" target="f2"/>
+  <links name="inventory" source="bob" target="inv"/>
+  <links source="inv" target="i1"/>
+  <links source="inv" target="i2"/>
+  <links name="canBeCombined" source="i1" target="i2"/>
+  <links name="canBeApplied" source="i1" target="f2"/>
+  <subGroups tag="Not">
+    <objects name="inv" type="Inventory" outboundLinks="//@links.10 //@links.11" inboundLinks="//@links.9"/>
+    <objects name="i1" type="Item" outboundLinks="//@links.12 //@links.13" inboundLinks="//@links.10"/>
+    <objects name="i2" type="Item" inboundLinks="//@links.11 //@links.12"/>
+  </subGroups>
+</model:SPEGroup>

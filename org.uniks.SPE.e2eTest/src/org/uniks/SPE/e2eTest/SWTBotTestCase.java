@@ -141,7 +141,7 @@ public class SWTBotTestCase extends SWTBotEclipseTestCase {
         });
         
         
-        return editParts;
+        return editParts; 
     }
     
     @AfterClass

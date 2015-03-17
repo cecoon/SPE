@@ -58,10 +58,10 @@ public class SPEWizardPage extends WizardPage {
         GridLayout layout = new GridLayout();
         container.setLayout(layout);
         layout.numColumns = 3;
-        layout.verticalSpacing = 9;
+        layout.verticalSpacing = 15;     
+        
         Label label = new Label(container, SWT.NULL);
-        label.setText("&Container:");
-
+        label.setText("&Container:");      
         containerText = new Text(container, SWT.BORDER | SWT.SINGLE);
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
         containerText.setLayoutData(gd);
@@ -79,18 +79,20 @@ public class SPEWizardPage extends WizardPage {
             }
         });
         
-        label = new Label(container, SWT.NULL);
-        label.setText("&Diagram name:");
-        diagramText = new Text(container, SWT.BORDER | SWT.SINGLE);
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        diagramText.setLayoutData(gd);
-       
         
         label = new Label(container, SWT.NULL);
-        label.setText("&Model Package:");
-        modelPackageText = new Text(container, SWT.BORDER | SWT.SINGLE);
+        label.setText("&Diagram name:");     
+        diagramText = new Text(container, SWT.BORDER | SWT.SINGLE);
+         gd = new GridData(GridData.FILL_HORIZONTAL);
+        diagramText.setLayoutData(gd);
+        label = new Label(container, SWT.NULL); 
+        
+        label = new Label(container, SWT.NULL);
+        label.setText("&Model Package:");      
+        modelPackageText = new Text(container, SWT.BORDER | SWT.SINGLE);        
         gd = new GridData(GridData.FILL_HORIZONTAL);
-        modelPackageText.setLayoutData(gd);       
+        modelPackageText.setLayoutData(gd);     
+        label = new Label(container, SWT.NULL);
 
         initialize();
         dialogChanged();

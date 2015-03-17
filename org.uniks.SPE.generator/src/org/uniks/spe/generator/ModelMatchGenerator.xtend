@@ -21,15 +21,15 @@ class ModelMatchGenerator {
 	new( MatchState matchState) {
 		this.matchState = matchState		
 	}	
+	 
+	//region match code for links to unknown objects 
 	
-	//region match code for links to unknown objects
-	
-	def generateMatchCodeForNonAlienObjects(SPEObject object) {
-		object.outboundLinks.filter[!tag.isNot && operation.isNotCreate]
-							.filter[object.group == it.target.group]
+	def generateMatchCodeForNonAlienObjects(SPEObject object) { 
+		object.outboundLinks.filter[canBeMatched && canCreatePO]
+							.filter[areInSameGroup(object, target)]
 							.fold("",[_, it|'''«_»«createMatchingCodeForLinkedObjects(it, object.varName)»'''])
 	}	
-
+	
 	private def CharSequence createMatchingCodeForLinkedObjects(SPELink link, String fromVarName) {
 		val target = link.target
 		if (matchState.isMatched(target)) { 
@@ -53,7 +53,7 @@ class ModelMatchGenerator {
 	//region missing links
 	
 	def generateCodeForMissingLinks() {
-		matchState.root.links.filter[!matchState.isMatched(it) && operation.isNotCreate]
+		matchState.root.links.filter[!matchState.isMatched(it) && canBeMatched]
 							 .fold("", [_, it|'''«_»«createMatchCodeForALink»'''])
 	}
 	
@@ -103,8 +103,8 @@ class ModelMatchGenerator {
 	private def findAlienLinks(SPEGroup group) {   
 	 	var alienLinks = newArrayList()
 		for (object : matchState.matchedObjects){
-			alienLinks.addAll(object.outboundLinks.filter[operation.isNotCreate && group == it.target.group])			
-			alienLinks.addAll(object.inboundLinks.filter[operation.isNotCreate && group == it.source.group])
+			alienLinks.addAll(object.outboundLinks.filter[canBeMatched && group == it.target.group])			
+			alienLinks.addAll(object.inboundLinks.filter[canBeMatched && group == it.source.group])
 		}		
 		alienLinks	
 	}
@@ -129,8 +129,7 @@ class ModelMatchGenerator {
 		}  else { 
 			result.alien = link.target;
 			result.start = link.source;	
-		}
-				 
+		}				 
 		result
 	}
 	
@@ -169,6 +168,10 @@ class ModelMatchGenerator {
  		 	 
  	//region helper 
 	
+	private def areInSameGroup(SPEObject source, SPEObject target){
+		source.group == target.group
+	}
+	
 	private def SPEGroup  getGroup(SPEObject object){
 		if(matchState.root.objects.contains(object))
 			return matchState.root
@@ -199,7 +202,7 @@ class ModelMatchGenerator {
 		val bigger = "^>\\d*$" -> [SPEAttribute it |'''.has«getAttrName»(«minInt», «getAttrValue» + 1)'''] 
 		val bEqual = "^>=\\d*$"-> [SPEAttribute it |'''.has«getAttrName»(«minInt», «getAttrValue»)''']  		
 		val nEqual = "^!=.*$"  -> [SPEAttribute it |'''.startNAC().has«getAttrName»(«getAttrValue»).endNAC()''']  
-		val setVal = "^:=.*$"  -> [SPEAttribute it |''''''] 			 			
+		val setVal = "^:=.*$"  -> [SPEAttribute it |''''''] 	//ll be handled later		 			
 		val inv_bs = "^>\\d*<\\d*$" -> [SPEAttribute it |'''.has«getAttrName»(«it.operation.replace(">", "").replace("<", " + 1, ")» - 1)''']  						 		
 		val inv_sb = "^<\\d*>\\d*$" -> 	[SPEAttribute it |'''.has«getAttrName»(«it.operation.replace("<", "").replace(">", " - 1, ")» + 1)'''] 	
 			 

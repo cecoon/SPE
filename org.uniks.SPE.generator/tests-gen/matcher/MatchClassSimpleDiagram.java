@@ -31,7 +31,9 @@ public class MatchClassSimpleDiagram {
 		pPO.hasHas(i2PO);
 		
 		//update model 
-	
-		return ! thisPO.allMatches().isEmpty();
+		boolean hasMatch = thisPO.getHasMatch();
+		if(hasMatch){
+		}
+		return hasMatch;
 	}
 }

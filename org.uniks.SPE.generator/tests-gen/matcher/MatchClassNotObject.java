@@ -27,7 +27,9 @@ public class MatchClassNotObject {
 		//matching missing links to known
 		
 		//update model 
-	
-		return ! thisPO.allMatches().isEmpty();
+		boolean hasMatch = thisPO.getHasMatch();
+		if(hasMatch){
+		}
+		return hasMatch;
 	}
 }

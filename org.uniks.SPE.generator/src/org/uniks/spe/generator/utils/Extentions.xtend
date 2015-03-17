@@ -9,6 +9,15 @@ import model.SPEGroup
 import model.SPEAttribute
 
 public final class Extentions {	 
+		
+	/* createLinks doesnt exist yet*/
+	def static canBeMatched(SPELink link) {
+		link.operation != Operations.CREATE
+	}	
+	
+	def static canCreatePO(SPELink link) {
+		!link.tag.isNot
+	}
 	
 	def static getIsNot(MatchTag tag) {
 		tag == MatchTag.NOT
@@ -50,4 +59,5 @@ public final class Extentions {
 	def static varName(SPEObject object){ 
 		 object.name + "PO"
 	}  	
+	
 }

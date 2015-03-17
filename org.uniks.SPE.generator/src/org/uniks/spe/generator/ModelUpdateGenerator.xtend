@@ -18,11 +18,11 @@ class ModelUpdateGenerator {
 		val allObjects = matchState.allObjects; 
 		
 		'''
+		«generateDeleteLinksCode»
+		«generateDeleteObjectCode(allObjects)»
 		«generateCreateObjectCode(allObjects)»
 		«generateCreateLinksCode»
-		«generateDeleteLinksCode»
 		«generateAttributesUpdateCode(allObjects)»
-		«generateDeleteObjectCode(allObjects)»
 		''' 
 	}  
 	 
@@ -34,18 +34,18 @@ class ModelUpdateGenerator {
 	private def static generateDeleteObjectCode( List<SPEObject> allObjects) { 
 		allObjects.filter[operation == Operations.DELETE]
 		 		  .fold("", [_, it| '''
-		 		  «_»«varName».destroy();'''])		
+		 		  «_»«varName».destroy();'''])		 
 	} 
 	 			 
 	private def static generateCreateObjectCode(List<SPEObject> allObjects) { 
 		allObjects.filter[operation == Operations.CREATE] 
 				  .fold("", [_, it| '''
-				  «_» «declarePO» = «createPO»;'''])		
+				  «_»«declarePO» = «createPO»;'''])		
 	}	
 	  
 	private def static generateAttributesUpdateCode(List<SPEObject> allObjects) {
 		var result = ''''''	
-		for (object : allObjects) {
+		for (object : allObjects.filter[operation != Operations.DELETE]) {
 			val varName = varName(object)	
 			var addAttributes = object.attributes.filter[it.operation.matches("^:=.*$")];			
 			if(addAttributes.size > 0){		

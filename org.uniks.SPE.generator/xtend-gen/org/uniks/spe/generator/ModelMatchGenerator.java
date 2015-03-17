@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import model.IHasMatchTag;
 import model.MatchTag;
-import model.Operations;
 import model.SPEAttribute;
 import model.SPEGroup;
 import model.SPELink;
@@ -41,15 +40,12 @@ public class ModelMatchGenerator {
     final Function1<SPELink, Boolean> _function = new Function1<SPELink, Boolean>() {
       public Boolean apply(final SPELink it) {
         boolean _and = false;
-        MatchTag _tag = it.getTag();
-        boolean _isNot = Extentions.getIsNot(_tag);
-        boolean _not = (!_isNot);
-        if (!_not) {
+        boolean _canBeMatched = Extentions.canBeMatched(it);
+        if (!_canBeMatched) {
           _and = false;
         } else {
-          Operations _operation = it.getOperation();
-          boolean _isNotCreate = Extentions.isNotCreate(_operation);
-          _and = _isNotCreate;
+          boolean _canCreatePO = Extentions.canCreatePO(it);
+          _and = _canCreatePO;
         }
         return Boolean.valueOf(_and);
       }
@@ -57,10 +53,8 @@ public class ModelMatchGenerator {
     Iterable<SPELink> _filter = IterableExtensions.<SPELink>filter(_outboundLinks, _function);
     final Function1<SPELink, Boolean> _function_1 = new Function1<SPELink, Boolean>() {
       public Boolean apply(final SPELink it) {
-        SPEGroup _group = ModelMatchGenerator.this.getGroup(object);
         SPEObject _target = it.getTarget();
-        SPEGroup _group_1 = ModelMatchGenerator.this.getGroup(_target);
-        return Boolean.valueOf(Objects.equal(_group, _group_1));
+        return Boolean.valueOf(ModelMatchGenerator.this.areInSameGroup(object, _target));
       }
     };
     Iterable<SPELink> _filter_1 = IterableExtensions.<SPELink>filter(_filter, _function_1);
@@ -125,9 +119,8 @@ public class ModelMatchGenerator {
         if (!_not) {
           _and = false;
         } else {
-          Operations _operation = it.getOperation();
-          boolean _isNotCreate = Extentions.isNotCreate(_operation);
-          _and = _isNotCreate;
+          boolean _canBeMatched = Extentions.canBeMatched(it);
+          _and = _canBeMatched;
         }
         return Boolean.valueOf(_and);
       }
@@ -312,9 +305,8 @@ public class ModelMatchGenerator {
           final Function1<SPELink, Boolean> _function = new Function1<SPELink, Boolean>() {
             public Boolean apply(final SPELink it) {
               boolean _and = false;
-              Operations _operation = it.getOperation();
-              boolean _isNotCreate = Extentions.isNotCreate(_operation);
-              if (!_isNotCreate) {
+              boolean _canBeMatched = Extentions.canBeMatched(it);
+              if (!_canBeMatched) {
                 _and = false;
               } else {
                 SPEObject _target = it.getTarget();
@@ -331,9 +323,8 @@ public class ModelMatchGenerator {
           final Function1<SPELink, Boolean> _function_1 = new Function1<SPELink, Boolean>() {
             public Boolean apply(final SPELink it) {
               boolean _and = false;
-              Operations _operation = it.getOperation();
-              boolean _isNotCreate = Extentions.isNotCreate(_operation);
-              if (!_isNotCreate) {
+              boolean _canBeMatched = Extentions.canBeMatched(it);
+              if (!_canBeMatched) {
                 _and = false;
               } else {
                 SPEObject _source = it.getSource();
@@ -501,6 +492,12 @@ public class ModelMatchGenerator {
     _builder.append("})");
     _builder.newLine();
     return _builder;
+  }
+  
+  private boolean areInSameGroup(final SPEObject source, final SPEObject target) {
+    SPEGroup _group = this.getGroup(source);
+    SPEGroup _group_1 = this.getGroup(target);
+    return Objects.equal(_group, _group_1);
   }
   
   private SPEGroup getGroup(final SPEObject object) {

@@ -70,9 +70,11 @@ class Generator implements IGenerator {
 			«matcher.generateCodeForMissingLinks»
 			
 			//update model 
-			«modelUpdater.generateModelUpdateCode(matcher.matchState)»
-		
-			return ! «start.varName».allMatches().isEmpty();
+			boolean hasMatch = «start.varName».getHasMatch();
+			if(hasMatch){
+				«modelUpdater.generateModelUpdateCode(matcher.matchState)»
+			}
+			return hasMatch;
 		}
 		'''		
 	}

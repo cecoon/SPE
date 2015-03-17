@@ -27,18 +27,18 @@ public class ModelUpdateGenerator {
       final String generateDeleteLinksCode = ModelUpdateGenerator.generateLinksCode(Operations.DELETE, "Destroy", _root_1);
       final List<SPEObject> allObjects = matchState.getAllObjects();
       StringConcatenation _builder = new StringConcatenation();
+      _builder.append(generateDeleteLinksCode, "");
+      _builder.newLineIfNotEmpty();
+      String _generateDeleteObjectCode = ModelUpdateGenerator.generateDeleteObjectCode(allObjects);
+      _builder.append(_generateDeleteObjectCode, "");
+      _builder.newLineIfNotEmpty();
       String _generateCreateObjectCode = ModelUpdateGenerator.generateCreateObjectCode(allObjects);
       _builder.append(_generateCreateObjectCode, "");
       _builder.newLineIfNotEmpty();
       _builder.append(generateCreateLinksCode, "");
       _builder.newLineIfNotEmpty();
-      _builder.append(generateDeleteLinksCode, "");
-      _builder.newLineIfNotEmpty();
       String _generateAttributesUpdateCode = ModelUpdateGenerator.generateAttributesUpdateCode(allObjects);
       _builder.append(_generateAttributesUpdateCode, "");
-      _builder.newLineIfNotEmpty();
-      String _generateDeleteObjectCode = ModelUpdateGenerator.generateDeleteObjectCode(allObjects);
-      _builder.append(_generateDeleteObjectCode, "");
       _builder.newLineIfNotEmpty();
       _xblockexpression = _builder;
     }
@@ -109,7 +109,6 @@ public class ModelUpdateGenerator {
       public String apply(final String _, final SPEObject it) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append(_, "");
-        _builder.append(" ");
         CharSequence _declarePO = CodeSnippets.declarePO(it);
         _builder.append(_declarePO, "");
         _builder.append(" = ");
@@ -127,21 +126,28 @@ public class ModelUpdateGenerator {
     {
       StringConcatenation _builder = new StringConcatenation();
       String result = _builder.toString();
-      for (final SPEObject object : allObjects) {
+      final Function1<SPEObject, Boolean> _function = new Function1<SPEObject, Boolean>() {
+        public Boolean apply(final SPEObject it) {
+          Operations _operation = it.getOperation();
+          return Boolean.valueOf((!Objects.equal(_operation, Operations.DELETE)));
+        }
+      };
+      Iterable<SPEObject> _filter = IterableExtensions.<SPEObject>filter(allObjects, _function);
+      for (final SPEObject object : _filter) {
         {
           final String varName = Extentions.varName(object);
           EList<SPEAttribute> _attributes = object.getAttributes();
-          final Function1<SPEAttribute, Boolean> _function = new Function1<SPEAttribute, Boolean>() {
+          final Function1<SPEAttribute, Boolean> _function_1 = new Function1<SPEAttribute, Boolean>() {
             public Boolean apply(final SPEAttribute it) {
               String _operation = it.getOperation();
               return Boolean.valueOf(_operation.matches("^:=.*$"));
             }
           };
-          Iterable<SPEAttribute> addAttributes = IterableExtensions.<SPEAttribute>filter(_attributes, _function);
+          Iterable<SPEAttribute> addAttributes = IterableExtensions.<SPEAttribute>filter(_attributes, _function_1);
           int _size = IterableExtensions.size(addAttributes);
           boolean _greaterThan = (_size > 0);
           if (_greaterThan) {
-            final Function2<String, SPEAttribute, String> _function_1 = new Function2<String, SPEAttribute, String>() {
+            final Function2<String, SPEAttribute, String> _function_2 = new Function2<String, SPEAttribute, String>() {
               public String apply(final String _, final SPEAttribute it) {
                 StringConcatenation _builder = new StringConcatenation();
                 _builder.append(_, "");
@@ -155,7 +161,7 @@ public class ModelUpdateGenerator {
                 return _builder.toString();
               }
             };
-            String createAttr = IterableExtensions.<SPEAttribute, String>fold(addAttributes, "", _function_1);
+            String createAttr = IterableExtensions.<SPEAttribute, String>fold(addAttributes, "", _function_2);
             String _result = result;
             StringConcatenation _builder_1 = new StringConcatenation();
             _builder_1.append(varName, "");

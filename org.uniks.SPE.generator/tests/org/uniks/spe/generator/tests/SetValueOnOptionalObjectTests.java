@@ -35,11 +35,11 @@ public class SetValueOnOptionalObjectTests {
         assertTrue(!mainPO.allMatches().isEmpty());
         assertEquals(5, optionalItem.getValue());
     }
-
+  
     @Test
     public void generatedMatcherTest() {
         createStoreWithOptional();
-
+ 
         assertTrue(new MatchClassoptionalSetValue().execute(store));
         assertEquals(5, optionalItem.getValue());
     }

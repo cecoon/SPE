@@ -48,8 +48,8 @@ public class CreateObjectAndLinkTest  {
         assertTrue(!mainPO.allMatches().isEmpty());
         assertNotNull(i1.getNext());
         assertEquals(4, i1.getNext().getValue()); 
-    }
-
+    } 
+  
     @Test 
     public void generatedMatcherTest() {
         assertTrue(new MatchClassCreateObjectAndLink().execute(store));
